@@ -3,19 +3,28 @@
 EnhedsRegister::EnhedsRegister()
 {
 	outputFile = "./register.txt";
-	//loadData();
+	loadData();
 }
 
 bool EnhedsRegister::loadData()
 {
-	unit tmpUnit();
+	unit tmpUnit(0x00, 0x00, false, 0);
+	string line;
+	char u = 0x00; char r = 0x00; bool s = false; int t = 0;
 	in.open(outputFile);
 	if(in.is_open())
 	{
-/*		while(!in.eof())
+		while (getline(in, line))
 		{
-			in >> unit[]
-		}*/
+			istringstream is(line);
+			is >> tmpUnit;
+			unitRegister_.push_back(tmpUnit);
+			/*is >> u >> r >> s >> t;*/
+/*			if (storeUnit(unit(u, r, s, t)))
+				cout << "Unit Stored" << endl;
+			else
+				cout << "FAILED" << endl;*/
+		}
 		in.close();
 		return true;
 	}
@@ -29,7 +38,10 @@ bool EnhedsRegister::storeUnit(unit& unitRef)
 	{
 		out.open(outputFile, ios::app);
 		if (!out.is_open())
+		{
+			cout << "Failed to open file for STOREUNIT" << endl;
 			return false;
+		}
 		unitRegister_.push_back(unitRef);
 		out << unitRef << endl;
 		out.close();
@@ -37,6 +49,7 @@ bool EnhedsRegister::storeUnit(unit& unitRef)
 	}
 	else
 	{
+		cout << "Unit ID already exists" << endl;
 		return false;
 	}
 }

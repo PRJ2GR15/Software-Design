@@ -3,8 +3,8 @@
 std::ostream& operator<<(std::ostream& os, const unit& obj)
 {
 	return os
-		<< +obj.getUnitID()	<< " "
-		<< +obj.getRoomID()	<< " "
+		<< obj.getUnitID()	<< " "
+		<< obj.getRoomID()	<< " "
 		<< obj.getStatus()	<< " "
 		<< obj.getTime()	<< " ";
 }

@@ -21,13 +21,7 @@ bool EnhedsRegister::loadData()
 	while (!inFile.eof())
 	{
 		inFile >> u >> r >> s >> t;
-		unit tmpUnit(static_cast<char>(u), static_cast<char>(r), s, t);
-		unitRegister_.push_back(tmpUnit);
-		/*is >> u >> r >> s >> t;*/
-/*			if (storeUnit(unit(u, r, s, t)))
-				cout << "Unit Stored" << endl;
-			else
-				cout << "FAILED" << endl;*/
+		unitRegister_.push_back(unit(static_cast<char>(u), static_cast<char>(r), s, t));
 	}
 	in.close();
 	return true;

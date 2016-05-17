@@ -2,63 +2,85 @@
 #include <ostream>
 #include <iostream>
 
+using namespace std;
+
+//Unit header. 
+
 class unit
 {
-public:
-	unit(char unitID, char roomID, bool status, int time)
+public: //Constructor
+	unit(unsigned char unitID, char roomID, unsigned char houseCode, bool status)
 	{
-		unitID_ = unitID;
+		setUnitID(unitID);
 		roomID_ = roomID;
+		setHouseCode(houseCode);
 		status_ = status;
-		placeholderTime_ = time;
+		
 	}
 
+//Metode for at sætte UnitID -- Tilladte værdier fra 1 til 255
+	void setUnitID(char unitID)
+	{
+		if (unitID >= 1 && unitID <= 255)
+			unitID_ = unitID;
+		else
+			return;
+	}
+
+//Metode for at returner UnitID 
 	char getUnitID() const
 	{
 		return unitID_;
 	}
-
-	void setUnitID(char unitID)
-	{
-		unitID_ = unitID;
-	}
-
-	char getRoomID() const
-	{
-		return roomID_;
-	}
-
+//Metode for at sætte roomID. Ingen validering
 	void setRoomID(char roomID)
 	{
 		roomID_ = roomID;
 	}
 
-	int getTime() const
+//Metode for at returner RoomID
+	char getRoomID() const
 	{
-		return placeholderTime_;
+		return roomID_;
+	}
+//Metode for at sætte HouseCode -- Tilladte værdier fra 1 til 15
+	void setHouseCode(char houseCode)
+	{
+		if (houseCode >= 1 && houseCode <= 15)
+			houseCode_ = houseCode;
+		else
+			return;
+	}
+//Metode for at returner houseCode
+	unsigned char getHouseCode()const
+	{
+		return houseCode_;
 	}
 
-	void setTime(int placeholder_time)
+//Metode for at sætte status
+	void setStatus(bool status)
 	{
-		placeholderTime_ = placeholder_time;
+		status_ = status;
 	}
 
+//Metode for at returner status på enheden
 	bool getStatus() const
 	{
 		return status_;
 	}
+//Metode for at printe oplysninger fra objektet
+	void print()const;
 
-	friend std::istream& operator>>(std::istream& is, unit& obj);
+//Operator>> for at indlæse data til objekt
+	friend istream& operator>>(istream& is, unit& obj);
 
-	void setStatus(bool newState)
-	{
-		status_ = newState;
-	}
+
 private:
-	char unitID_;
+	unsigned char unitID_; 
 	char roomID_;
+	unsigned char houseCode_;
 	bool status_;
-	int placeholderTime_;	
+	
 };
-
-std::ostream& operator<<(std::ostream& os, const unit& obj);
+//Operator << for at printe objektets oplysninger
+	ostream& operator<<(ostream& os, const unit& obj);

@@ -1,3 +1,16 @@
+//========================================================================
+// FILENAME : <filename>
+// CREATED : <Creation date>
+// AUTHOR : <Author>
+// DESCR. : <Description of file contents>
+//
+//------------------------------------------------------------------------
+//
+// REV. DATE/AUTHOR CHANGE DESCRIPTION
+// 1.0 <rev. date/author> <Change description>
+//========================================================================
+
+
 #include "EnhedsRegister.h"
 
 int main()

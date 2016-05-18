@@ -1,10 +1,35 @@
+//========================================================================
+// FILENAME : <EnhedsRegister.cpp>
+// CREATED : <17/05-2016>
+// AUTHOR : <Author>
+// DESCR. : <Description of file contents>
+//
+//------------------------------------------------------------------------
+//
+// REV. DATE/AUTHOR CHANGE DESCRIPTION
+// 1.0 <rev. date/author> <Change description>
+//========================================================================
+
+
 #include "EnhedsRegister.h"
+
+//=============================================================
+// METHOD : 
+// DESCR. : 
+//=============================================================
+
 
 EnhedsRegister::EnhedsRegister()
 {
 	outputFile = "./register.txt";
 	loadData();
 }
+
+//=============================================================
+// METHOD : 
+// DESCR. : 
+//=============================================================
+
 
 bool EnhedsRegister::loadData()
 {
@@ -25,6 +50,11 @@ bool EnhedsRegister::loadData()
 	in.close();
 	return true;
 }
+
+//=============================================================
+// METHOD : 
+// DESCR. : 
+//=============================================================
 
 
 bool EnhedsRegister::storeUnit(unit& unitRef)
@@ -49,6 +79,12 @@ bool EnhedsRegister::storeUnit(unit& unitRef)
 	}
 }
 
+//=============================================================
+// METHOD : 
+// DESCR. : 
+//=============================================================
+
+
 bool EnhedsRegister::compareID(char unitID) const
 {
 	vector<unit>::const_iterator iter;
@@ -60,6 +96,12 @@ bool EnhedsRegister::compareID(char unitID) const
 	return false;
 
 }
+
+//=============================================================
+// METHOD : 
+// DESCR. : 
+//=============================================================
+
 
 bool EnhedsRegister::updateStatus(char unitID, bool status)
 {
@@ -75,12 +117,24 @@ bool EnhedsRegister::updateStatus(char unitID, bool status)
 	return false;
 }
 
+//=============================================================
+// METHOD : 
+// DESCR. : 
+//=============================================================
+
+
 void EnhedsRegister::getStoredUnits()
 {
 	vector<unit>::iterator iter;
 	for (iter = unitRegister_.begin(); iter != unitRegister_.end(); ++iter)
 		cout << *iter << endl;
 }
+
+//=============================================================
+// METHOD : 
+// DESCR. : 
+//=============================================================
+
 
 bool EnhedsRegister::deleteUnit(char unitID)
 {
@@ -96,6 +150,12 @@ bool EnhedsRegister::deleteUnit(char unitID)
 	return false;
 }
 
+//=============================================================
+// METHOD : 
+// DESCR. : 
+//=============================================================
+
+
 bool EnhedsRegister::modifyUnit(char unitID, char roomID)
 {
 	return true;
@@ -105,10 +165,22 @@ bool EnhedsRegister::modifyUnit(char unitID, char roomID)
 {
 }*/
 
+//=============================================================
+// METHOD : 
+// DESCR. : 
+//=============================================================
+
+
 bool EnhedsRegister::updateTime(char roomID, int placeholder)
 {
 	return true;
 }
+
+//=============================================================
+// METHOD : 
+// DESCR. : 
+//=============================================================
+
 
 EnhedsRegister::~EnhedsRegister()
 {

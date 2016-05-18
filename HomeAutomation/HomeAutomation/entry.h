@@ -1,8 +1,29 @@
-﻿#pragma once
+﻿//========================================================================
+// FILENAME : <filename>
+// CREATED : <Creation date>
+// AUTHOR : <Author>
+// DESCR. : <Description of file contents>
+//
+//------------------------------------------------------------------------
+//
+// REV. DATE/AUTHOR CHANGE DESCRIPTION
+// 1.0 <rev. date/author> <Change description>
+//========================================================================
+
+#pragma once
+#include <iostream>
+
+using namespace std;
 
 class entry
 {
-public: //Constructor
+public: 
+
+	//=============================================================
+	// METHOD : 
+	// DESCR. : 
+	//=============================================================
+
 	entry(unsigned char hour, unsigned char min, unsigned char dayOfWeek, bool action)
 	{
 		setHour(hour);
@@ -10,7 +31,12 @@ public: //Constructor
 		setDayOfWeek(dayOfWeek);
 		setAction(action);
 	}
-	//Metode for at sætte hour. Tilladte værdier 0-24
+	
+	//=============================================================
+	// METHOD : 
+	// DESCR. : 
+	//=============================================================
+
 	void setHour(unsigned char hour)
 	{
 		if (hour >= 0 && hour <= 24)
@@ -18,13 +44,22 @@ public: //Constructor
 		else
 			return;
 	}
-	//Metode for at returner hour
+
+	//=============================================================
+	// METHOD : 
+	// DESCR. : 
+	//=============================================================
+
 	unsigned char getHour()const
 	{
 		return hour_;
 	}
 
-	//Metode for at sætte min. Tilladte værdier 0-59
+	//=============================================================
+	// METHOD : 
+	// DESCR. : 
+	//=============================================================
+
 	void setMin(unsigned char min)
 	{
 		if (min >= 0 && min <= 59)
@@ -32,12 +67,22 @@ public: //Constructor
 		else
 			return;
 	}
-	//Metode for at returner min
+	
+	//=============================================================
+	// METHOD : 
+	// DESCR. : 
+	//=============================================================
+
 	unsigned char getMin()const
 	{
 		return min_;
 	}
-	//Metode for at sætte hour. Tilladte værdier 1-7
+	
+	//=============================================================
+	// METHOD : 
+	// DESCR. : 
+	//=============================================================
+
 	void setDayOfWeek(unsigned char dayOfWeek)
 	{
 		if (dayOfWeek >= 1 && dayOfWeek <= 7)
@@ -45,22 +90,38 @@ public: //Constructor
 		else
 			return;
 	}
-	//Metode for at returner dayOfWeek
+
+	//=============================================================
+	// METHOD : 
+	// DESCR. : 
+	//=============================================================
+	
 	unsigned char getDayOfWeek()const
 	{
 		return dayOfWeek_;
 	}
-	//Metode for at sætte action. 1 = Tænd. 0 = sluk
+	
+	//=============================================================
+	// METHOD : 
+	// DESCR. : 
+	//=============================================================
+
 	void setAction(bool action)
 	{
 		action_ = action;
 	}
 
-	//Metode for at returner action
+	//=============================================================
+	// METHOD : 
+	// DESCR. : 
+	//=============================================================
+
 	bool getAction()const
 	{
 		return action_;
 	}
+
+	void print()const;
 
 private:
 	unsigned char hour_;
@@ -68,3 +129,6 @@ private:
 	unsigned char dayOfWeek_;
 	bool action_;
 };
+
+
+ostream& operator<<(ostream& os, const entry& obj);

@@ -1,14 +1,31 @@
-﻿#pragma once
-#include <ostream>
+﻿//========================================================================
+// FILENAME : <filename>
+// CREATED : <Creation date>
+// AUTHOR : <Author>
+// DESCR. : <Description of file contents>
+//
+//------------------------------------------------------------------------
+//
+// REV. DATE/AUTHOR CHANGE DESCRIPTION
+// 1.0 <rev. date/author> <Change description>
+//========================================================================
+
+
+#pragma once
 #include <iostream>
 
 using namespace std;
 
-//Unit header. 
 
 class unit
 {
-public: //Constructor
+public: 
+	
+	//=============================================================
+	// METHOD : 
+	// DESCR. : 
+	//=============================================================
+
 	unit(unsigned char unitID, char roomID, unsigned char houseCode, bool status)
 	{
 		setUnitID(unitID);
@@ -18,7 +35,10 @@ public: //Constructor
 		
 	}
 
-//Metode for at sætte UnitID -- Tilladte værdier fra 1 til 255
+	//=============================================================
+	// METHOD : 
+	// DESCR. : 
+	//=============================================================
 	void setUnitID(char unitID)
 	{
 		if (unitID >= 1 && unitID <= 255)
@@ -27,23 +47,41 @@ public: //Constructor
 			return;
 	}
 
-//Metode for at returner UnitID 
+	//=============================================================
+	// METHOD : 
+	// DESCR. : 
+	//=============================================================
+
 	char getUnitID() const
 	{
 		return unitID_;
 	}
-//Metode for at sætte roomID. Ingen validering
+
+	//=============================================================
+	// METHOD : 
+	// DESCR. : 
+	//=============================================================
+
 	void setRoomID(char roomID)
 	{
 		roomID_ = roomID;
 	}
 
-//Metode for at returner RoomID
+	//=============================================================
+	// METHOD : 
+	// DESCR. : 
+	//=============================================================
+
 	char getRoomID() const
 	{
 		return roomID_;
 	}
-//Metode for at sætte HouseCode -- Tilladte værdier fra 1 til 15
+
+	//=============================================================
+	// METHOD : 
+	// DESCR. : 
+	//=============================================================
+
 	void setHouseCode(char houseCode)
 	{
 		if (houseCode >= 1 && houseCode <= 15)
@@ -51,27 +89,40 @@ public: //Constructor
 		else
 			return;
 	}
-//Metode for at returner houseCode
+
+	//=============================================================
+	// METHOD : 
+	// DESCR. : 
+	//=============================================================
+
 	unsigned char getHouseCode()const
 	{
 		return houseCode_;
 	}
 
-//Metode for at sætte status
+	//=============================================================
+	// METHOD : 
+	// DESCR. : 
+	//=============================================================
+
 	void setStatus(bool status)
 	{
 		status_ = status;
 	}
 
-//Metode for at returner status på enheden
+	//=============================================================
+	// METHOD : 
+	// DESCR. : 
+	//=============================================================
+
 	bool getStatus() const
 	{
 		return status_;
 	}
-//Metode for at printe oplysninger fra objektet
+
 	void print()const;
 
-//Operator>> for at indlæse data til objekt
+
 	friend istream& operator>>(istream& is, unit& obj);
 
 
@@ -82,5 +133,5 @@ private:
 	bool status_;
 	
 };
-//Operator << for at printe objektets oplysninger
+
 	ostream& operator<<(ostream& os, const unit& obj);

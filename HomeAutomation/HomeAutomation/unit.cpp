@@ -1,7 +1,25 @@
-﻿#include "unit.h"
+﻿//========================================================================
+// FILENAME : <filename>
+// CREATED : <Creation date>
+// AUTHOR : <Author>
+// DESCR. : <Description of file contents>
+//
+//------------------------------------------------------------------------
+//
+// REV. DATE/AUTHOR CHANGE DESCRIPTION
+// 1.0 <rev. date/author> <Change description>
+//========================================================================
 
-//NOTE: Når GUI så overflødig.... 
-//Print funktion for at printe oplysninger fra Unit
+
+#include "unit.h"
+
+
+//=============================================================
+// METHOD : 
+// DESCR. : 
+//=============================================================
+
+
 void unit::print() const
 {
 	cout << "\nUnitID: " << static_cast<int>(getUnitID()) 
@@ -14,15 +32,25 @@ void unit::print() const
 		cout << "Enheden er deactiveret" << endl;
 }
 
-//Operator<< mulighed for at printe hele objekter ved navn
-ostream& operator<<(ostream& os, const unit& obj)
+//=============================================================
+// METHOD : 
+// DESCR. : 
+//=============================================================
+
+
+ostream &operator<<(ostream& os, const unit& obj)
 {
 	obj.print();
 
 	return os;
 }
 
-//Operator >> for at kunne indlæse data til objekt
+//=============================================================
+// METHOD : 
+// DESCR. : 
+//=============================================================
+
+
 istream& operator>>(istream& is, unit& obj)
 {
 	is >> obj.unitID_;

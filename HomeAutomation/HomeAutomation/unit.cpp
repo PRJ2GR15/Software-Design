@@ -1,19 +1,34 @@
 ﻿#include "unit.h"
 
-std::ostream& operator<<(std::ostream& os, const unit& obj)
+//NOTE: Når GUI så overflødig.... 
+//Print funktion for at printe oplysninger fra Unit
+void unit::print() const
 {
-	return os
-		<< static_cast<int>(obj.getUnitID() )	<< " "
-		<< static_cast<int>(obj.getRoomID() )	<< " "
-		<< obj.getStatus()	<< " "
-		<< obj.getTime()	<< " ";
+	cout << "\nUnitID: " << static_cast<int>(getUnitID()) 
+		 << "\nRoomID: " << static_cast<int>(getRoomID()) 
+		 << "\nHouseCodeNr: "<< static_cast<int>(getHouseCode()) << endl;
+
+	if (getStatus() == true)
+		cout << "Enheden er aktiv" << endl;
+	else
+		cout << "Enheden er deactiveret" << endl;
 }
 
-std::istream& operator>>(std::istream& is, unit& obj)
+//Operator<< mulighed for at printe hele objekter ved navn
+ostream& operator<<(ostream& os, const unit& obj)
+{
+	obj.print();
+
+	return os;
+}
+
+//Operator >> for at kunne indlæse data til objekt
+istream& operator>>(istream& is, unit& obj)
 {
 	is >> obj.unitID_;
 	is >> obj.roomID_;
+	is >> obj.houseCode_;
 	is >> obj.status_;
-	is >> obj.placeholderTime_;
+	
 	return is;
 }

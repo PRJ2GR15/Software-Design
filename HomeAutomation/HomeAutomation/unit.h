@@ -1,14 +1,37 @@
-﻿#pragma once
-#include <ostream>
+﻿//========================================================================
+// FILENAME : <Unit.h>
+// CREATED : <17/05-2016>
+// AUTHOR : <Anders Brondbjerg Knudsen>
+// DESCR. : <Headerfilen for Unit>
+//
+//------------------------------------------------------------------------
+//
+// REV. DATE/AUTHOR CHANGE DESCRIPTION
+// 1.0 <rev. date/author> <Change description>
+//========================================================================
+
+
+#pragma once
 #include <iostream>
 
 using namespace std;
 
-//Unit header. 
+//=====================================
+// CLASS : Unit
+// DESCR. : Indeholder data om Units. 
+// Dets UnitID, RoomID, Housecode og dets status.
+//=====================================
+
 
 class unit
 {
-public: //Constructor
+public: 
+	
+	//=============================================================
+	// METHOD : Explicit Constructor
+	// DESCR. : 
+	//=============================================================
+
 	unit(unsigned char unitID, char roomID, unsigned char houseCode, bool status)
 	{
 		setUnitID(unitID);
@@ -18,7 +41,10 @@ public: //Constructor
 		
 	}
 
-//Metode for at sætte UnitID -- Tilladte værdier fra 1 til 255
+	//=============================================================
+	// METHOD : Sætter UnitID
+	// DESCR. : Tilladte værdier fra 1 til 255 
+	//=============================================================
 	void setUnitID(char unitID)
 	{
 		if (unitID >= 1 && unitID <= 255)
@@ -27,23 +53,41 @@ public: //Constructor
 			return;
 	}
 
-//Metode for at returner UnitID 
+	//=============================================================
+	// METHOD : Returner UnitID
+	// DESCR. : 
+	//=============================================================
+
 	char getUnitID() const
 	{
 		return unitID_;
 	}
-//Metode for at sætte roomID. Ingen validering
+
+	//=============================================================
+	// METHOD : Sætter RoomID
+	// DESCR. : Ingen validering
+	//=============================================================
+
 	void setRoomID(char roomID)
 	{
 		roomID_ = roomID;
 	}
 
-//Metode for at returner RoomID
+	//=============================================================
+	// METHOD : Returner RoomID
+	// DESCR. : 
+	//=============================================================
+
 	char getRoomID() const
 	{
 		return roomID_;
 	}
-//Metode for at sætte HouseCode -- Tilladte værdier fra 1 til 15
+
+	//=============================================================
+	// METHOD : Sætter HouseCode
+	// DESCR. : Tilladte værdier fra 1 til 15
+	//=============================================================
+
 	void setHouseCode(char houseCode)
 	{
 		if (houseCode >= 1 && houseCode <= 15)
@@ -51,27 +95,40 @@ public: //Constructor
 		else
 			return;
 	}
-//Metode for at returner houseCode
+
+	//=============================================================
+	// METHOD : Returner HouseCode
+	// DESCR. : 
+	//=============================================================
+
 	unsigned char getHouseCode()const
 	{
 		return houseCode_;
 	}
 
-//Metode for at sætte status
+	//=============================================================
+	// METHOD : Sæt status for en enhed 
+	// DESCR. : 1 = tændt. 0 = slukket
+	//=============================================================
+
 	void setStatus(bool status)
 	{
 		status_ = status;
 	}
 
-//Metode for at returner status på enheden
+	//=============================================================
+	// METHOD : Returner status for enheden
+	// DESCR. : 
+	//=============================================================
+
 	bool getStatus() const
 	{
 		return status_;
 	}
-//Metode for at printe oplysninger fra objektet
+
 	void print()const;
 
-//Operator>> for at indlæse data til objekt
+
 	friend istream& operator>>(istream& is, unit& obj);
 
 
@@ -82,5 +139,5 @@ private:
 	bool status_;
 	
 };
-//Operator << for at printe objektets oplysninger
+
 	ostream& operator<<(ostream& os, const unit& obj);

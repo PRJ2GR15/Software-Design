@@ -1,20 +1,29 @@
+//========================================================================
+// FILENAME : <TestRegister>
+// CREATED : <17/05-2016>
+// AUTHOR : <Nikolai James Topping>
+// DESCR. : <Test af klasser>
+//
+//------------------------------------------------------------------------
+//
+// REV. DATE/AUTHOR CHANGE DESCRIPTION
+// 1.0 <rev. date/author> <Change description>
+//========================================================================
+
+
 #include "EnhedsRegister.h"
+#include "entry.h"
 
 int main()
 {
 	unsigned char c = 0x00;
 	EnhedsRegister m_register;
-	m_register.getStoredUnits();
-	
-	vector<unit>::iterator iter = m_register.begin();
-	for (iter = m_register.begin(); iter != m_register.end(); ++iter)
-	{
-		m_register.updateStatus(iter->getUnitID(), true);
-	}
+	//_register.getStoredUnits();
 
-	m_register.getStoredUnits();
-	 
-		
+	//entry test(23, 59, 7, 1);
+
+	//cout << test << endl;
+
 	////for (int i = 0; i <= 20; ++i)
 	//{
 	//	c++;

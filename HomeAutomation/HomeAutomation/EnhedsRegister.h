@@ -1,3 +1,17 @@
+//========================================================================
+// FILENAME : <EnhedsRegister.h>
+// CREATED : <17/05-2016>
+// AUTHOR : <Nikolai James Topping>
+// DESCR. : <Header filen for EnhedsRegister>
+//
+//------------------------------------------------------------------------
+//
+// REV. DATE/AUTHOR CHANGE DESCRIPTION
+// 1.0 <rev. date/author> <Change description>
+// 1.1 <18.05/2016/Anders Brondbjerg Knudsen> <Tilføjelse af entry>
+//========================================================================
+
+
 #pragma once
 #include <vector>
 #include <iostream>
@@ -7,6 +21,12 @@
 #include "unit.h"
 
 using namespace std;
+
+//=====================================
+// CLASS : EnhedsRegister
+// DESCR. : BLA BLA BLA
+//=====================================
+
 
 class EnhedsRegister
 {
@@ -22,21 +42,13 @@ public:
 	//bool updateTime(char roomID, int placeholder);
 	bool updateTime(char unitID, int placeholder);
 	bool loadData();
-	vector<unit>::iterator begin()
-	{
-		return unitRegister_.begin();
-	}
-
-	vector<unit>::iterator end()
-	{
-		return unitRegister_.end();
-	}
 
 private:
 	vector<unit> unitRegister_;
 	ofstream out;
 	ifstream in;
 	string outputFile;
+	
 };
 
 istream& operator>>(istream&, const EnhedsRegister &);

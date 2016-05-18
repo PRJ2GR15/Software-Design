@@ -1,8 +1,8 @@
 ﻿//========================================================================
-// FILENAME : <unit.cpp>
-// CREATED : <17/05-2016>
+// FILENAME : <entry.cpp>
+// CREATED : <18/05-2016>
 // AUTHOR : <Anders Brondbjerg Knudsen>
-// DESCR. : <Implementering af Unit>
+// DESCR. : <Implementering af entry>
 //
 //------------------------------------------------------------------------
 //
@@ -11,25 +11,16 @@
 //========================================================================
 
 
-#include "unit.h"
-
+#include "entry.h"
 
 //=============================================================
 // METHOD : Print
-// DESCR. : Printer information om Unit
+// DESCR. : Printer information om entry
 //=============================================================
 
-
-void unit::print() const
+void entry::print()const
 {
-	cout << "\nUnitID: " << static_cast<int>(getUnitID()) 
-		 << "\nRoomID: " << static_cast<int>(getRoomID()) 
-		 << "\nHouseCodeNr: "<< static_cast<int>(getHouseCode()) << endl;
-
-	if (getStatus() == true)
-		cout << "Enheden er aktiv" << endl;
-	else
-		cout << "Enheden er deactiveret" << endl;
+	cout << +hour_ << " " << +min_ << " " << +dayOfWeek_ << " " << action_ << endl;
 }
 
 //=============================================================
@@ -38,7 +29,7 @@ void unit::print() const
 //=============================================================
 
 
-ostream &operator<<(ostream& os, const unit& obj)
+ostream &operator<<(ostream& os, const entry& obj)
 {
 	obj.print();
 
@@ -51,12 +42,12 @@ ostream &operator<<(ostream& os, const unit& obj)
 //=============================================================
 
 
-istream& operator>>(istream& is, unit& obj)
+istream& operator>>(istream& is, entry& obj)
 {
-	is >> obj.unitID_;
-	is >> obj.roomID_;
-	is >> obj.houseCode_;
-	is >> obj.status_;
-	
+	is >> obj.hour_;
+	is >> obj.min_;
+	is >> obj.dayOfWeek_;
+	is >> obj.action_;
+
 	return is;
 }

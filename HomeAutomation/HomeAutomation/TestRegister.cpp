@@ -1,8 +1,8 @@
 //========================================================================
-// FILENAME : <filename>
-// CREATED : <Creation date>
-// AUTHOR : <Author>
-// DESCR. : <Description of file contents>
+// FILENAME : <TestRegister>
+// CREATED : <17/05-2016>
+// AUTHOR : <Nikolai James Topping>
+// DESCR. : <Test af klasser>
 //
 //------------------------------------------------------------------------
 //
@@ -12,12 +12,18 @@
 
 
 #include "EnhedsRegister.h"
+#include "entry.h"
 
 int main()
 {
 	unsigned char c = 0x00;
 	EnhedsRegister m_register;
-	m_register.getStoredUnits();
+	//_register.getStoredUnits();
+
+	//entry test(23, 59, 7, 1);
+
+	//cout << test << endl;
+
 	////for (int i = 0; i <= 20; ++i)
 	//{
 	//	c++;

@@ -1,13 +1,13 @@
 ﻿//========================================================================
-// FILENAME : <filename>
-// CREATED : <Creation date>
-// AUTHOR : <Author>
-// DESCR. : <Description of file contents>
+// FILENAME : <entry.h>
+// CREATED : <18/05-2016>
+// AUTHOR : <Anders Brondbjerg Knudsen>
+// DESCR. : <Header for entry>
 //
 //------------------------------------------------------------------------
 //
 // REV. DATE/AUTHOR CHANGE DESCRIPTION
-// 1.0 <rev. date/author> <Change description>
+// 1.0 <rev. date/author> <Oprettelse af entry>
 //========================================================================
 
 #pragma once
@@ -15,12 +15,18 @@
 
 using namespace std;
 
+
+//=====================================
+// CLASS : Entry
+// DESCR. : Indeholder data om hvornår enheden skal aktiveres og slukke
+//=====================================
+
 class entry
 {
 public: 
 
 	//=============================================================
-	// METHOD : 
+	// METHOD : Explicit Constructor
 	// DESCR. : 
 	//=============================================================
 
@@ -33,20 +39,20 @@ public:
 	}
 	
 	//=============================================================
-	// METHOD : 
-	// DESCR. : 
+	// METHOD : Sætter hour
+	// DESCR. : Tilladte værdier fra 0 til 23 
 	//=============================================================
 
 	void setHour(unsigned char hour)
 	{
-		if (hour >= 0 && hour <= 24)
+		if (hour >= 0 && hour <= 23)
 			hour_ = hour;
 		else
 			return;
 	}
 
 	//=============================================================
-	// METHOD : 
+	// METHOD : Returner Hour
 	// DESCR. : 
 	//=============================================================
 
@@ -56,8 +62,8 @@ public:
 	}
 
 	//=============================================================
-	// METHOD : 
-	// DESCR. : 
+	// METHOD : Sætter min
+	// DESCR. : Tilladte værdier fra 0 til 59
 	//=============================================================
 
 	void setMin(unsigned char min)
@@ -69,7 +75,7 @@ public:
 	}
 	
 	//=============================================================
-	// METHOD : 
+	// METHOD : Returner min
 	// DESCR. : 
 	//=============================================================
 
@@ -79,8 +85,8 @@ public:
 	}
 	
 	//=============================================================
-	// METHOD : 
-	// DESCR. : 
+	// METHOD : Sætter dayOfWeek
+	// DESCR. : Tilladte værdier fra 1 til 7. Står for ugedagene. 1 = mandag... 7 = søndag. 
 	//=============================================================
 
 	void setDayOfWeek(unsigned char dayOfWeek)
@@ -92,7 +98,7 @@ public:
 	}
 
 	//=============================================================
-	// METHOD : 
+	// METHOD : Returner dayOfWeek
 	// DESCR. : 
 	//=============================================================
 	
@@ -102,8 +108,9 @@ public:
 	}
 	
 	//=============================================================
-	// METHOD : 
-	// DESCR. : 
+	// METHOD : Sætter action. 
+	// DESCR. : 1 = Planlægges at skulle tændes. 
+	//          0 = Planlægges at skulle slukkes.
 	//=============================================================
 
 	void setAction(bool action)
@@ -112,7 +119,7 @@ public:
 	}
 
 	//=============================================================
-	// METHOD : 
+	// METHOD : Returner action
 	// DESCR. : 
 	//=============================================================
 
@@ -123,6 +130,8 @@ public:
 
 	void print()const;
 
+	friend istream& operator>>(istream& is, entry& obj);
+
 private:
 	unsigned char hour_;
 	unsigned char min_;
@@ -132,3 +141,44 @@ private:
 
 
 ostream& operator<<(ostream& os, const entry& obj);
+
+
+
+//bool loadEntryData();
+//bool storeEntry(entry&);
+
+
+//=============================================================
+// METHOD : 
+// DESCR. : 
+//=============================================================
+
+//bool EnhedsRegister::loadEntryData()
+//{
+//	int h = 0x00, m = 0x00, d = 0x01; bool a = false;
+//
+//	in.open(outputFileEntry, ios::in);
+//
+//	if (!in)
+//	{
+//		cerr << "Filen findes ikke" << endl;
+//		return false;
+//	}
+//
+//	while (!in.eof())
+//	{
+//		in >> h >> m >> d >> a;
+//		entryRegister_.push_back(entry(static_cast<unsigned char>(h), static_cast<unsigned char> (m), static_cast<unsigned char> (d), a));
+//	}
+//	in.close();
+//	return true;
+//}
+//
+//bool EnhedsRegister::storeEntry(entry&)
+//{
+//
+//}
+
+//vector<entry>entryRegister
+
+//string outputFileEntry;

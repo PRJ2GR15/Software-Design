@@ -1,8 +1,8 @@
 ﻿//========================================================================
-// FILENAME : <filename>
-// CREATED : <Creation date>
-// AUTHOR : <Author>
-// DESCR. : <Description of file contents>
+// FILENAME : <entry.cpp>
+// CREATED : <18/05-2016>
+// AUTHOR : <Anders Brondbjerg Knudsen>
+// DESCR. : <Implementering af entry>
 //
 //------------------------------------------------------------------------
 //
@@ -14,8 +14,8 @@
 #include "entry.h"
 
 //=============================================================
-// METHOD : 
-// DESCR. : 
+// METHOD : Print
+// DESCR. : Printer information om entry
 //=============================================================
 
 void entry::print()const
@@ -24,9 +24,10 @@ void entry::print()const
 }
 
 //=============================================================
-// METHOD : 
-// DESCR. : 
+// METHOD : Print Operator 
+// DESCR. : Giver mulighed for at printe med objekt navn
 //=============================================================
+
 
 ostream &operator<<(ostream& os, const entry& obj)
 {
@@ -35,3 +36,18 @@ ostream &operator<<(ostream& os, const entry& obj)
 	return os;
 }
 
+//=============================================================
+// METHOD : Input operator
+// DESCR. : Giver mulighed for at indlæse data til objekt. 
+//=============================================================
+
+
+istream& operator>>(istream& is, entry& obj)
+{
+	is >> obj.hour_;
+	is >> obj.min_;
+	is >> obj.dayOfWeek_;
+	is >> obj.action_;
+
+	return is;
+}

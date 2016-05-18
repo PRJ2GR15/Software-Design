@@ -1,8 +1,8 @@
 ﻿//========================================================================
-// FILENAME : <filename>
-// CREATED : <Creation date>
-// AUTHOR : <Author>
-// DESCR. : <Description of file contents>
+// FILENAME : <Unit.h>
+// CREATED : <17/05-2016>
+// AUTHOR : <Anders Brondbjerg Knudsen>
+// DESCR. : <Headerfilen for Unit>
 //
 //------------------------------------------------------------------------
 //
@@ -16,13 +16,19 @@
 
 using namespace std;
 
+//=====================================
+// CLASS : Unit
+// DESCR. : Indeholder data om Units. 
+// Dets UnitID, RoomID, Housecode og dets status.
+//=====================================
+
 
 class unit
 {
 public: 
 	
 	//=============================================================
-	// METHOD : 
+	// METHOD : Explicit Constructor
 	// DESCR. : 
 	//=============================================================
 
@@ -36,8 +42,8 @@ public:
 	}
 
 	//=============================================================
-	// METHOD : 
-	// DESCR. : 
+	// METHOD : Sætter UnitID
+	// DESCR. : Tilladte værdier fra 1 til 255 
 	//=============================================================
 	void setUnitID(char unitID)
 	{
@@ -48,7 +54,7 @@ public:
 	}
 
 	//=============================================================
-	// METHOD : 
+	// METHOD : Returner UnitID
 	// DESCR. : 
 	//=============================================================
 
@@ -58,8 +64,8 @@ public:
 	}
 
 	//=============================================================
-	// METHOD : 
-	// DESCR. : 
+	// METHOD : Sætter RoomID
+	// DESCR. : Ingen validering
 	//=============================================================
 
 	void setRoomID(char roomID)
@@ -68,7 +74,7 @@ public:
 	}
 
 	//=============================================================
-	// METHOD : 
+	// METHOD : Returner RoomID
 	// DESCR. : 
 	//=============================================================
 
@@ -78,8 +84,8 @@ public:
 	}
 
 	//=============================================================
-	// METHOD : 
-	// DESCR. : 
+	// METHOD : Sætter HouseCode
+	// DESCR. : Tilladte værdier fra 1 til 15
 	//=============================================================
 
 	void setHouseCode(char houseCode)
@@ -91,7 +97,7 @@ public:
 	}
 
 	//=============================================================
-	// METHOD : 
+	// METHOD : Returner HouseCode
 	// DESCR. : 
 	//=============================================================
 
@@ -101,8 +107,8 @@ public:
 	}
 
 	//=============================================================
-	// METHOD : 
-	// DESCR. : 
+	// METHOD : Sæt status for en enhed 
+	// DESCR. : 1 = tændt. 0 = slukket
 	//=============================================================
 
 	void setStatus(bool status)
@@ -111,7 +117,7 @@ public:
 	}
 
 	//=============================================================
-	// METHOD : 
+	// METHOD : Returner status for enheden
 	// DESCR. : 
 	//=============================================================
 

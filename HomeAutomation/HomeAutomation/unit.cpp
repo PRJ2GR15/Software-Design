@@ -1,8 +1,8 @@
 ﻿//========================================================================
-// FILENAME : <filename>
-// CREATED : <Creation date>
-// AUTHOR : <Author>
-// DESCR. : <Description of file contents>
+// FILENAME : <unit.cpp>
+// CREATED : <17/05-2016>
+// AUTHOR : <Anders Brondbjerg Knudsen>
+// DESCR. : <Implementering af Unit>
 //
 //------------------------------------------------------------------------
 //
@@ -15,8 +15,8 @@
 
 
 //=============================================================
-// METHOD : 
-// DESCR. : 
+// METHOD : Print
+// DESCR. : Printer information om Unit
 //=============================================================
 
 
@@ -33,8 +33,8 @@ void unit::print() const
 }
 
 //=============================================================
-// METHOD : 
-// DESCR. : 
+// METHOD : Print Operator 
+// DESCR. : Giver mulighed for at printe med objekt navn
 //=============================================================
 
 
@@ -46,8 +46,8 @@ ostream &operator<<(ostream& os, const unit& obj)
 }
 
 //=============================================================
-// METHOD : 
-// DESCR. : 
+// METHOD : Input operator
+// DESCR. : Giver mulighed for at indlæse data til objekt. 
 //=============================================================
 
 

@@ -1,13 +1,14 @@
 //========================================================================
-// FILENAME : <filename>
-// CREATED : <Creation date>
-// AUTHOR : <Author>
-// DESCR. : <Description of file contents>
+// FILENAME : <EnhedsRegister.h>
+// CREATED : <17/05-2016>
+// AUTHOR : <Nikolai James Topping>
+// DESCR. : <Header filen for EnhedsRegister>
 //
 //------------------------------------------------------------------------
 //
 // REV. DATE/AUTHOR CHANGE DESCRIPTION
 // 1.0 <rev. date/author> <Change description>
+// 1.1 <18.05/2016/Anders Brondbjerg Knudsen> <Tilføjelse af entry>
 //========================================================================
 
 
@@ -20,6 +21,12 @@
 #include "unit.h"
 
 using namespace std;
+
+//=====================================
+// CLASS : EnhedsRegister
+// DESCR. : BLA BLA BLA
+//=====================================
+
 
 class EnhedsRegister
 {
@@ -36,12 +43,12 @@ public:
 	bool updateTime(char unitID, int placeholder);
 	bool loadData();
 
-
 private:
 	vector<unit> unitRegister_;
 	ofstream out;
 	ifstream in;
 	string outputFile;
+	
 };
 
 istream& operator>>(istream&, const EnhedsRegister &);

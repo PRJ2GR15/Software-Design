@@ -117,11 +117,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EnhedsRegister.cpp" />
+    <ClCompile Include="entry.cpp" />
     <ClCompile Include="TestRegister.cpp" />
     <ClCompile Include="unit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnhedsRegister.h" />
+    <ClInclude Include="entry.h" />
     <ClInclude Include="unit.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

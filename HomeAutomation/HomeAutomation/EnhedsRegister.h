@@ -4,7 +4,6 @@
 #include <fstream>
 #include <iterator>
 #include <string>
-#include <sstream>
 #include "unit.h"
 
 using namespace std;

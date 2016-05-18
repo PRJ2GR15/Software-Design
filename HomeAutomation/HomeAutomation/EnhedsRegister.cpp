@@ -10,17 +10,16 @@ bool EnhedsRegister::loadData()
 {
 	//unit tmpUnit(0x00, 0x00, false, 0);
 	int u = 0x00; int r = 0x00; bool s = false; int t = 0;
-	//in.open(outputFile, ios::in);
-	ifstream inFile("register.txt", ios::in);
-	if (!inFile)
+	in.open(outputFile, ios::in);
+	if (!in)
 	{
 		cerr << "Filen findes ikke" << endl;
 		return false;
 	}
 		
-	while (!inFile.eof())
+	while (!in.eof())
 	{
-		inFile >> u >> r >> s >> t;
+		in >> u >> r >> s >> t;
 		unitRegister_.push_back(unit(static_cast<char>(u), static_cast<char>(r), s, t));
 	}
 	in.close();
@@ -40,7 +39,6 @@ bool EnhedsRegister::storeUnit(unit& unitRef)
 		}
 		unitRegister_.push_back(unitRef);
 		out << unitRef << endl;
-		//out << unitRef.getUnitID() << unitRef.getRoomID() << unitRef.getStatus() << unitRef.getTime() << endl;
 		out.close();
 		return true;
 	}
@@ -76,8 +74,6 @@ bool EnhedsRegister::updateStatus(char unitID, bool status)
 	}
 	return false;
 }
-
-
 
 void EnhedsRegister::getStoredUnits()
 {

@@ -7,7 +7,9 @@
 //------------------------------------------------------------------------
 //
 // REV. DATE/AUTHOR CHANGE DESCRIPTION
-// 1.0 <rev. date/author> <Oprettelse af entry>
+// 1.0 <18/05-2016/Anders Brondbjerg Knudsen> <Oprettelse af entry>
+// 1.1 <19/05-2016/Anders Brondbjerg Knudsen> <DayOfWeek attibut fjernes. Bliver i stedet en vector som indeholder dag og entry objekter i Unit. 
+// 1.2 <19/05-2016/Anders Brondbjerg Knudsen> <Ændret så implementering ikke er inline>
 //========================================================================
 
 #pragma once
@@ -24,121 +26,21 @@ using namespace std;
 class entry
 {
 public: 
-
-	//=============================================================
-	// METHOD : Explicit Constructor
-	// DESCR. : 
-	//=============================================================
-
-	entry(unsigned char hour, unsigned char min, unsigned char dayOfWeek, bool action)
-	{
-		setHour(hour);
-		setMin(min);
-		setDayOfWeek(dayOfWeek);
-		setAction(action);
-	}
-	
-	//=============================================================
-	// METHOD : Sætter hour
-	// DESCR. : Tilladte værdier fra 0 til 23 
-	//=============================================================
-
-	void setHour(unsigned char hour)
-	{
-		if (hour >= 0 && hour <= 23)
-			hour_ = hour;
-		else
-			return;
-	}
-
-	//=============================================================
-	// METHOD : Returner Hour
-	// DESCR. : 
-	//=============================================================
-
-	unsigned char getHour()const
-	{
-		return hour_;
-	}
-
-	//=============================================================
-	// METHOD : Sætter min
-	// DESCR. : Tilladte værdier fra 0 til 59
-	//=============================================================
-
-	void setMin(unsigned char min)
-	{
-		if (min >= 0 && min <= 59)
-			min_ = min;
-		else
-			return;
-	}
-	
-	//=============================================================
-	// METHOD : Returner min
-	// DESCR. : 
-	//=============================================================
-
-	unsigned char getMin()const
-	{
-		return min_;
-	}
-	
-	//=============================================================
-	// METHOD : Sætter dayOfWeek
-	// DESCR. : Tilladte værdier fra 1 til 7. Står for ugedagene. 1 = mandag... 7 = søndag. 
-	//=============================================================
-
-	void setDayOfWeek(unsigned char dayOfWeek)
-	{
-		if (dayOfWeek >= 1 && dayOfWeek <= 7)
-			dayOfWeek_ = dayOfWeek;
-		else
-			return;
-	}
-
-	//=============================================================
-	// METHOD : Returner dayOfWeek
-	// DESCR. : 
-	//=============================================================
-	
-	unsigned char getDayOfWeek()const
-	{
-		return dayOfWeek_;
-	}
-	
-	//=============================================================
-	// METHOD : Sætter action. 
-	// DESCR. : 1 = Planlægges at skulle tændes. 
-	//          0 = Planlægges at skulle slukkes.
-	//=============================================================
-
-	void setAction(bool action)
-	{
-		action_ = action;
-	}
-
-	//=============================================================
-	// METHOD : Returner action
-	// DESCR. : 
-	//=============================================================
-
-	bool getAction()const
-	{
-		return action_;
-	}
-
+	entry(unsigned char hour, unsigned char min, bool action);
+	void setHour(unsigned char hour);
+	unsigned char getHour()const;
+	void setMin(unsigned char min);
+	unsigned char getMin()const;
+	void setAction(bool action);
+	bool getAction()const;
 	void print()const;
-
 	friend istream& operator>>(istream& is, entry& obj);
 
 private:
 	unsigned char hour_;
 	unsigned char min_;
-	unsigned char dayOfWeek_;
 	bool action_;
 };
-
 
 ostream& operator<<(ostream& os, const entry& obj);
 
@@ -153,27 +55,6 @@ ostream& operator<<(ostream& os, const entry& obj);
 // DESCR. : 
 //=============================================================
 
-//bool EnhedsRegister::loadEntryData()
-//{
-//	int h = 0x00, m = 0x00, d = 0x01; bool a = false;
-//
-//	in.open(outputFileEntry, ios::in);
-//
-//	if (!in)
-//	{
-//		cerr << "Filen findes ikke" << endl;
-//		return false;
-//	}
-//
-//	while (!in.eof())
-//	{
-//		in >> h >> m >> d >> a;
-//		entryRegister_.push_back(entry(static_cast<unsigned char>(h), static_cast<unsigned char> (m), static_cast<unsigned char> (d), a));
-//	}
-//	in.close();
-//	return true;
-//}
-//
 //bool EnhedsRegister::storeEntry(entry&)
 //{
 //

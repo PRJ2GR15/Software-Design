@@ -33,7 +33,7 @@ bool UnitRegister::loadData()
 	int u = 0x00; int r = 0x00; bool s = false; int t = 0;
 	//TODO - Validering, så den rent faktisk åbner den rigtige fil, det rigtige sted
     string path = "register.txt";
-    in.open(path1,ios::in);
+    in.open(path,ios::in);
     if (!in)
 	{
 		cerr << "Filen findes ikke" << endl;
@@ -57,7 +57,7 @@ bool UnitRegister::loadData()
 // DESCR. : 
 //=============================================================
 
-bool UnitRegister::storeUnit(unit& unitRef)
+bool UnitRegister::storeUnit(Unit& unitRef)
 {
 	if (!compareID(unitRef.getUnitID()))
 	{
@@ -96,7 +96,7 @@ bool UnitRegister::compareID(uchar unitID) const
 // DESCR. : 
 //=============================================================
 
-bool UnitRegister::updateStatus(char unitID, bool status)
+bool UnitRegister::updateStatus(uchar unitID, bool status)
 {
 	vector<Unit>::iterator iter;
 	for (iter = unitRegister_.begin(); iter != unitRegister_.end(); ++iter)

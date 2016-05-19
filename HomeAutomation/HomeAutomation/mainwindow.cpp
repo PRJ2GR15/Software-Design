@@ -31,7 +31,7 @@ void MainWindow::on_opdaterStatus_clicked()
        if(tablePtr != NULL) {
             tablePtr->setRowCount(registryPtr->getRegistrySize());
             int rowCount = 0;
-            vector<unit>::iterator iter;
+            vector<Unit>::iterator iter;
             //QTableWidgetItem* item = new QTableWidgetItem;
             //item->setData(Qt::DisplayRole, 2);
             //tablePtr->setItem(0, 1, item);
@@ -43,7 +43,7 @@ void MainWindow::on_opdaterStatus_clicked()
                 if(+((*iter).getStatus()))
                     inf = "Tændt";
                 else
-                    inf = "Slukket";2-+
+                    inf = "Slukket";
                 tablePtr->setItem( rowCount, 2, new QTableWidgetItem( inf ) );
                 rowCount += 1;
             }

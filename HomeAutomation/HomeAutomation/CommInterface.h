@@ -10,7 +10,7 @@ public:
     }
 
     //Placeholder
-    bool getUnitStatus(uchar ID) {
+    bool getUnitStatus(unsigned char ID) {
         return true;
     }
 private:

@@ -11,7 +11,7 @@
 // 1.1 <19/05-2016/Anders Brondbjerg Knudsen> <Tilføjelse af Entry>
 // 1.2 <19/05-2016/Anders Brondbjerg Knudsen> <Ændret så implementering ikke er inline> 
 //========================================================================
-#include "entry.h"
+#include "Entry.h"
 
 #pragma once
 #include <iostream>
@@ -27,29 +27,29 @@ using namespace std;
 //=====================================
 
 
-class unit
+class Unit
 {
 public: 
-	unit(unsigned char unitID, char roomID, unsigned char houseCode, bool status);
-	void setUnitID(char unitID);
-	char getUnitID() const;
-	void setRoomID(char roomID);
-	char getRoomID() const;
-	void setHouseCode(char houseCode);
+	Unit(unsigned char unitID, unsigned char roomID, unsigned char houseCode, bool status);
+	void setUnitID(unsigned char unitID);
+	unsigned char getUnitID() const;
+	void setRoomID(unsigned char roomID);
+	unsigned char getRoomID() const;
+	void setHouseCode(unsigned char houseCode);
 	unsigned char getHouseCode()const;
 	void setStatus(bool status);
 	bool getStatus() const;
 	void print()const;
-	friend istream& operator>>(istream& is, unit& obj);
+	friend istream& operator>>(istream& is, Unit& obj);
 	bool loadEntryData();
 
 private:
 	unsigned char unitID_; 
-	char roomID_;
+	unsigned char roomID_;
 	unsigned char houseCode_;
 	bool status_;
-	vector <vector<entry> > entryRegister_[6]; // Oprettelse et two 
+	vector <vector<Entry> > entryRegister_[6]; // Oprettelse et two 
  
 };
 
-	ostream& operator<<(ostream& os, const unit& obj);
+	ostream& operator<<(ostream& os, const Unit& obj);

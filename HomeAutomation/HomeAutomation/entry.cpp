@@ -1,8 +1,8 @@
 ﻿//========================================================================
-// FILENAME : <entry.cpp>
+// FILENAME : <Entry.cpp>
 // CREATED : <18/05-2016>
 // AUTHOR : <Anders Brondbjerg Knudsen>
-// DESCR. : <Implementering af entry>
+// DESCR. : <Implementering af Entry>
 //
 //------------------------------------------------------------------------
 //
@@ -13,14 +13,14 @@
 //========================================================================
 
 
-#include "entry.h"
+#include "Entry.h"
 
 //=============================================================
 // METHOD : Explicit Constructor
 // DESCR. : 
 //=============================================================
 
-entry::entry(unsigned char hour, unsigned char min, bool action)
+Entry::Entry(unsigned char hour, unsigned char min, bool action)
 {
 	setHour(hour);
 	setMin(min);
@@ -33,7 +33,7 @@ entry::entry(unsigned char hour, unsigned char min, bool action)
 //=============================================================
 
 
-void entry::setHour(unsigned char hour)
+void Entry::setHour(unsigned char hour)
 {
 	if (hour >= 0 && hour <= 23)
 		hour_ = hour;
@@ -46,7 +46,7 @@ void entry::setHour(unsigned char hour)
 // DESCR. : 
 //=============================================================
 
-unsigned char entry::getHour() const
+unsigned char Entry::getHour() const
 {
 	return hour_;
 }
@@ -56,7 +56,7 @@ unsigned char entry::getHour() const
 // DESCR. : Tilladte værdier fra 0 til 59
 //=============================================================
 
-void entry::setMin(unsigned char min)
+void Entry::setMin(unsigned char min)
 {
 	if (min >= 0 && min <= 59)
 		min_ = min;
@@ -69,7 +69,7 @@ void entry::setMin(unsigned char min)
 // DESCR. : 
 //=============================================================
 
-unsigned char entry::getMin() const
+unsigned char Entry::getMin() const
 {
 	return min_;
 }
@@ -80,7 +80,7 @@ unsigned char entry::getMin() const
 //          0 = Planlægges at skulle slukkes.
 //=============================================================
 
-void entry::setAction(bool action)
+void Entry::setAction(bool action)
 {
 	action_ = action;
 
@@ -91,7 +91,7 @@ void entry::setAction(bool action)
 // DESCR. : 
 //=============================================================
 
-bool entry::getAction() const
+bool Entry::getAction() const
 {
 	return action_;
 }
@@ -99,11 +99,11 @@ bool entry::getAction() const
 
 //=============================================================
 // METHOD : Print
-// DESCR. : Printer information om entry
+// DESCR. : Printer information om Entry
 //=============================================================
 
 
-void entry::print()const
+void Entry::print()const
 {
 	cout << +hour_ << " " << +min_ << " " << " " << action_ << endl;
 }
@@ -114,7 +114,7 @@ void entry::print()const
 //=============================================================
 
 
-ostream &operator<<(ostream& os, const entry& obj)
+ostream &operator<<(ostream& os, const Entry& obj)
 {
 	obj.print();
 
@@ -127,7 +127,7 @@ ostream &operator<<(ostream& os, const entry& obj)
 //=============================================================
 
 
-istream& operator>>(istream& is, entry& obj)
+istream& operator>>(istream& is, Entry& obj)
 {
 	is >> obj.hour_;
 	is >> obj.min_;

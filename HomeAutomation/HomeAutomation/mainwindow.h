@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QtWidgets>
-#include "EnhedsRegister.h"
+#include "UnitRegister.h"
 #include "CommInterface.h"
 
 namespace Ui {
@@ -18,7 +18,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void setRegistryPtr(EnhedsRegister& regRef) {
+    void setRegistryPtr(UnitRegister& regRef) {
         //TODO - Validering
         if(&regRef != NULL)
             registryPtr = &regRef;
@@ -47,7 +47,7 @@ public:
         return tablePtr;
     }
 
-    EnhedsRegister* getRegistryPtr() {
+    UnitRegister* getRegistryPtr() {
         return registryPtr;
     }
 
@@ -60,7 +60,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    EnhedsRegister* registryPtr;
+    UnitRegister* registryPtr;
     QTableWidget* tablePtr;
     CommInterface* commPtr;
 

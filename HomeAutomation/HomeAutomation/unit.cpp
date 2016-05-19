@@ -1,5 +1,5 @@
 ﻿//========================================================================
-// FILENAME : <unit.cpp>
+// FILENAME : <Unit.cpp>
 // CREATED : <17/05-2016>
 // AUTHOR : <Anders Brondbjerg Knudsen>
 // DESCR. : <Implementering af Unit>
@@ -13,7 +13,7 @@
 //========================================================================
 
 
-#include "unit.h"
+#include "Unit.h"
 #include <fstream>
 
 
@@ -22,7 +22,7 @@
 // DESCR. : 
 //=============================================================
 
-unit::unit(unsigned char unitID, char roomID, unsigned char houseCode, bool status)
+Unit::Unit(unsigned char unitID, unsigned char roomID, unsigned char houseCode, bool status)
 {
 	setUnitID(unitID);
 	roomID_ = roomID;
@@ -35,7 +35,7 @@ unit::unit(unsigned char unitID, char roomID, unsigned char houseCode, bool stat
 // DESCR. : Tilladte værdier fra 1 til 255 
 //=============================================================
 
-void unit::setUnitID(char unitID)
+void Unit::setUnitID(unsigned char unitID)
 {
 	if (unitID >= 1 && unitID <= 255)
 		unitID_ = unitID;
@@ -48,7 +48,7 @@ void unit::setUnitID(char unitID)
 // DESCR. : 
 //=============================================================
 
-char unit::getUnitID() const
+unsigned char Unit::getUnitID() const
 {
 	return unitID_;
 }
@@ -58,7 +58,7 @@ char unit::getUnitID() const
 // DESCR. : Ingen validering
 //=============================================================
 
-void unit::setRoomID(char roomID)
+void Unit::setRoomID(unsigned char roomID)
 {
 	roomID_ = roomID;
 }
@@ -69,7 +69,7 @@ void unit::setRoomID(char roomID)
 // DESCR. : 
 //=============================================================
 
-char unit::getRoomID() const
+unsigned char Unit::getRoomID() const
 {
 	return roomID_;
 }
@@ -79,7 +79,7 @@ char unit::getRoomID() const
 // DESCR. : Tilladte værdier fra 1 til 15
 //=============================================================
 
-void unit::setHouseCode(char houseCode)
+void Unit::setHouseCode(unsigned char houseCode)
 {
 	if (houseCode >= 1 && houseCode <= 15)
 		houseCode_ = houseCode;
@@ -93,7 +93,7 @@ void unit::setHouseCode(char houseCode)
 // DESCR. : 
 //=============================================================
 
-unsigned char unit::getHouseCode() const
+unsigned char Unit::getHouseCode() const
 {
 	return houseCode_;
 }
@@ -103,12 +103,12 @@ unsigned char unit::getHouseCode() const
 // DESCR. : 1 = tændt. 0 = slukket
 //=============================================================
 
-void unit::setStatus(bool status)
+void Unit::setStatus(bool status)
 {
 	status_ = status;
 }
 
-bool unit::getStatus() const
+bool Unit::getStatus() const
 {
 	return status_;
 }
@@ -118,7 +118,7 @@ bool unit::getStatus() const
 // DESCR. : Printer information om Unit
 //=============================================================
 
-void unit::print() const
+void Unit::print() const
 {
 	cout << "\nUnitID: " << static_cast<int>(getUnitID()) 
 		 << "\nRoomID: " << static_cast<int>(getRoomID()) 
@@ -167,7 +167,7 @@ void unit::print() const
 //=============================================================
 
 
-ostream &operator<<(ostream& os, const unit& obj)
+ostream &operator<<(ostream& os, const Unit& obj)
 {
 	obj.print();
 
@@ -180,7 +180,7 @@ ostream &operator<<(ostream& os, const unit& obj)
 //=============================================================
 
 
-istream& operator>>(istream& is, unit& obj)
+istream& operator>>(istream& is, Unit& obj)
 {
 	is >> obj.unitID_;
 	is >> obj.roomID_;

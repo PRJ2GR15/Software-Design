@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2016-05-18T13:31:41
+# Project created by QtCreator 2016-05-19T14:52:30
 #
 #-------------------------------------------------
 
@@ -14,14 +14,17 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    EnhedsRegister.cpp \
-    unit.cpp
+    CommInterface.cpp \
+    Entry.cpp \
+    Unit.cpp \
+    UnitRegister.cpp
 
 HEADERS  += mainwindow.h \
-    EnhedsRegister.h \
-    unit.h \
-    CommInterface.h
+    CommInterface.h \
+    Entry.h \
+    Unit.h \
+    UnitRegister.h
 
 FORMS    += mainwindow.ui
 
-CONFIG  += c++11
+CONFIG += c++11

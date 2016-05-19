@@ -1,64 +1,55 @@
-﻿#pragma once
-#include <ostream>
+﻿//========================================================================
+// FILENAME : <Unit.h>
+// CREATED : <17/05-2016>
+// AUTHOR : <Anders Brondbjerg Knudsen>
+// DESCR. : <Headerfilen for Unit>
+//
+//------------------------------------------------------------------------
+//
+// REV. DATE/AUTHOR CHANGE DESCRIPTION
+// 1.0 <17/05-2016/Anders Brondbjerg Knudsen> <Oprettelse af Unit>
+// 1.1 <19/05-2016/Anders Brondbjerg Knudsen> <Tilføjelse af Entry>
+// 1.2 <19/05-2016/Anders Brondbjerg Knudsen> <Ændret så implementering ikke er inline> 
+//========================================================================
+#include "Entry.h"
+
+#pragma once
 #include <iostream>
+#include <vector>
+#include <iterator>
 
-class unit
+using namespace std;
+
+//=====================================
+// CLASS : Unit
+// DESCR. : Indeholder data om Units. 
+// Dets UnitID, RoomID, Housecode og dets status.
+//=====================================
+
+
+class Unit
 {
-public:
-	unit(char unitID, char roomID, bool status, int time)
-	{
-		unitID_ = unitID;
-		roomID_ = roomID;
-		status_ = status;
-		placeholderTime_ = time;
-	}
+public: 
+	Unit(unsigned char unitID, unsigned char roomID, unsigned char houseCode, bool status);
+	void setUnitID(unsigned char unitID);
+	unsigned char getUnitID() const;
+	void setRoomID(unsigned char roomID);
+	unsigned char getRoomID() const;
+	void setHouseCode(unsigned char houseCode);
+	unsigned char getHouseCode()const;
+	void setStatus(bool status);
+	bool getStatus() const;
+	void print()const;
+	friend istream& operator>>(istream& is, Unit& obj);
+	bool loadEntryData();
 
-	char getUnitID() const
-	{
-		return unitID_;
-	}
-
-	void setUnitID(char unitID)
-	{
-		unitID_ = unitID;
-	}
-
-	char getRoomID() const
-	{
-		return roomID_;
-	}
-
-	void setRoomID(char roomID)
-	{
-		roomID_ = roomID;
-	}
-
-	int getTime() const
-	{
-		return placeholderTime_;
-	}
-
-	void setTime(int placeholder_time)
-	{
-		placeholderTime_ = placeholder_time;
-	}
-
-	bool getStatus() const
-	{
-		return status_;
-	}
-
-	friend std::istream& operator>>(std::istream& is, unit& obj);
-
-	void setStatus(bool newState)
-	{
-		status_ = newState;
-	}
 private:
-	char unitID_;
-	char roomID_;
+	unsigned char unitID_; 
+	unsigned char roomID_;
+	unsigned char houseCode_;
 	bool status_;
-	int placeholderTime_;	
+	vector <vector<Entry> > entryRegister_[6]; // Oprettelse et two 
+ 
 };
 
-std::ostream& operator<<(std::ostream& os, const unit& obj);
+	ostream& operator<<(ostream& os, const Unit& obj);

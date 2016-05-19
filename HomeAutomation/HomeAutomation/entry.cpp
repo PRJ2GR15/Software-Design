@@ -20,6 +20,10 @@
 // DESCR. : 
 //=============================================================
 
+Entry::Entry()
+{
+}
+
 Entry::Entry(unsigned char hour, unsigned char min, bool action)
 {
 	setHour(hour);

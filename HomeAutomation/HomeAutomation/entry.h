@@ -26,6 +26,7 @@ using namespace std;
 class Entry
 {
 public: 
+	Entry();
 	Entry(unsigned char hour, unsigned char min, bool action);
 	void setHour(unsigned char hour);
 	unsigned char getHour()const;
@@ -35,7 +36,7 @@ public:
 	bool getAction()const;
 	void print()const;
 	friend istream& operator>>(istream& is, Entry& obj);
-
+	
 private:
 	unsigned char hour_;
 	unsigned char min_;

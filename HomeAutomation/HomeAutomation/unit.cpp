@@ -28,6 +28,9 @@ Unit::Unit(unsigned char unitID, unsigned char roomID, unsigned char houseCode, 
 	roomID_ = roomID;
 	setHouseCode(houseCode);
 	status_ = status;
+
+	initialEntry();
+	
 }
 
 //=============================================================
@@ -128,6 +131,61 @@ void Unit::print() const
 		cout << "Enheden er aktiv" << endl;
 	else
 		cout << "Enheden er deactiveret" << endl;
+
+}
+
+//=============================================================
+// METHOD : Compare Entry. 
+// DESCR. : Benyttes for at tjekke om to objekter er ens.
+//=============================================================
+
+bool Unit::storeEntry(int day,Entry& obj)
+{
+	if ((entryRegister_[day].size() <=maxEntries) & (!compareEntry(obj,day)))
+	{
+		entryRegister_[day].push_back(obj);
+		return true;
+	}
+	else
+		return false;
+}
+
+bool Unit::compareEntry(Entry& obj,int d) const
+{
+	
+	int max = entryRegister_[d].size();
+	
+		
+	for (int i = 0; i < max;i++)
+	{
+			if ((entryRegister_[d][i].getHour() == obj.getHour() & (entryRegister_[d][i].getMin() == obj.getMin()) && (entryRegister_[d][i].getAction() == obj.getAction())))
+				return true;
+			
+	}
+	return false; //Samme tidsplan findes ikke
+}
+
+
+//=============================================================
+// METHOD : Initialiserer Entry. 
+// DESCR. : Initialiserer størrelse på Entry. 7*20. Da vi har 7 dage, med maks 20 entries. 
+//=============================================================
+
+void Unit::initialEntry()
+{
+	vector<Entry>temp(0);
+	vector<vector<Entry> > temp2(days, temp);
+	entryRegister_ = temp2;
+}
+
+void Unit::printEntry() const
+{
+	
+	for (auto row : entryRegister_)
+	{
+		for (auto col : row)
+			cout << col << endl;
+	}
 }
 
 //=============================================================
@@ -170,7 +228,7 @@ void Unit::print() const
 ostream &operator<<(ostream& os, const Unit& obj)
 {
 	obj.print();
-
+	obj.printEntry();
 	return os;
 }
 
@@ -189,3 +247,4 @@ istream& operator>>(istream& is, Unit& obj)
 	
 	return is;
 }
+

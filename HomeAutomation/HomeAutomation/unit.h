@@ -15,6 +15,7 @@
 
 #pragma once
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <iterator>
 
@@ -26,6 +27,8 @@ using namespace std;
 // Dets UnitID, RoomID, Housecode og dets status.
 //=====================================
 
+const int days= 7; //Bruger i Vector- Antal dage- 0=mandag, 1 = tirsdag, 2 = onsdag, 3 = torsdag, 4 = fredag, 5= lørdag, 6= søndag.
+const int maxEntries = 20; //Maks antal entries som kan tilføjes. 
 
 class Unit
 {
@@ -42,14 +45,17 @@ public:
 	void print()const;
 	friend istream& operator>>(istream& is, Unit& obj);
 	bool loadEntryData();
-
+	bool storeEntry(int day,Entry&obj);
+	bool compareEntry(Entry&,int)const;
+	void initialEntry();
+	void printEntry()const;
 private:
 	unsigned char unitID_; 
 	unsigned char roomID_;
 	unsigned char houseCode_;
 	bool status_;
-	vector <vector<Entry> > entryRegister_[6]; // Oprettelse et two 
- 
+	vector <vector<Entry> > entryRegister_; // Oprettelse et to dimensionel. Indeholder 7 dage med entry objekter. 
+	
 };
 
 	ostream& operator<<(ostream& os, const Unit& obj);

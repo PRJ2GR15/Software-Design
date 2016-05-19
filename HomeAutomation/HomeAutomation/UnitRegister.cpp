@@ -1,26 +1,25 @@
 //========================================================================
-// FILENAME : <EnhedsRegister.cpp>
+// FILENAME : <UnitRegister.cpp>
 // CREATED : <17/05-2016>
-// AUTHOR : <Author>
-// DESCR. : <Description of file contents>
+// AUTHOR : <Nikolai James Topping>
+// DESCR. : <Implementering af UnitRegister>
 //
 //------------------------------------------------------------------------
 //
 // REV. DATE/AUTHOR CHANGE DESCRIPTION
-// 1.0 <rev. date/author> <Change description>
+// 1.0 <18.05/2016/Nikolai J. Topping> <Tilføjet data fra QT projekt>
+//
 //========================================================================
-
-
-#include "EnhedsRegister.h"
+#include "UnitRegister.h"
 
 //=============================================================
 // METHOD : 
 // DESCR. : 
 //=============================================================
 
-EnhedsRegister::EnhedsRegister()
+UnitRegister::UnitRegister()
 {
-	outputFile = "./register.txt";
+	//outputFile = "./register.txt";
 	loadData();
 }
 
@@ -29,22 +28,23 @@ EnhedsRegister::EnhedsRegister()
 // DESCR. : 
 //=============================================================
 
-
-bool EnhedsRegister::loadData()
+bool UnitRegister::loadData()
 {
 	int u = 0x00; int r = 0x00; bool s = false; int t = 0;
-	in.open(outputFile, ios::in);
-	if (!in)
+	//TODO - Validering, så den rent faktisk åbner den rigtige fil, det rigtige sted
+    string path = "register.txt";
+    in.open(path1,ios::in);
+    if (!in)
 	{
 		cerr << "Filen findes ikke" << endl;
 		return false;
 	}
 		
-	while (!in.eof())
+    while (!in.eof())
 	{
 		in >> u >> r >> s >> t;
 		if (!compareID(u))
-			unitRegister_.push_back(unit(static_cast<char>(u), static_cast<char>(r), s, t));
+            unitRegister_.push_back(Unit(static_cast<uchar>(u), static_cast<uchar>(r), s, t));
 		else
 			cout << "Unit already exists" << endl;
 	}
@@ -57,26 +57,21 @@ bool EnhedsRegister::loadData()
 // DESCR. : 
 //=============================================================
 
-bool EnhedsRegister::storeUnit(unit& unitRef)
+bool UnitRegister::storeUnit(unit& unitRef)
 {
 	if (!compareID(unitRef.getUnitID()))
 	{
-		out.open(outputFile, ios::app);
-		if (!out.is_open())
-		{
-			cout << "Failed to open file for STOREUNIT" << endl;
-			return false;
-		}
 		unitRegister_.push_back(unitRef);
-		out << unitRef << endl;
-		out.close();
-		return true;
+        return true;
 	}
-	else
-	{
-		cout << "Unit ID already exists" << endl;
-		return false;
-	}
+    else
+    {
+        vector<Unit>::iterator iter;
+        for(iter = unitRegister_.begin(); iter != unitRegister_.end(); ++iter) {
+            if(iter->getUnitID() == unitRef.getUnitID())
+                *iter = unitRef;
+        }
+    }
 }
 
 //=============================================================
@@ -84,9 +79,9 @@ bool EnhedsRegister::storeUnit(unit& unitRef)
 // DESCR. : 
 //=============================================================
 
-bool EnhedsRegister::compareID(char unitID) const
+bool UnitRegister::compareID(uchar unitID) const
 {
-	vector<unit>::const_iterator iter;
+	vector<Unit>::const_iterator iter;
 	for (iter = unitRegister_.begin(); iter != unitRegister_.end(); ++iter)
 	{
 		if (unitID == (*iter).getUnitID())
@@ -101,9 +96,9 @@ bool EnhedsRegister::compareID(char unitID) const
 // DESCR. : 
 //=============================================================
 
-bool EnhedsRegister::updateStatus(char unitID, bool status)
+bool UnitRegister::updateStatus(char unitID, bool status)
 {
-	vector<unit>::iterator iter;
+	vector<Unit>::iterator iter;
 	for (iter = unitRegister_.begin(); iter != unitRegister_.end(); ++iter)
 	{
 		if (unitID == (*iter).getUnitID())
@@ -120,9 +115,9 @@ bool EnhedsRegister::updateStatus(char unitID, bool status)
 // DESCR. : 
 //=============================================================
 
-void EnhedsRegister::getStoredUnits()
+void UnitRegister::getStoredUnits()
 {
-	vector<unit>::iterator iter;
+	vector<Unit>::iterator iter;
 	for (iter = unitRegister_.begin(); iter != unitRegister_.end(); ++iter)
 		cout << *iter << endl;
 }
@@ -132,9 +127,9 @@ void EnhedsRegister::getStoredUnits()
 // DESCR. : 
 //=============================================================
 
-bool EnhedsRegister::deleteUnit(char unitID)
+bool UnitRegister::deleteUnit(uchar unitID)
 {
-	vector<unit>::iterator iter;
+	vector<Unit>::iterator iter;
 	for (iter = unitRegister_.begin(); iter != unitRegister_.end(); ++iter)
 	{
 		if (unitID == (*iter).getUnitID())
@@ -151,12 +146,12 @@ bool EnhedsRegister::deleteUnit(char unitID)
 // DESCR. : 
 //=============================================================
 
-bool EnhedsRegister::modifyUnit(char unitID, char roomID)
+bool UnitRegister::modifyUnit(uchar unitID, uchar roomID)
 {
 	return true;
 }
 
-/*bool EnhedsRegister::updateTime(char roomID, int placeholder)
+/*bool UnitRegister::updateTime(char roomID, int placeholder)
 {
 }*/
 
@@ -165,7 +160,7 @@ bool EnhedsRegister::modifyUnit(char unitID, char roomID)
 // DESCR. : 
 //=============================================================
 
-bool EnhedsRegister::updateTime(char roomID, int placeholder)
+bool UnitRegister::updateTime(uchar unitID, int placeholder)
 {
 	return true;
 }
@@ -175,6 +170,6 @@ bool EnhedsRegister::updateTime(char roomID, int placeholder)
 // DESCR. : 
 //=============================================================
 
-EnhedsRegister::~EnhedsRegister()
+UnitRegister::~UnitRegister()
 {
 }

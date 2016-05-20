@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2016-05-19T14:52:30
+# Project created by QtCreator 2016-05-19T22:33:59
 #
 #-------------------------------------------------
 
@@ -17,14 +17,20 @@ SOURCES += main.cpp\
     CommInterface.cpp \
     Entry.cpp \
     Unit.cpp \
-    UnitRegister.cpp
+    UnitRegister.cpp \
+    mainmenu.cpp \
+    removeunit.cpp \
+    basemenu.cpp
 
 HEADERS  += mainwindow.h \
     CommInterface.h \
     Entry.h \
     Unit.h \
-    UnitRegister.h
+    UnitRegister.h \
+    mainmenu.h \
+    removeunit.h \
+    basemenu.h
 
-FORMS    += mainwindow.ui
-
-CONFIG += c++11
+FORMS    += mainwindow.ui \
+    mainmenu.ui \
+    removeunit.ui

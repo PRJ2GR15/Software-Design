@@ -10,14 +10,13 @@ int main()
 	Unit unit1(256, 2, 2, 0);
 
 	unit1.storeEntry(0, test);
-	unit1.storeEntry(1, test2);
+	unit1.storeEntry(0, test2);
 	unit1.storeEntry(2, test3);
-	unit1.storeEntry(2, test4);
+	unit1.storeEntry(5, test4);
+	unit1.storeEntry(6, test4);
 	cout << unit1 << endl;
 
-	Unit unit2(2, 2, 2, 1);
+	unit1.storeEntryData();
 
-	unit2.storeEntry(2,test4);
 
-	cout << unit2;
 }

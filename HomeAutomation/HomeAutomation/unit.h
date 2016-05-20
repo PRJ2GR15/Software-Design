@@ -10,6 +10,8 @@
 // 1.0 <17/05-2016/Anders Brondbjerg Knudsen> <Oprettelse af Unit>
 // 1.1 <19/05-2016/Anders Brondbjerg Knudsen> <Tilføjelse af Entry>
 // 1.2 <19/05-2016/Anders Brondbjerg Knudsen> <Ændret så implementering ikke er inline> 
+// 1.3 <19/05-2016/Anders Brondbjerg Knudsen> <Ændret så implementering ikke er inline> 
+// 1.3 <20/05-2016/Anders Brondbjerg Knudsen> <Tilføjelse af metoder til Entry> 
 //========================================================================
 #include "Entry.h"
 
@@ -44,10 +46,16 @@ public:
 	bool getStatus() const;
 	void print()const;
 	friend istream& operator>>(istream& is, Unit& obj);
+	void initialEntry();
 	bool loadEntryData();
+	bool storeEntryData();
 	bool storeEntry(int day,Entry&obj);
 	bool compareEntry(Entry&,int)const;
-	void initialEntry();
+	bool deleteEntry(int day, int place);
+	bool deleteDayEntry(int day);
+	bool deleteEntry();
+	bool updateEntry(int day, int place, unsigned char hour, unsigned char min, bool action);
+
 	void printEntry()const;
 private:
 	unsigned char unitID_; 

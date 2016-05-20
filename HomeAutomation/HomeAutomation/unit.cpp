@@ -10,6 +10,7 @@
 // 1.0 <17/05-2016/Anders Brondbjerg Knudsen> <Oprettelse af Unit>
 // 1.1 <19/05-2016/Anders Brondbjerg Knudsen> <Tilføjelse af Entry>
 // 1.2 <19/05-2016/Anders Brondbjerg Knudsen> <Ændret så implementering ikke er inline> 
+// 1.3 <20/05-2016/Anders Brondbjerg Knudsen> <Tilføjelse af metoder til Entry> 
 //========================================================================
 
 
@@ -135,8 +136,20 @@ void Unit::print() const
 }
 
 //=============================================================
-// METHOD : Compare Entry. 
-// DESCR. : Benyttes for at tjekke om to objekter er ens.
+// METHOD : Initialiserer Entry. 
+// DESCR. : Initialiserer størrelse på Entry. 7*20. Da vi har 7 dage, med maks 20 entries. 
+//=============================================================
+
+void Unit::initialEntry()
+{
+	vector<Entry>temp(0);
+	vector<vector<Entry> > temp2(days, temp);
+	entryRegister_ = temp2;
+}
+
+//=============================================================
+// METHOD : Store Entry. 
+// DESCR. : Benyttes for at ligge en tidsplan ind i Unit. 
 //=============================================================
 
 bool Unit::storeEntry(int day,Entry& obj)
@@ -149,6 +162,11 @@ bool Unit::storeEntry(int day,Entry& obj)
 	else
 		return false;
 }
+
+//=============================================================
+// METHOD : Compare Entry. 
+// DESCR. : Benyttes for at tjekke om to objekter er ens.
+//=============================================================
 
 bool Unit::compareEntry(Entry& obj,int d) const
 {
@@ -165,18 +183,56 @@ bool Unit::compareEntry(Entry& obj,int d) const
 	return false; //Samme tidsplan findes ikke
 }
 
-
 //=============================================================
-// METHOD : Initialiserer Entry. 
-// DESCR. : Initialiserer størrelse på Entry. 7*20. Da vi har 7 dage, med maks 20 entries. 
+// METHOD : Delete Entry. 
+// DESCR. : Benyttes for at slette en Entry fra Vectoren
 //=============================================================
 
-void Unit::initialEntry()
+bool Unit::deleteEntry(int day,int place)
 {
-	vector<Entry>temp(0);
-	vector<vector<Entry> > temp2(days, temp);
-	entryRegister_ = temp2;
+	entryRegister_[day].erase(entryRegister_[day].begin() + place);
+	return true;
 }
+
+//=============================================================
+// METHOD : DeleteDayEntry. 
+// DESCR. : Benyttes for at slette en dags tidsplan
+//=============================================================
+
+bool Unit::deleteDayEntry(int day)
+{
+	entryRegister_[day].clear();
+	return true;
+}
+
+//=============================================================
+// METHOD : deleteEntry. 
+// DESCR. : Benyttes for slette tidsplan
+//=============================================================
+
+bool Unit::deleteEntry()
+{
+	entryRegister_.clear();
+	return true;
+}
+
+//=============================================================
+// METHOD : UpdateEntry. 
+// DESCR. : Benyttes for at opdater allerede eksisterende tidsplan
+//=============================================================
+
+bool Unit::updateEntry(int day, int place, unsigned char hour, unsigned char min, bool action)
+{
+	entryRegister_[day][place].setHour(hour);
+	entryRegister_[day][place].setMin(min);
+	entryRegister_[day][place].setAction(action);
+	return true;
+}
+
+//=============================================================
+// METHOD : Print metode. 
+// DESCR. : Print alle Entries som er tilføjet i pågældende Unit
+//=============================================================
 
 void Unit::printEntry() const
 {
@@ -193,7 +249,7 @@ void Unit::printEntry() const
 // DESCR. : Indlæser gemt data fra txt.fil ved allerede oprettede tidsplaner
 //=============================================================
 
-//bool unit::loadEntryData()
+//bool Unit::loadEntryData()
 //{
 //	int h = 0x00, m = 0x00; bool a = false;
 //
@@ -210,14 +266,41 @@ void Unit::printEntry() const
 //		while (!entryFile.eof())
 //		{
 //			entryFile >> h >> m >> a;
-//
-//			entryRegister_.push_back(entry(static_cast<unsigned char>(h), static_cast<unsigned char> (m), static_cast<unsigned char> (d), a));
+//			
+//			entryRegister_push_back(Entry(static_cast<unsigned char>(h), static_cast<unsigned char> (m), static_cast<unsigned char> (d), a));
 //		}
 //		entryFile.close();
 //		return true;
 //
 //
 //}
+
+//=============================================================
+// METHOD : StoreEntrydata 
+// DESCR. : Benyttes for at gemme oprettede entries til et txt.file 
+//=============================================================
+
+
+
+bool Unit::storeEntryData()
+{
+	ofstream saveData;
+
+	saveData.open("entry.txt");
+
+	for (int i = 0; i < 7; i++) 
+	{
+		for (int j = 0; j < entryRegister_[i].size(); j++)
+		{
+			saveData << i << " ";
+			saveData << entryRegister_[i][j];
+		}
+	}
+
+	saveData.close();
+	return true;
+}
+
 
 //=============================================================
 // METHOD : Print Operator 

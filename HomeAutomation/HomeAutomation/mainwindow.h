@@ -5,6 +5,7 @@
 #include <QtWidgets>
 #include "mainmenu.h"
 #include "removeunit.h"
+#include "addunit.h"
 #include "CommInterface.h"
 #include "UnitRegister.h"
 
@@ -36,6 +37,7 @@ private:
     Ui::MainWindow *ui;
     MainMenu* mainMenuPtr;
     RemoveUnit* removeUnitPtr;
+    AddUnit* addUnitPtr;
     UnitRegister* registryPtr;
     CommInterface* commPtr;
     QTableWidget* tablePtr;

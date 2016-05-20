@@ -34,6 +34,9 @@
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="topMargin">
+      <number>1</number>
+     </property>
      <item>
       <widget class="QPushButton" name="pushButton_3">
        <property name="sizePolicy">
@@ -106,6 +109,9 @@
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="topMargin">
+      <number>2</number>
+     </property>
      <item>
       <widget class="QTableWidget" name="unitTable">
        <property name="sizePolicy">
@@ -117,7 +123,7 @@
        <property name="minimumSize">
         <size>
          <width>320</width>
-         <height>249</height>
+         <height>251</height>
         </size>
        </property>
        <attribute name="horizontalHeaderCascadingSectionResizes">

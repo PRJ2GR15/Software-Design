@@ -18,12 +18,13 @@
 // METHOD :
 // DESCR. :
 //=============================================================
-MainMenu::MainMenu(QStackedWidget *parent) :
+MainMenu::MainMenu(QStackedWidget *parent, UnitRegister &regRef, CommInterface &commRef) :
     QWidget(parent),
     ui(new Ui::MainMenu)
 {
     ui->setupUi(this);
     parentPtr = parent;
+    setRegistryPtr(regReg);
     //Fang vores unitTable så der kan skrives til den.
     setTablePtr(this->findChild<QTableWidget*>("unitTable"));
 }
@@ -91,3 +92,8 @@ void MainMenu::on_pushButton_3_clicked()
 }
 
 
+
+void MainMenu::on_unitTable_cellClicked(int row, int column)
+{
+    cout << "Cell in row: " << row << ", column: " << column << " clicked." << endl;
+}

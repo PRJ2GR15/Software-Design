@@ -3,8 +3,10 @@
 
 #include <QMainWindow>
 #include <QtWidgets>
-#include "UnitRegister.h"
+#include "mainmenu.h"
+#include "removeunit.h"
 #include "CommInterface.h"
+#include "UnitRegister.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,52 +20,25 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void setRegistryPtr(UnitRegister& regRef) {
-        //TODO - Validering
-        if(&regRef != NULL)
-            registryPtr = &regRef;
-        else
-            cerr << "Couldn't register unit registry address" << endl;
-    }
+    void setRegistryPtr(UnitRegister& regRef);
 
-    void setTablePtr(QTableWidget* tableRef) {
-        if(tableRef != NULL) {
-           tablePtr = tableRef;
-           tablePtr->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        }
-        else
-            cerr << "Couldn't register table address" << endl;
-    }
+    void setTablePtr(QTableWidget* tableRef);
 
-    void setCommPtr(CommInterface& commRef) {
-        if(&commRef != NULL) {
-            commPtr = &commRef;
-        }
-        else
-            cerr << "Couldn't register comm interface address" << endl;
-    }
+    void setCommPtr(CommInterface& commRef);
 
-    QTableWidget* getTablePtr() {
-        return tablePtr;
-    }
+    QTableWidget* getTablePtr() { return tablePtr; }
 
-    UnitRegister* getRegistryPtr() {
-        return registryPtr;
-    }
+    UnitRegister* getRegistryPtr() { return registryPtr; }
 
-    CommInterface* getCommPtr() {
-        return commPtr;
-    }
-
-private slots:
-    void on_opdaterStatus_clicked();
+    CommInterface* getCommPtr() { return commPtr; }
 
 private:
     Ui::MainWindow *ui;
+    MainMenu* mainMenuPtr;
+    RemoveUnit* removeUnitPtr;
     UnitRegister* registryPtr;
-    QTableWidget* tablePtr;
     CommInterface* commPtr;
-
+    QTableWidget* tablePtr;
 };
 
 #endif // MAINWINDOW_H

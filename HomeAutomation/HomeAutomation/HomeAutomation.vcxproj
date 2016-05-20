@@ -116,15 +116,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="EnhedsRegister.cpp" />
-    <ClCompile Include="entry.cpp" />
+    <ClCompile Include="CommInterface.cpp" />
+    <ClCompile Include="Entry.cpp" />
     <ClCompile Include="TestRegister.cpp" />
-    <ClCompile Include="unit.cpp" />
+    <ClCompile Include="UnitRegister.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EnhedsRegister.h" />
-    <ClInclude Include="entry.h" />
-    <ClInclude Include="unit.h" />
+    <ClInclude Include="CommInterface.h" />
+    <ClInclude Include="Entry.h" />
+    <ClInclude Include="Unit.h" />
+    <ClInclude Include="UnitRegister.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

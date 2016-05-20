@@ -11,13 +11,13 @@
 //========================================================================
 
 
-#include "EnhedsRegister.h"
+#include "UnitRegister.h"
 #include "entry.h"
 
 int main()
 {
 	unsigned char c = 0x00;
-	EnhedsRegister m_register;
+	UnitRegister m_register;
 	m_register.getStoredUnits();
 
 	//entry test(23, 59, 7, 1);

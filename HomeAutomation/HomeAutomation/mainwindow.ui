@@ -70,6 +70,13 @@
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuHandlinger">
+    <property name="title">
+     <string>Handlinger</string>
+    </property>
+    <addaction name="actionLuk"/>
+   </widget>
+   <addaction name="menuHandlinger"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -80,6 +87,11 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionLuk">
+   <property name="text">
+    <string>Luk</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

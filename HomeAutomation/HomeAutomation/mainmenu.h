@@ -26,7 +26,7 @@ class MainMenu : public QWidget, public BaseMenu
     Q_OBJECT
 
 public:
-    explicit MainMenu(QStackedWidget *parent = 0);
+    explicit MainMenu(QStackedWidget *parent = 0, UnitRegister& regRef, CommInterface& commRef);
     ~MainMenu();
 
     QTableWidget* getTablePtr() { return tablePtr; }
@@ -37,6 +37,8 @@ private slots:
     void on_updateButton_clicked();
 
     void on_pushButton_3_clicked();
+
+    void on_unitTable_cellClicked(int row, int column);
 
 private:
     Ui::MainMenu *ui;

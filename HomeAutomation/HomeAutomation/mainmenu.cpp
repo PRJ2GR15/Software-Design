@@ -25,6 +25,7 @@ MainMenu::MainMenu(QStackedWidget *parent, UnitRegister &regRef, CommInterface &
     ui->setupUi(this);
     parentPtr = parent;
     setRegistryPtr(regReg);
+    setCommPtr(commRef);
     //Fang vores unitTable så der kan skrives til den.
     setTablePtr(this->findChild<QTableWidget*>("unitTable"));
 }

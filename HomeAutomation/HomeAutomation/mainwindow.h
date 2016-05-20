@@ -18,7 +18,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = 0, UnitRegister& regRef, CommInterface& commRef);
     ~MainWindow();
 
     void setRegistryPtr(UnitRegister& regRef);

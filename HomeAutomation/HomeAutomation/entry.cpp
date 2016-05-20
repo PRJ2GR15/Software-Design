@@ -20,6 +20,10 @@
 // DESCR. : 
 //=============================================================
 
+Entry::Entry()
+{
+}
+
 Entry::Entry(unsigned char hour, unsigned char min, bool action)
 {
 	setHour(hour);
@@ -105,7 +109,7 @@ bool Entry::getAction() const
 
 void Entry::print()const
 {
-	cout << +hour_ << " " << +min_ << " " << " " << action_ << endl;
+	cout << +hour_ << " " << +min_ <<  " " << action_ << endl;
 }
 
 //=============================================================
@@ -116,9 +120,12 @@ void Entry::print()const
 
 ostream &operator<<(ostream& os, const Entry& obj)
 {
-	obj.print();
+	os << +obj.getHour()<< " ";
+	os << +obj.getMin() << " ";
+	os << +obj.getAction() << endl;
 
 	return os;
+	
 }
 
 //=============================================================

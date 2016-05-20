@@ -14,12 +14,14 @@
 #include "removeunit.h"
 #include "ui_removeunit.h"
 
-RemoveUnit::RemoveUnit(QStackedWidget *parent) :
+RemoveUnit::RemoveUnit(QStackedWidget *parent, UnitRegister& regRef, CommInterface& commRef) :
     QWidget(parent),
     ui(new Ui::RemoveUnit)
 {
     ui->setupUi(this);
     parentPtr = parent;
+    setRegistryPtr(regRef);
+    setCommPtr(commRef);
 }
 
 RemoveUnit::~RemoveUnit()

@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent, UnitRegister& regRef, CommInterface& commRef) :
+MainWindow::MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *parent = 0) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
@@ -11,11 +11,10 @@ MainWindow::MainWindow(QWidget *parent, UnitRegister& regRef, CommInterface& com
     mainMenuPtr = new MainMenu(ui->MainW_StackedWidget, regRef, commRef);
     removeUnitPtr = new RemoveUnit(ui->MainW_StackedWidget, regRef, commRef);
     addUnitPtr = new AddUnit(ui->MainW_StackedWidget, regRef, commRef);
-    //mainMenuPtr->setCommPtr(*commPtr);
 
     ui->MainW_StackedWidget->addWidget(mainMenuPtr);
-    ui->MainW_StackedWidget->addWidget(removeUnitPtr);
     ui->MainW_StackedWidget->addWidget(addUnitPtr);
+    ui->MainW_StackedWidget->addWidget(removeUnitPtr);
     ui->MainW_StackedWidget->setCurrentWidget(mainMenuPtr);
 }
 

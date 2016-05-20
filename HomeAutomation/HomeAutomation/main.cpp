@@ -4,9 +4,10 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
+
     UnitRegister uR;
     CommInterface cI;
+    MainWindow w(uR, cI, 0);
     w.setRegistryPtr(uR);
     w.setCommPtr(cI);
     w.show();

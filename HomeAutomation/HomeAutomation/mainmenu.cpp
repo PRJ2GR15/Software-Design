@@ -24,7 +24,7 @@ MainMenu::MainMenu(QStackedWidget *parent, UnitRegister &regRef, CommInterface &
 {
     ui->setupUi(this);
     parentPtr = parent;
-    setRegistryPtr(regReg);
+    setRegistryPtr(regRef);
     setCommPtr(commRef);
     //Fang vores unitTable så der kan skrives til den.
     setTablePtr(this->findChild<QTableWidget*>("unitTable"));
@@ -87,14 +87,17 @@ void MainMenu::on_updateButton_clicked()
         }
 }
 
-void MainMenu::on_pushButton_3_clicked()
+void MainMenu::on_unitTable_cellClicked(int row, int column)
+{
+    cout << "Cell in row: " << row << ", column: " << column << " clicked." << endl;
+}
+
+void MainMenu::on_addUnit_PushButton_clicked()
 {
     getParentPtr()->setCurrentIndex(1);
 }
 
-
-
-void MainMenu::on_unitTable_cellClicked(int row, int column)
+void MainMenu::on_remUnit_PushButton_clicked()
 {
-    cout << "Cell in row: " << row << ", column: " << column << " clicked." << endl;
+    getParentPtr()->setCurrentIndex(2);
 }

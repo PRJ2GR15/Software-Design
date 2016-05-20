@@ -13,7 +13,7 @@ class AddUnit : public QWidget, public BaseMenu
     Q_OBJECT
 
 public:
-    explicit AddUnit(QStackedWidget *parent = 0, UnitRegister& regRef, CommInterface& commRef);
+    AddUnit(QStackedWidget *parent, UnitRegister& regRef, CommInterface& commRef);
     ~AddUnit();
 
 private:

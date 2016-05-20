@@ -176,7 +176,7 @@ bool Unit::compareEntry(Entry& obj,int d) const
 		
 	for (int i = 0; i < max;i++)
 	{
-			if ((entryRegister_[d][i].getHour() == obj.getHour() & (entryRegister_[d][i].getMin() == obj.getMin()) && (entryRegister_[d][i].getAction() == obj.getAction())))
+            if ((entryRegister_[d][i].getHour() == obj.getHour() && (entryRegister_[d][i].getMin() == obj.getMin()) && (entryRegister_[d][i].getAction() == obj.getAction())))
 				return true;
 			
 	}

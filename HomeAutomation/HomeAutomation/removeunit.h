@@ -28,7 +28,7 @@ class RemoveUnit : public QWidget, public BaseMenu
     Q_OBJECT
 
 public:
-    explicit RemoveUnit(QStackedWidget *parent = 0, UnitRegister& regRef, CommInterface& commRef);
+    RemoveUnit(QStackedWidget *parent, UnitRegister& regRef, CommInterface& commRef);
     ~RemoveUnit();
 
 private slots:

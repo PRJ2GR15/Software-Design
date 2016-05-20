@@ -6,10 +6,12 @@ MainWindow::MainWindow(QWidget *parent, UnitRegister& regRef, CommInterface& com
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    mainMenuPtr = new MainMenu(ui->MainW_StackedWidget);
-    removeUnitPtr = new RemoveUnit(ui->MainW_StackedWidget);
-    addUnitPtr = new AddUnit(ui->MainW_StackedWidget);
-    mainMenuPtr->setCommPtr(*commPtr);
+    setRegistryPtr(regRef);
+    setCommPtr(commRef);
+    mainMenuPtr = new MainMenu(ui->MainW_StackedWidget, regRef, commRef);
+    removeUnitPtr = new RemoveUnit(ui->MainW_StackedWidget, regRef, commRef);
+    addUnitPtr = new AddUnit(ui->MainW_StackedWidget, regRef, commRef);
+    //mainMenuPtr->setCommPtr(*commPtr);
 
     ui->MainW_StackedWidget->addWidget(mainMenuPtr);
     ui->MainW_StackedWidget->addWidget(removeUnitPtr);
@@ -25,8 +27,6 @@ MainWindow::~MainWindow()
 void MainWindow::setRegistryPtr(UnitRegister& regRef) {
     //TODO - Validering
     if(&regRef != NULL) {
-        mainMenuPtr->setRegistryPtr(regRef);
-        mainMenuPtr->setCommPtr(*commPtr);
         registryPtr = &regRef;
     }
     else
@@ -36,7 +36,6 @@ void MainWindow::setRegistryPtr(UnitRegister& regRef) {
 void MainWindow::setCommPtr(CommInterface& commRef) {
     if(&commRef != NULL) {
         commPtr = &commRef;
-        mainMenuPtr->setCommPtr(commRef);
     }
     else
         cerr << "Couldn't register comm interface address" << endl;

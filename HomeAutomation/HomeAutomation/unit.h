@@ -1,64 +1,69 @@
-﻿#pragma once
-#include <ostream>
+﻿//========================================================================
+// FILENAME : <Unit.h>
+// CREATED : <17/05-2016>
+// AUTHOR : <Anders Brondbjerg Knudsen>
+// DESCR. : <Headerfilen for Unit>
+//
+//------------------------------------------------------------------------
+//
+// REV. DATE/AUTHOR CHANGE DESCRIPTION
+// 1.0 <17/05-2016/Anders Brondbjerg Knudsen> <Oprettelse af Unit>
+// 1.1 <19/05-2016/Anders Brondbjerg Knudsen> <Tilføjelse af Entry>
+// 1.2 <19/05-2016/Anders Brondbjerg Knudsen> <Ændret så implementering ikke er inline> 
+// 1.3 <19/05-2016/Anders Brondbjerg Knudsen> <Ændret så implementering ikke er inline> 
+// 1.3 <20/05-2016/Anders Brondbjerg Knudsen> <Tilføjelse af metoder til Entry> 
+//========================================================================
+#include "Entry.h"
+
+#pragma once
 #include <iostream>
+#include <fstream>
+#include <vector>
+#include <iterator>
 
-class unit
+using namespace std;
+
+//=====================================
+// CLASS : Unit
+// DESCR. : Indeholder data om Units. 
+// Dets UnitID, RoomID, Housecode og dets status.
+//=====================================
+
+const int days= 7; //Bruger i Vector- Antal dage- 0=mandag, 1 = tirsdag, 2 = onsdag, 3 = torsdag, 4 = fredag, 5= lørdag, 6= søndag.
+const int maxEntries = 20; //Maks antal entries som kan tilføjes. 
+
+class Unit
 {
-public:
-	unit(char unitID, char roomID, bool status, int time)
-	{
-		unitID_ = unitID;
-		roomID_ = roomID;
-		status_ = status;
-		placeholderTime_ = time;
-	}
+public: 
+	Unit(unsigned char unitID, unsigned char roomID, unsigned char houseCode, bool status);
+	void setUnitID(unsigned char unitID);
+	unsigned char getUnitID() const;
+	void setRoomID(unsigned char roomID);
+	unsigned char getRoomID() const;
+	void setHouseCode(unsigned char houseCode);
+	unsigned char getHouseCode()const;
+	void setStatus(bool status);
+	bool getStatus() const;
+	void print()const;
+	friend istream& operator>>(istream& is, Unit& obj);
+	void initialEntry();
+	bool loadEntryData();
+	bool storeEntryData();
+	bool storeEntry(int day,Entry&obj);
+	bool compareEntry(Entry&,int)const;
+	bool deleteEntry(int day, int place);
+	bool deleteDayEntry(int day);
+	bool deleteEntry();
+	bool updateEntry(int day, int place, unsigned char hour, unsigned char min, bool action);
 
-	char getUnitID() const
-	{
-		return unitID_;
-	}
-
-	void setUnitID(char unitID)
-	{
-		unitID_ = unitID;
-	}
-
-	char getRoomID() const
-	{
-		return roomID_;
-	}
-
-	void setRoomID(char roomID)
-	{
-		roomID_ = roomID;
-	}
-
-	int getTime() const
-	{
-		return placeholderTime_;
-	}
-
-	void setTime(int placeholder_time)
-	{
-		placeholderTime_ = placeholder_time;
-	}
-
-	bool getStatus() const
-	{
-		return status_;
-	}
-
-	friend std::istream& operator>>(std::istream& is, unit& obj);
-
-	void setStatus(bool newState)
-	{
-		status_ = newState;
-	}
+	void printEntry()const;
 private:
-	char unitID_;
-	char roomID_;
+	unsigned char unitID_; 
+	unsigned char roomID_;
+	unsigned char houseCode_;
 	bool status_;
-	int placeholderTime_;	
+	vector <vector<Entry> > entryRegister_; // Oprettelse et to dimensionel. Indeholder 7 dage med entry objekter. 
+	
 };
 
-std::ostream& operator<<(std::ostream& os, const unit& obj);
+	ostream& operator<<(ostream& os, const Unit& obj);

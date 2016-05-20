@@ -3,7 +3,7 @@
 int main()
 
 {
-	Entry test(20, 20, 0);
+	/*Entry test(20, 20, 0);
 	Entry test2(21, 21, 1);
 	Entry test3(23, 45, 1);
 	Entry test4(23, 45, 1);
@@ -17,6 +17,7 @@ int main()
 	cout << unit1 << endl;
 
 	unit1.storeEntryData();
-
-
+*/
+	Unit unit1(256, 2, 2, 0);
+	cout << unit1 << endl;
 }

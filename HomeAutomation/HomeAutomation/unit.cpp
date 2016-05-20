@@ -31,7 +31,7 @@ Unit::Unit(unsigned char unitID, unsigned char roomID, unsigned char houseCode, 
 	status_ = status;
 
 	initialEntry();
-	
+	loadEntryData();
 }
 
 //=============================================================
@@ -249,31 +249,33 @@ void Unit::printEntry() const
 // DESCR. : Indlæser gemt data fra txt.fil ved allerede oprettede tidsplaner
 //=============================================================
 
-//bool Unit::loadEntryData()
-//{
-//	int h = 0x00, m = 0x00; bool a = false;
-//
-//	ifstream entryFile;
-//
-//		entryFile.open("entry.txt", ios::in);
-//	
-//		if (!entryFile)
-//		{
-//			cerr << "Filen findes ikke" << endl;
-//			return false;
-//		}
-//	
-//		while (!entryFile.eof())
-//		{
-//			entryFile >> h >> m >> a;
-//			
-//			entryRegister_push_back(Entry(static_cast<unsigned char>(h), static_cast<unsigned char> (m), static_cast<unsigned char> (d), a));
-//		}
-//		entryFile.close();
-//		return true;
-//
-//
-//}
+bool Unit::loadEntryData()
+{
+	int d = 0x00, h = 0x00, m = 0x00; bool a = false;
+
+	ifstream entryFile;
+
+		entryFile.open("entry.txt", ios::in);
+	
+		if (!entryFile)
+		{
+			cerr << "Filen findes ikke" << endl;
+			return false;
+		}
+	
+		while (!entryFile.eof())
+		{
+			
+			entryFile >>d >> h >> m >> a;
+			Entry tempObj(h, m, a);
+			storeEntry(d, tempObj);
+			
+		}
+		entryFile.close();
+		return true;
+
+
+}
 
 //=============================================================
 // METHOD : StoreEntrydata 
@@ -287,6 +289,12 @@ bool Unit::storeEntryData()
 	ofstream saveData;
 
 	saveData.open("entry.txt");
+
+	if(!saveData)
+	{
+		cerr << "Filen findes ikke" << endl;
+		return false;
+	}
 
 	for (int i = 0; i < 7; i++) 
 	{

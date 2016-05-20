@@ -46,21 +46,3 @@ private:
 ostream& operator<<(ostream& os, const Entry& obj);
 
 
-
-//bool loadEntryData();
-//bool storeEntry(entry&);
-
-
-//=============================================================
-// METHOD : 
-// DESCR. : 
-//=============================================================
-
-//bool EnhedsRegister::storeEntry(entry&)
-//{
-//
-//}
-
-//vector<entry>entryRegister
-
-//string outputFileEntry;

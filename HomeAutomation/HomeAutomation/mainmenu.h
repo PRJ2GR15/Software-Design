@@ -33,6 +33,10 @@ public:
 
     void setTablePtr(QTableWidget* tableRef);
 
+    void updateFromCommandBox();
+
+    void updateFromLocal();
+
 private slots:
     void on_updateButton_clicked();
 

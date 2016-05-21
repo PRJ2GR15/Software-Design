@@ -33,6 +33,9 @@ public:
 
     CommInterface* getCommPtr() { return commPtr; }
 
+private slots:
+    void on_MainW_StackedWidget_currentChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
     MainMenu* mainMenuPtr;

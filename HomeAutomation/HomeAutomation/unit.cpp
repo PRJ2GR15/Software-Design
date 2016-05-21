@@ -31,7 +31,7 @@ Unit::Unit(unsigned char unitID, unsigned char roomID, unsigned char houseCode, 
 	status_ = status;
 
 	initialEntry();
-
+	loadEntryData();
 }
 
 //=============================================================
@@ -229,6 +229,23 @@ bool Unit::updateEntry(int day, int place, unsigned char hour, unsigned char min
 	return true;
 }
 
+bool Unit::clearData()
+{
+	ofstream clear;
+
+	clear.open("entry.txt", ofstream::trunc);
+
+	if (!clear)
+	{
+		cerr << "Filen findes ikke- test test" << endl;
+		return false;
+	}
+
+	clear.close();
+
+	return true;
+}
+
 //=============================================================
 // METHOD : Print metode. 
 // DESCR. : Print alle Entries som er tilføjet i pågældende Unit
@@ -251,7 +268,7 @@ void Unit::printEntry() const
 
 bool Unit::loadEntryData()
 {
-	int d = 0x00, h = 0x00, m = 0x00; bool a = false;
+	int id = 0x00, d = 0x00, h = 0x00, m = 0x00; bool a = false;
 
 	ifstream entryFile;
 
@@ -266,10 +283,12 @@ bool Unit::loadEntryData()
 		while (!entryFile.eof())
 		{
 			
-			entryFile >>d >> h >> m >> a;
+			entryFile >>id >>d >> h >> m >> a;
 			Entry tempObj(h, m, a);
-			storeEntry(d, tempObj);
-			
+			if (getUnitID() == id)
+			{
+				storeEntry(d, tempObj);
+			}
 		}
 		entryFile.close();
 		return true;
@@ -288,7 +307,7 @@ bool Unit::storeEntryData()
 {
 	ofstream saveData;
 
-	saveData.open("entry.txt");
+	saveData.open("entry.txt",ofstream::app);
 
 	if(!saveData)
 	{
@@ -300,8 +319,11 @@ bool Unit::storeEntryData()
 	{
 		for (int j = 0; j < entryRegister_[i].size(); j++)
 		{
+			saveData << +unitID_ << " "; 
 			saveData << i << " ";
 			saveData << entryRegister_[i][j];
+
+			
 		}
 	}
 
@@ -317,9 +339,15 @@ bool Unit::storeEntryData()
 
 
 ostream &operator<<(ostream& os, const Unit& obj)
-{
-	obj.print();
+{	
+	
+
+	os << +obj.getUnitID() << " ";
+	os << +obj.getRoomID() << " ";
+	os << +obj.getHouseCode() << " ";
+	os << +obj.getStatus() << endl;
 	obj.printEntry();
+
 	return os;
 }
 

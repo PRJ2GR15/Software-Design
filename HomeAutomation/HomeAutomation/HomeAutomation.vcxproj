@@ -118,14 +118,13 @@
   <ItemGroup>
     <ClCompile Include="CommInterface.cpp" />
     <ClCompile Include="Entry.cpp" />
-    <ClCompile Include="TestRegister.cpp" />
-    <ClCompile Include="UnitRegister.cpp" />
+    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="unit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommInterface.h" />
     <ClInclude Include="Entry.h" />
     <ClInclude Include="Unit.h" />
-    <ClInclude Include="UnitRegister.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

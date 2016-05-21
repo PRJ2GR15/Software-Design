@@ -55,7 +55,7 @@ public:
 	bool deleteDayEntry(int day);
 	bool deleteEntry();
 	bool updateEntry(int day, int place, unsigned char hour, unsigned char min, bool action);
-
+	bool clearData();
 	void printEntry()const;
 private:
 	unsigned char unitID_; 

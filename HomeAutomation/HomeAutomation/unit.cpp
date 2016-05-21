@@ -29,7 +29,6 @@ Unit::Unit(unsigned char unitID, unsigned char roomID, unsigned char houseCode, 
 	roomID_ = roomID;
 	setHouseCode(houseCode);
 	status_ = status;
-
 	initialEntry();
 	loadEntryData();
 }
@@ -276,24 +275,21 @@ bool Unit::loadEntryData()
 	
 		if (!entryFile)
 		{
-                        cerr << "Filen findes ikke- test test" << endl;
+            cerr << "Filen findes ikke- test test" << endl;
 			return false;
 		}
 	
 		while (!entryFile.eof())
 		{
-			
-			entryFile >>id >>d >> h >> m >> a;
+            entryFile >>id >>d >> h >> m >> a;
 			Entry tempObj(h, m, a);
 			if (getUnitID() == id)
 			{
 				storeEntry(d, tempObj);
-			}
+            }
 		}
 		entryFile.close();
 		return true;
-
-
 }
 
 //=============================================================
@@ -326,7 +322,6 @@ bool Unit::storeEntryData()
 			
 		}
 	}
-
 	saveData.close();
 	return true;
 }

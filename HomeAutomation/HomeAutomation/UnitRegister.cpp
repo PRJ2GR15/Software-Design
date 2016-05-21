@@ -43,8 +43,9 @@ bool UnitRegister::loadData()
     while (!in.eof())
 	{
 		in >> u >> r >> s >> t;
-		if (!compareID(u))
+        if (!compareID(u)) {
             unitRegister_.push_back(Unit(static_cast<uchar>(u), static_cast<uchar>(r), s, t));
+        }
 		else
 			cout << "Unit already exists" << endl;
 	}

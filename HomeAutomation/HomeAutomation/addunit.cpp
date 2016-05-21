@@ -22,6 +22,20 @@ AddUnit::AddUnit(QStackedWidget *parent, UnitRegister &regRef, CommInterface &co
     parentPtr = parent;
     setRegistryPtr(regRef);
     setCommPtr(comRef);
+
+
+
+    //Blank SpinBox_2
+    int blank = ui->spinBox_2->value();
+
+    QString text1=" ";
+
+    if(blank==0)
+    {
+      ui->spinBox_2->setSpecialValueText(text1);
+    }
+
+
 }
 
 AddUnit::~AddUnit()
@@ -31,10 +45,15 @@ AddUnit::~AddUnit()
 
 void AddUnit::on_pushButton_clicked()
 {
+ //ID value fra SpinBox 1
+  int IDValue=ui->spinBox->value();
 
-  int xvalue=ui->spinBox->value();
-  Unit tempUnit(xvalue,3,2,1);
-    cout << tempUnit;
+ //roomValue fra spinBox 2
+  int roomValue = ui->spinBox_2->value();
+
+//Temp Unit indeholdende overstående data
+  Unit tempUnit(IDValue,roomValue,2,1);
+  cout << tempUnit;
 
   QMessageBox msgBox;
   msgBox.setWindowTitle("Udført funktion");
@@ -50,13 +69,6 @@ void AddUnit::on_pushButton_clicked()
   getParentPtr()->setCurrentIndex(0);
 }
 
-
-void AddUnit::on_pushButton_3_clicked()
-{
-    QString N = QInputDialog::getText(this,"Tilføj nyt rum","Tilføj rum");
-    ui->comboBox->addItem(N);
-
-}
 
 void AddUnit::on_pushButton_2_clicked()
 {

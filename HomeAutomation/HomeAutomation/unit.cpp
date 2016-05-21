@@ -31,7 +31,7 @@ Unit::Unit(unsigned char unitID, unsigned char roomID, unsigned char houseCode, 
 	status_ = status;
 
 	initialEntry();
-	loadEntryData();
+
 }
 
 //=============================================================
@@ -259,7 +259,7 @@ bool Unit::loadEntryData()
 	
 		if (!entryFile)
 		{
-			cerr << "Filen findes ikke" << endl;
+                        cerr << "Filen findes ikke- test test" << endl;
 			return false;
 		}
 	

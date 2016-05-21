@@ -62,7 +62,7 @@ void MainMenu::on_updateButton_clicked()
 {
     if(getRegistryPtr() != NULL)
         //Lambda expression - Opdaterer status for enhederne i enhedsregistret.
-        //99% magi. Source: http://stackoverflow.com/questions/37300108/iterate-through-vector-contained-in-another-class
+        //99% magi. Source: http://stackoverflow.com/questions/37300108/iterate-through-vector-contained-in-another-class -- LOL
         getRegistryPtr()->updateStates([&](uchar ID) { return getCommPtr()->getUnitStatus(ID); });
 
         if(tablePtr != NULL) {

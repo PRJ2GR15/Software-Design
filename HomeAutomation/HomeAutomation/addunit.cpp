@@ -33,9 +33,21 @@ void AddUnit::on_pushButton_clicked()
 {
 
   int xvalue=ui->spinBox->value();
-  Unit tempUnit(xvalue,1,2,1);
+  Unit tempUnit(xvalue,3,2,1);
+    cout << tempUnit;
 
-  getRegistryPtr()->storeUnit(tempUnit); //Filen findes ikke ?
+  QMessageBox msgBox;
+  msgBox.setWindowTitle("Udført funktion");
+  msgBox.addButton(QMessageBox::Ok);
+
+  if(getRegistryPtr()->storeUnit(tempUnit)==true)
+  {
+      msgBox.setText("Tilføjelse af enheden succesfuld");
+  }
+  else
+      msgBox.setText("Tilføjelse af enheden fejlede");
+  if(msgBox.exec()==QMessageBox::Ok)
+  getParentPtr()->setCurrentIndex(0);
 }
 
 

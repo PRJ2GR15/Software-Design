@@ -1,3 +1,0 @@
-Oprydning i enhedsregister
-Comments i enhedsregister
-Sørg for der er overenstemmelse imellem store unit og updateunits osv.

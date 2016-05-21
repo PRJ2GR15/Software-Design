@@ -192,6 +192,24 @@ bool UnitRegister::updateTime(uchar unitID,int day, int placeholder, uchar hour,
 // DESCR. : 
 //=============================================================
 
+void UnitRegister::printUnitEntry(uchar unitID)
+{
+
+    vector<Unit>::iterator iter;
+
+
+    for(iter=unitRegister_.begin();iter!=unitRegister_.end();++iter)
+        if(iter->getUnitID()==unitID)
+    {
+
+            iter->printEntry();
+
+
+    }
+
+}
+
+
 UnitRegister::~UnitRegister()
 {
 }

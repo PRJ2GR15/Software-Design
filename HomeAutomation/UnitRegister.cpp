@@ -120,7 +120,7 @@ void UnitRegister::getStoredUnits()
 {
 	vector<Unit>::iterator iter;
 	for (iter = unitRegister_.begin(); iter != unitRegister_.end(); ++iter)
-		cout << *iter << endl;
+        iter->printEntry();
 }
 
 //=============================================================
@@ -152,7 +152,7 @@ bool UnitRegister::modifyUnit(uchar unitID, uchar roomID)
 	return true;
 }
 
-/*bool UnitRegister::updateTime(char roomID, int placeholder)
+/*bool UnitRegister::updateTime(uchar roomID, int placeholder)
 {
 }*/
 

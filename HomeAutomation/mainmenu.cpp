@@ -118,6 +118,7 @@ void MainMenu::updateFromLocal() {
 void MainMenu::on_updateButton_clicked()
 {
     updateFromCommandBox();
+    getRegistryPtr()->getStoredUnits();
 }
 
 void MainMenu::on_unitTable_cellClicked(int row, int column)
@@ -146,4 +147,15 @@ void MainMenu::on_remUnit_PushButton_clicked()
     }
     cerr<< "Kan ikke finde Remove Unit" << endl;
     //getParentPtr()->setCurrentIndex(2);
+}
+
+void MainMenu::on_pushButton_2_clicked()
+{
+    for(int i = 0; i < getParentPtr()->count(); ++i) {
+        if(getParentPtr()->widget(i)->accessibleName().compare("Edit Entry") == 0) {
+            getParentPtr()->setCurrentIndex(i);
+            return;
+        }
+    }
+    cerr<< "Kan ikke finde Edit Entry" << endl;
 }

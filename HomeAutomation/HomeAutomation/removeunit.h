@@ -25,18 +25,32 @@ class RemoveUnit;
 
 class RemoveUnit : public QWidget, public BaseMenu
 {
+    const int invalidSelection;
     Q_OBJECT
 
 public:
     RemoveUnit(QStackedWidget *parent, UnitRegister& regRef, CommInterface& commRef);
     ~RemoveUnit();
 
+    QTableWidget* getTablePtr() { return tablePtr; }
+
+    void setTablePtr(QTableWidget* tableRef);
+
+    void populateTable();
+
 private slots:
-    void on_rem_u_PushButton_clicked();
+    //void on_rem_unitTable_cellEntered(int row, int column);
+
+    void on_rem_unitTable_cellClicked(int row, int column);
+
+    void on_remove_PushButton_clicked();
+
+    void on_cancel_PushButton_clicked();
 
 private:
     Ui::RemoveUnit *ui;
-    //QWidget* parentPtr;
+    QTableWidget* tablePtr;
+    int selectedRow, selectedColumn;
 };
 
 #endif // REMOVEUNIT_H

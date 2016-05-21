@@ -1,3 +1,18 @@
+//========================================================================
+// FILENAME : <MainWindow.cpp>
+// CREATED : <17/05-2016>
+// AUTHOR : <Nikolai James Topping>
+// DESCR. : <Implementering af MainWindow>
+//
+//------------------------------------------------------------------------
+//
+// REV. DATE/AUTHOR CHANGE DESCRIPTION
+// 1.0 <17.05/2016/Nikolai J. Topping> <Oprettet MainWindow>
+// 1.1 <17.05/2016/Nikolai J. Topping> <Tilføjet AddUnit og RemoveUnit vinduer til StackedWidget>
+// 1.2 <21.05/2016/Nikolai J. Topping> <Opdateret måden hvorpå man skifter mellem vinduer>
+//
+//========================================================================
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -38,4 +53,16 @@ void MainWindow::setCommPtr(CommInterface& commRef) {
     }
     else
         cerr << "Couldn't register comm interface address" << endl;
+}
+
+void MainWindow::on_MainW_StackedWidget_currentChanged(int arg1)
+{
+    QString tmpString = QString(ui->MainW_StackedWidget->currentWidget()->accessibleName());
+    if(tmpString.compare("Main Menu") == 0) {
+        mainMenuPtr->updateFromLocal();
+    } else if(tmpString.compare("Remove Unit") == 0) {
+        removeUnitPtr->populateTable();
+    } else {
+        cout << "Default" << endl;
+    }
 }

@@ -23,11 +23,13 @@ MainMenu::MainMenu(QStackedWidget *parent, UnitRegister &regRef, CommInterface &
     ui(new Ui::MainMenu)
 {
     ui->setupUi(this);
+    this->setAccessibleName("Main Menu");
     parentPtr = parent;
     setRegistryPtr(regRef);
     setCommPtr(commRef);
     //Fang vores unitTable så der kan skrives til den.
     setTablePtr(this->findChild<QTableWidget*>("unitTable"));
+    on_updateButton_clicked();
 }
 
 //=============================================================
@@ -48,18 +50,14 @@ void MainMenu::setTablePtr(QTableWidget* tableRef) {
         tablePtr = tableRef;
         //Sørger for at man ikke kan redigere i vores table.
         tablePtr->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        tablePtr->setSelectionBehavior(QAbstractItemView::SelectRows);
+        tablePtr->setSelectionMode(QAbstractItemView::SingleSelection);
     }
     else
         cerr << "Couldn't register table address" << endl;
 }
 
-
-//=============================================================
-// METHOD :
-// DESCR. :
-//=============================================================
-void MainMenu::on_updateButton_clicked()
-{
+void MainMenu::updateFromCommandBox() {
     if(getRegistryPtr() != NULL)
         //Lambda expression - Opdaterer status for enhederne i enhedsregistret.
         //99% magi. Source: http://stackoverflow.com/questions/37300108/iterate-through-vector-contained-in-another-class -- LOL
@@ -87,17 +85,63 @@ void MainMenu::on_updateButton_clicked()
         }
 }
 
+void MainMenu::updateFromLocal() {
+    if(getRegistryPtr() != NULL)
+    {
+        if(tablePtr != NULL) {
+            tablePtr->setRowCount(getRegistryPtr()->getRegistrySize());
+            int rowCount = 0;
+            vector<Unit>::iterator iter;
+            QString inf;
+            for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter) {
+                //Returnere unitID som uchar, caster til int. QString::number gemmer int som en QString.
+                inf = QString::number(+((*iter).getUnitID()));
+                tablePtr->setItem( rowCount, 0, new QTableWidgetItem( inf ) );
+                //Returnere RoomID som uchar, caster til int. QString::number gemmer int som en QString.
+                inf = QString::number(+((*iter).getRoomID()));
+                tablePtr->setItem( rowCount, 1, new QTableWidgetItem( inf ) );
+                if(+((*iter).getStatus()))
+                    inf = "Tændt";
+                else
+                    inf = "Slukket";
+                tablePtr->setItem( rowCount, 2, new QTableWidgetItem( inf ) );
+                rowCount += 1;
+            }
+        }
+    }
+}
+
+//=============================================================
+// METHOD :
+// DESCR. :
+//=============================================================
+void MainMenu::on_updateButton_clicked()
+{
+    updateFromCommandBox();
+}
+
 void MainMenu::on_unitTable_cellClicked(int row, int column)
 {
-    cout << "Cell in row: " << row << ", column: " << column << " clicked." << endl;
+    //cout << "Cell in row: " << row << ", column: " << column << " clicked." << endl;
 }
 
 void MainMenu::on_addUnit_PushButton_clicked()
 {
-    getParentPtr()->setCurrentIndex(1);
+    for(int i = 0; i < getParentPtr()->count(); ++i) {
+        if(getParentPtr()->widget(i)->accessibleName().compare("Add Unit") == 0)
+            getParentPtr()->setCurrentIndex(i);
+        else
+            cerr << "Kan ikke finde Add Unit" << endl;
+    }
 }
 
 void MainMenu::on_remUnit_PushButton_clicked()
 {
-    getParentPtr()->setCurrentIndex(2);
+    for(int i = 0; i < getParentPtr()->count(); ++i) {
+        if(getParentPtr()->widget(i)->accessibleName().compare("Remove Unit") == 0)
+            getParentPtr()->setCurrentIndex(i);
+        else
+            cerr<< "Kan ikke finde Remove Unit" << endl;
+    }
+    //getParentPtr()->setCurrentIndex(2);
 }

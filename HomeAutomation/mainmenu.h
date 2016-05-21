@@ -46,6 +46,8 @@ private slots:
 
     void on_remUnit_PushButton_clicked();
 
+    void on_pushButton_2_clicked();
+
 private:
     Ui::MainMenu *ui;
     QTableWidget* tablePtr;

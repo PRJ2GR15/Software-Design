@@ -26,10 +26,12 @@ MainWindow::MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *pa
     mainMenuPtr = new MainMenu(ui->MainW_StackedWidget, regRef, commRef);
     removeUnitPtr = new RemoveUnit(ui->MainW_StackedWidget, regRef, commRef);
     addUnitPtr = new AddUnit(ui->MainW_StackedWidget, regRef, commRef);
+    editPtr = new EditEntry(ui->MainW_StackedWidget, regRef, commRef);
 
     ui->MainW_StackedWidget->addWidget(mainMenuPtr);
     ui->MainW_StackedWidget->addWidget(addUnitPtr);
     ui->MainW_StackedWidget->addWidget(removeUnitPtr);
+    ui->MainW_StackedWidget->addWidget(editPtr);
     ui->MainW_StackedWidget->setCurrentWidget(mainMenuPtr);
 }
 

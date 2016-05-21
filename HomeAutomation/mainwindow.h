@@ -8,6 +8,7 @@
 #include "addunit.h"
 #include "CommInterface.h"
 #include "UnitRegister.h"
+#include "editentry.h"
 
 namespace Ui {
 class MainWindow;
@@ -33,6 +34,9 @@ public:
 
     CommInterface* getCommPtr() { return commPtr; }
 
+private slots:
+    void on_MainW_StackedWidget_currentChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
     MainMenu* mainMenuPtr;
@@ -41,6 +45,7 @@ private:
     UnitRegister* registryPtr;
     CommInterface* commPtr;
     QTableWidget* tablePtr;
+    EditEntry* editPtr;
 };
 
 #endif // MAINWINDOW_H

@@ -8,7 +8,7 @@
 //
 // REV. DATE/AUTHOR CHANGE DESCRIPTION
 // 1.0 <18.05/2016/Nikolai J. Topping> <Tilføjet data fra QT projekt>
-//
+// 1.1 <21/05-2016/Anders Brondbjerg Knudsen <Tilføjet addNewTime og upDate time>
 //========================================================================
 #include "UnitRegister.h"
 
@@ -43,8 +43,9 @@ bool UnitRegister::loadData()
     while (!in.eof())
 	{
 		in >> u >> r >> s >> t;
-		if (!compareID(u))
+        if (!compareID(u)) {
             unitRegister_.push_back(Unit(static_cast<uchar>(u), static_cast<uchar>(r), s, t));
+        }
 		else
 			cout << "Unit already exists" << endl;
 	}
@@ -115,11 +116,25 @@ bool UnitRegister::updateStatus(uchar unitID, bool status)
 // DESCR. : 
 //=============================================================
 
+bool UnitRegister::AddNewtime(uchar unitID,int day, Entry &obj)
+{
+    vector<Unit>::iterator iter;
+    for(iter=unitRegister_begin();iter!=unitRegister_.end();++iter)
+        if(iter->getUnitID()==unitID)
+    {
+            if(iter->storeEntry(day,obj)==false)
+                return false;
+    }
+    return true;
+}
+
+
+
 void UnitRegister::getStoredUnits()
 {
 	vector<Unit>::iterator iter;
 	for (iter = unitRegister_.begin(); iter != unitRegister_.end(); ++iter)
-		cout << *iter << endl;
+        iter->printEntry();
 }
 
 //=============================================================
@@ -151,7 +166,7 @@ bool UnitRegister::modifyUnit(uchar unitID, uchar roomID)
 	return true;
 }
 
-/*bool UnitRegister::updateTime(char roomID, int placeholder)
+/*bool UnitRegister::updateTime(uchar roomID, int placeholder)
 {
 }*/
 
@@ -160,9 +175,16 @@ bool UnitRegister::modifyUnit(uchar unitID, uchar roomID)
 // DESCR. : 
 //=============================================================
 
-bool UnitRegister::updateTime(uchar unitID, int placeholder)
+bool UnitRegister::updateTime(uchar unitID,int day, int placeholder, uchar hour, uchar min, bool action)
 {
-	return true;
+    vector<Unit>::iterator iter;
+    for(iter=unitRegister_begin();iter!=unitRegister_.end();++iter)
+        if(iter->getUnitID()==unitID)
+    {
+            if(iter->updateEntry(day,placeholder,hour,min,action)==false)
+                return false;
+    }
+    return true;
 }
 
 //=============================================================

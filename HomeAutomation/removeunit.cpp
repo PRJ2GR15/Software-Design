@@ -1,5 +1,5 @@
 //========================================================================
-// FILENAME : <MainMenu.cpp>
+// FILENAME : <RemoveUnit.cpp>
 // CREATED : <18/05-2016>
 // AUTHOR : <Nikolai James Topping>
 // DESCR. : <Implementering af MainMenu>
@@ -7,34 +7,27 @@
 //------------------------------------------------------------------------
 //
 // REV. DATE/AUTHOR CHANGE DESCRIPTION
-// 1.0 <18.05/2016/Nikolai J. Topping> <Oprettet MainMenu. Implementeret setters/getters. Implementeret updateButton clicked>
+// 1.0 <18.05/2016/Nikolai J. Topping> <Oprettet RemoveUnit>
 //
 //========================================================================
 
-#include "mainmenu.h"
-#include "ui_mainmenu.h"
+#include "removeunit.h"
+#include "ui_removeunit.h"
 
-//=============================================================
-// METHOD :
-// DESCR. :
-//=============================================================
-MainMenu::MainMenu(QStackedWidget *parent, UnitRegister &regRef, CommInterface &commRef) :
-    QWidget(parent),
-    ui(new Ui::MainMenu)
+RemoveUnit::RemoveUnit(QStackedWidget *parent, UnitRegister& regRef, CommInterface& commRef) :
+    QWidget(parent), invalidSelection(9999),
+    ui(new Ui::RemoveUnit)
 {
     ui->setupUi(this);
+    this->setAccessibleName("Remove Unit");
     parentPtr = parent;
     setRegistryPtr(regRef);
     setCommPtr(commRef);
-    //Fang vores unitTable så der kan skrives til den.
-    setTablePtr(this->findChild<QTableWidget*>("unitTable"));
+    setTablePtr(this->findChild<QTableWidget*>("rem_unitTable"));
+    selectedRow = invalidSelection; selectedColumn = invalidSelection;
 }
 
-//=============================================================
-// METHOD :
-// DESCR. :
-//=============================================================
-MainMenu::~MainMenu()
+RemoveUnit::~RemoveUnit()
 {
     delete ui;
 }
@@ -43,28 +36,20 @@ MainMenu::~MainMenu()
 // METHOD :
 // DESCR. :
 //=============================================================
-void MainMenu::setTablePtr(QTableWidget* tableRef) {
+void RemoveUnit::setTablePtr(QTableWidget* tableRef) {
     if(tableRef != NULL) {
         tablePtr = tableRef;
         //Sørger for at man ikke kan redigere i vores table.
         tablePtr->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        tablePtr->setSelectionBehavior(QAbstractItemView::SelectRows);
+        tablePtr->setSelectionMode(QAbstractItemView::SingleSelection);
     }
     else
         cerr << "Couldn't register table address" << endl;
 }
 
-
-//=============================================================
-// METHOD :
-// DESCR. :
-//=============================================================
-void MainMenu::on_updateButton_clicked()
-{
+void RemoveUnit::populateTable() {
     if(getRegistryPtr() != NULL)
-        //Lambda expression - Opdaterer status for enhederne i enhedsregistret.
-        //99% magi. Source: http://stackoverflow.com/questions/37300108/iterate-through-vector-contained-in-another-class -- LOL
-        getRegistryPtr()->updateStates([&](uchar ID) { return getCommPtr()->getUnitStatus(ID); });
-
         if(tablePtr != NULL) {
             tablePtr->setRowCount(getRegistryPtr()->getRegistrySize());
             int rowCount = 0;
@@ -87,17 +72,29 @@ void MainMenu::on_updateButton_clicked()
         }
 }
 
-void MainMenu::on_unitTable_cellClicked(int row, int column)
+/*void RemoveUnit::on_rem_unitTable_cellEntered(int row, int column)
 {
-    cout << "Cell in row: " << row << ", column: " << column << " clicked." << endl;
+    selectedRow = row;
+    selectedColumn = column;
+}*/
+
+void RemoveUnit::on_rem_unitTable_cellClicked(int row, int column)
+{
+    selectedRow = row;
+    selectedColumn = column;
 }
 
-void MainMenu::on_addUnit_PushButton_clicked()
+void RemoveUnit::on_remove_PushButton_clicked()
 {
-    getParentPtr()->setCurrentIndex(1);
+    QModelIndex index = tablePtr->model()->index(selectedRow,0,QModelIndex());
+    QString data = tablePtr->model()->data(index).toString();
+    cout << data.toStdString() << endl;
+    getRegistryPtr()->deleteUnit(static_cast<uchar>(data.toInt()));
+    cout << "Unit with ID: " << data.toStdString() << " deleted." << endl;
+    populateTable();
 }
 
-void MainMenu::on_remUnit_PushButton_clicked()
+void RemoveUnit::on_cancel_PushButton_clicked()
 {
-    getParentPtr()->setCurrentIndex(2);
+    parentPtr->setCurrentIndex(0);
 }

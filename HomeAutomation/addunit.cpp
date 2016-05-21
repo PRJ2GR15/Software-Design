@@ -22,7 +22,7 @@ AddUnit::AddUnit(QStackedWidget *parent, UnitRegister &regRef, CommInterface &co
     parentPtr = parent;
     setRegistryPtr(regRef);
     setCommPtr(comRef);
-    this->setAccessibleName("Remove Unit");
+    this->setAccessibleName("Add Unit");
 
 
     //Blank SpinBox_2

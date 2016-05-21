@@ -33,6 +33,10 @@ public:
 
     void setTablePtr(QTableWidget* tableRef);
 
+    void updateFromCommandBox();
+
+    void updateFromLocal();
+
 private slots:
     void on_updateButton_clicked();
 
@@ -41,6 +45,8 @@ private slots:
     void on_addUnit_PushButton_clicked();
 
     void on_remUnit_PushButton_clicked();
+
+    void on_pushButton_2_clicked();
 
 private:
     Ui::MainMenu *ui;

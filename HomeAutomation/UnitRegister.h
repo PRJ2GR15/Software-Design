@@ -7,9 +7,9 @@
 //------------------------------------------------------------------------
 //
 // REV. DATE/AUTHOR CHANGE DESCRIPTION
-// 1.0 <rev. date/author> <Change description>
-// 1.1 <18.05/2016/Anders Brondbjerg Knudsen> <Tilf�jelse af entry>
-// 1.2 <19.05/2016/Nikolai J. Topping> <Migreret inhold fra QT projekt>
+// 1.0 <18.05/2016/Nikolai J. Topping> <Tilføjet data fra QT projekt>
+// 1.1 <19.05/2016/Nikolai J. Topping> <Migreret inhold fra QT projekt>
+// 1.2 <21/05-2016/Anders Brondbjerg Knudsen <Tilføjet addNewTime og upDate time>
 //========================================================================
 #pragma once
 #include <vector>
@@ -37,8 +37,9 @@ public:
     void getStoredUnits();
     bool deleteUnit(uchar unitID);
     bool modifyUnit(uchar unitID, uchar roomID);
+    bool AddNewtime(uchar unitID, int day, Entry&obj);
     //bool updateTime(uchar roomID, int placeholder);
-    bool updateTime(uchar unitID, int placeholder);
+    bool updateTime(uchar unitID, int day, int placeholder, uchar hour, uchar min, bool action);
     bool loadData();
 
     void updateStates(function<bool(uchar)> f) {

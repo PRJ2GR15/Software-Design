@@ -128,20 +128,22 @@ void MainMenu::on_unitTable_cellClicked(int row, int column)
 void MainMenu::on_addUnit_PushButton_clicked()
 {
     for(int i = 0; i < getParentPtr()->count(); ++i) {
-        if(getParentPtr()->widget(i)->accessibleName().compare("Add Unit") == 0)
+        if(getParentPtr()->widget(i)->accessibleName().compare("Add Unit") == 0) {
             getParentPtr()->setCurrentIndex(i);
-        else
-            cerr << "Kan ikke finde Add Unit" << endl;
+            return;
+        }
     }
+    cerr << "Kan ikke finde Add Unit" << endl;
 }
 
 void MainMenu::on_remUnit_PushButton_clicked()
 {
     for(int i = 0; i < getParentPtr()->count(); ++i) {
-        if(getParentPtr()->widget(i)->accessibleName().compare("Remove Unit") == 0)
+        if(getParentPtr()->widget(i)->accessibleName().compare("Remove Unit") == 0) {
             getParentPtr()->setCurrentIndex(i);
-        else
-            cerr<< "Kan ikke finde Remove Unit" << endl;
+            return;
+        }
     }
+    cerr<< "Kan ikke finde Remove Unit" << endl;
     //getParentPtr()->setCurrentIndex(2);
 }

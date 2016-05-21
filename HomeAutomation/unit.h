@@ -56,7 +56,11 @@ public:
 	bool deleteEntry();
 	bool updateEntry(int day, int place, unsigned char hour, unsigned char min, bool action);
 	bool clearData();
-	void printEntry()const;
+        void printEntry()const;
+        unsigned char getHour()const;
+        unsigned char getMin()const;
+        bool getAction()const;
+
 private:
 	unsigned char unitID_; 
 	unsigned char roomID_;

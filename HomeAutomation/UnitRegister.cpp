@@ -119,7 +119,7 @@ bool UnitRegister::updateStatus(uchar unitID, bool status)
 bool UnitRegister::AddNewtime(uchar unitID,int day, Entry &obj)
 {
     vector<Unit>::iterator iter;
-    for(iter=unitRegister_begin();iter!=unitRegister_.end();++iter)
+    for(iter=unitRegister_.begin();iter!=unitRegister_.end();++iter)
         if(iter->getUnitID()==unitID)
     {
             if(iter->storeEntry(day,obj)==false)
@@ -178,7 +178,7 @@ bool UnitRegister::modifyUnit(uchar unitID, uchar roomID)
 bool UnitRegister::updateTime(uchar unitID,int day, int placeholder, uchar hour, uchar min, bool action)
 {
     vector<Unit>::iterator iter;
-    for(iter=unitRegister_begin();iter!=unitRegister_.end();++iter)
+    for(iter=unitRegister_.begin();iter!=unitRegister_.end();++iter)
         if(iter->getUnitID()==unitID)
     {
             if(iter->updateEntry(day,placeholder,hour,min,action)==false)
@@ -191,6 +191,24 @@ bool UnitRegister::updateTime(uchar unitID,int day, int placeholder, uchar hour,
 // METHOD : 
 // DESCR. : 
 //=============================================================
+
+void UnitRegister::printUnitEntry(uchar unitID)
+{
+
+    vector<Unit>::iterator iter;
+
+
+    for(iter=unitRegister_.begin();iter!=unitRegister_.end();++iter)
+        if(iter->getUnitID()==unitID)
+    {
+
+            iter->printEntry();
+
+
+    }
+
+}
+
 
 UnitRegister::~UnitRegister()
 {

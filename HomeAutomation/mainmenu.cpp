@@ -151,6 +151,8 @@ void MainMenu::on_remUnit_PushButton_clicked()
 
 void MainMenu::on_pushButton_2_clicked()
 {
+
+
     for(int i = 0; i < getParentPtr()->count(); ++i) {
         if(getParentPtr()->widget(i)->accessibleName().compare("Edit Entry") == 0) {
             getParentPtr()->setCurrentIndex(i);
@@ -158,4 +160,6 @@ void MainMenu::on_pushButton_2_clicked()
         }
     }
     cerr<< "Kan ikke finde Edit Entry" << endl;
+
+
 }

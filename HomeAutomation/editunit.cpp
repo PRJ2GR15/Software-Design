@@ -20,10 +20,13 @@ EditUnit::EditUnit(QStackedWidget *parent, UnitRegister &regRef, CommInterface& 
     ui->setupUi(this);
     this->setAccessibleName("Edit Unit");
     this->findChild<QLineEdit*>("newUnitID_LineEdit")->setValidator(new QIntValidator(1,255));
-    this->findChild<QLineEdit*>("newRoomID_LineEdit")->setValidator(new QIntValidator(1,255));
+    this->findChild<QLineEdit*>("newRoomID_LineEdit")->setValidator(new QIntValidator(-1,255));
+    this->findChild<QLineEdit*>("newUnitID_LineEdit")->setPlaceholderText("empty");
+    this->findChild<QLineEdit*>("newRoomID_LineEdit")->setPlaceholderText("empty");
     parentPtr = parent;
     setRegistryPtr(regRef);
     setCommPtr(commRef);
+    selectedUnitID = -1; selectedRoomID = -1;
     setTablePtr(this->findChild<QTableWidget*>("editUnit_Table"));
 }
 
@@ -32,7 +35,7 @@ EditUnit::~EditUnit()
     delete ui;
 }
 
-void EditUnit::setSelectedUnitID(unsigned char unitID) {
+void EditUnit::setSelectedUnitID(int unitID) {
     selectedUnitID = unitID;
 }
 
@@ -71,6 +74,7 @@ void EditUnit::setTablePtr(QTableWidget* tableRef)
 
 void EditUnit::updateTable()
 {
+    selectedUnitID = -1; selectedRoomID = -1;
     if(getRegistryPtr() != NULL)
         if(tablePtr != NULL) {
             tablePtr->setRowCount(getRegistryPtr()->getRegistrySize());
@@ -104,12 +108,77 @@ void EditUnit::on_editUnit_Table_cellClicked(int row, int column)
     selectedRow = row;
     QModelIndex index = tablePtr->model()->index(selectedRow,0,QModelIndex());
     QString data = tablePtr->model()->data(index).toString();
-    this->findChild<QLineEdit*>("currentUnitID_LineEdit")->setText(data);
     selectedUnitID = static_cast<char>(data.toInt());
+    if(this->findChild<QLineEdit*>("currentUnitID_LineEdit") != 0)
+            this->findChild<QLineEdit*>("currentUnitID_LineEdit")->setText(data);
 
     index = tablePtr->model()->index(selectedRow,1,QModelIndex());
     data = tablePtr->model()->data(index).toString();
-    this->findChild<QLineEdit*>("currentRoomID_LineEdit")->setText(data);
     selectedRoomID = static_cast<char>(data.toInt());
+    if(this->findChild<QLineEdit*>("currentRoomID_LineEdit") != 0)
+        this->findChild<QLineEdit*>("currentRoomID_LineEdit")->setText(data);
 
+    if(this->findChild<QLineEdit*>("newUnitID_LineEdit") != 0)
+        this->findChild<QLineEdit*>("newUnitID_LineEdit")->clear();
+
+    if(this->findChild<QLineEdit*>("newRoomID_LineEdit") != 0)
+        this->findChild<QLineEdit*>("newRoomID_LineEdit")->clear();
+
+}
+
+void EditUnit::on_editUnit_Save_PushButton_clicked()
+{
+    int newUnitID, newRoomID;
+    cout << selectedUnitID << " " << selectedRoomID << endl;
+    if(selectedUnitID != -1 && selectedRoomID != -1)
+    {
+        newUnitID = selectedUnitID; newRoomID = selectedRoomID;
+    }
+    else
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Fejl under Ændring");
+        msgBox.addButton(QMessageBox::Ok);
+        msgBox.setText("Ingen enhed valg til ændring");
+        if(msgBox.exec()==QMessageBox::Ok)
+            return;
+    }
+    if(!this->findChild<QLineEdit*>("newUnitID_LineEdit")->text().isEmpty())
+    {
+        newUnitID = this->findChild<QLineEdit*>("newUnitID_LineEdit")->text().toInt();
+        cout << +newUnitID << endl;
+    }
+
+    if(!this->findChild<QLineEdit*>("newRoomID_LineEdit")->text().isEmpty())
+    {
+        newRoomID = this->findChild<QLineEdit*>("newRoomID_LineEdit")->text().toInt();
+        cout << +newRoomID << endl;
+    }
+
+    if(newUnitID == selectedUnitID && newRoomID == selectedRoomID)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Fejl under Ændring");
+        msgBox.addButton(QMessageBox::Ok);
+        msgBox.setText("Ingen enhed ændringer registreret.");
+        if(msgBox.exec()==QMessageBox::Ok)
+            return;
+    }
+    else
+    {
+        getRegistryPtr()->modifyUnit(static_cast<uchar>(selectedUnitID), static_cast<uchar>(newUnitID), static_cast<uchar>(newRoomID));
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Ændring Godkendt");
+        msgBox.addButton(QMessageBox::Ok);
+        msgBox.setText("Enhed: " + QString::number(selectedUnitID) + " opdateret til\nEnheds ID: " + QString::number(newUnitID) + "\n" + "Rum ID: " + QString::number(newRoomID));
+        if(msgBox.exec()==QMessageBox::Ok)
+        {
+            updateTable();
+            return;
+        }
+    }
+
+
+    //if(this->findChild<QLineEdit*>("newUnitID_LineEdit")->text().toInt() != 0)
+        //registryPtr->modifyUnit()
 }

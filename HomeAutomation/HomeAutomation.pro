@@ -43,3 +43,8 @@ FORMS    += mainwindow.ui \
     addunit.ui \
     editentry.ui \
     editunit.ui
+
+DISTFILES += \
+    icon.ico
+
+win32:RC_ICONS += icon.ico

@@ -149,7 +149,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="newUnitID_LineEdit_2">
+         <widget class="QLineEdit" name="newRoomID_LineEdit">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>

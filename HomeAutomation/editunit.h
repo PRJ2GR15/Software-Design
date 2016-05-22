@@ -21,6 +21,7 @@ class EditUnit;
 
 class EditUnit : public QWidget, public BaseMenu
 {
+    const int invalidSelection;
     Q_OBJECT
 
 public:
@@ -39,11 +40,15 @@ public slots:
     void updateTable();
 
 private slots:
-    void on_pushButton_clicked();
+
+    void on_editUnit_Cancel_PushButton_clicked();
+
+    void on_editUnit_Table_cellClicked(int row, int column);
 
 private:
     Ui::EditUnit *ui;
-    unsigned char selectedUnitID;
+    unsigned char selectedUnitID, selectedRoomID;
+    int selectedRow;
     QTableWidget* tablePtr;
 };
 

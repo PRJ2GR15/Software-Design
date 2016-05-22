@@ -23,7 +23,6 @@ class MainMenu;
 
 class MainMenu : public QWidget, public BaseMenu
 {
-    const int invalidSelection;
     Q_OBJECT
 
 public:
@@ -41,8 +40,6 @@ public:
 private slots:
     void on_updateButton_clicked();
 
-    void on_unitTable_cellClicked(int row, int column);
-
     void on_addUnit_PushButton_clicked();
 
     void on_remUnit_PushButton_clicked();
@@ -54,7 +51,6 @@ private slots:
 private:
     Ui::MainMenu *ui;
     QTableWidget* tablePtr;
-    int selectedRow;
 };
 
 #endif // MAINMENU_H

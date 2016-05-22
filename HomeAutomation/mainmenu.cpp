@@ -19,11 +19,10 @@
 // DESCR. :
 //=============================================================
 MainMenu::MainMenu(QStackedWidget *parent, UnitRegister &regRef, CommInterface &commRef) :
-    QWidget(parent), invalidSelection(9999),
+    QWidget(parent),
     ui(new Ui::MainMenu)
 {
     ui->setupUi(this);
-    selectedRow = invalidSelection;
     this->setAccessibleName("Main Menu");
     parentPtr = parent;
     setRegistryPtr(regRef);
@@ -122,11 +121,6 @@ void MainMenu::on_updateButton_clicked()
     getRegistryPtr()->getStoredUnits();
 }
 
-void MainMenu::on_unitTable_cellClicked(int row, int column)
-{
-    selectedRow = row;
-}
-
 void MainMenu::on_addUnit_PushButton_clicked()
 {
     for(int i = 0; i < getParentPtr()->count(); ++i) {
@@ -163,10 +157,6 @@ void MainMenu::on_pushButton_2_clicked()
 
 void MainMenu::on_editUnit_PushButton_clicked()
 {
-    QModelIndex index = tablePtr->model()->index(selectedRow,0,QModelIndex());
-    QString data = tablePtr->model()->data(index).toString();
-    cout << data.toStdString() << endl;
-    getRegistryPtr()->deleteUnit(static_cast<uchar>(data.toInt()));
     for(int i = 0; i < getParentPtr()->count(); ++i) {
         if(getParentPtr()->widget(i)->accessibleName().compare("Edit Unit") == 0) {
             getParentPtr()->setCurrentIndex(i);

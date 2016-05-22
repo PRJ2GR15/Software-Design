@@ -172,6 +172,7 @@ bool UnitRegister::modifyUnit(uchar unitID, uchar roomID)
             iter->setRoomID(roomID);
         }
     }
+    return true;
 }
 
 /*bool UnitRegister::updateTime(uchar roomID, int placeholder)

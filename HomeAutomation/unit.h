@@ -57,6 +57,7 @@ public:
 	bool updateEntry(int day, int place, unsigned char hour, unsigned char min, bool action);
 	bool clearData();
 	void printEntry()const;
+	unsigned char getSize()const;
 private:
 	unsigned char unitID_; 
 	unsigned char roomID_;

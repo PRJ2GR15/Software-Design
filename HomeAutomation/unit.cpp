@@ -326,7 +326,17 @@ bool Unit::storeEntryData()
 	return true;
 }
 
-
+unsigned char Unit::getSize()const
+{
+	
+	unsigned char size=0;
+	
+	for(int i= 0; i<7;i++)
+	{
+		size += entryRegister_[i].size();
+	}
+	return size;
+}
 //=============================================================
 // METHOD : Print Operator 
 // DESCR. : Giver mulighed for at printe med objekt navn

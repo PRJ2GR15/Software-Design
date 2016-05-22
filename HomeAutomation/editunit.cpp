@@ -14,11 +14,13 @@
 //========================================================================
 
 EditUnit::EditUnit(QStackedWidget *parent, UnitRegister &regRef, CommInterface& commRef) :
-    QWidget(parent),
+    QWidget(parent), invalidSelection(9999),
     ui(new Ui::EditUnit)
 {
     ui->setupUi(this);
     this->setAccessibleName("Edit Unit");
+    this->findChild<QLineEdit*>("newUnitID_LineEdit")->setValidator(new QIntValidator(1,255));
+    this->findChild<QLineEdit*>("newRoomID_LineEdit")->setValidator(new QIntValidator(1,255));
     parentPtr = parent;
     setRegistryPtr(regRef);
     setCommPtr(commRef);
@@ -41,11 +43,6 @@ void EditUnit::setTablePtr(QTableWidget* tableRef)
     }
     else
         cerr << "Couldn't register table address" << endl;
-}
-
-void EditUnit::on_pushButton_clicked()
-{
-    parentPtr->setCurrentIndex(0);
 }
 
 /*void EditUnit::populateTable() {
@@ -95,4 +92,24 @@ void EditUnit::updateTable()
                 rowCount += 1;
             }
         }
+}
+
+void EditUnit::on_editUnit_Cancel_PushButton_clicked()
+{
+    parentPtr->setCurrentIndex(0);
+}
+
+void EditUnit::on_editUnit_Table_cellClicked(int row, int column)
+{
+    selectedRow = row;
+    QModelIndex index = tablePtr->model()->index(selectedRow,0,QModelIndex());
+    QString data = tablePtr->model()->data(index).toString();
+    this->findChild<QLineEdit*>("currentUnitID_LineEdit")->setText(data);
+    selectedUnitID = static_cast<char>(data.toInt());
+
+    index = tablePtr->model()->index(selectedRow,1,QModelIndex());
+    data = tablePtr->model()->data(index).toString();
+    this->findChild<QLineEdit*>("currentRoomID_LineEdit")->setText(data);
+    selectedRoomID = static_cast<char>(data.toInt());
+
 }

@@ -24,7 +24,7 @@ RemoveUnit::RemoveUnit(QStackedWidget *parent, UnitRegister& regRef, CommInterfa
     setRegistryPtr(regRef);
     setCommPtr(commRef);
     setTablePtr(this->findChild<QTableWidget*>("rem_unitTable"));
-    selectedRow = invalidSelection; selectedColumn = invalidSelection;
+    selectedRow = invalidSelection;
 }
 
 RemoveUnit::~RemoveUnit()
@@ -81,7 +81,6 @@ void RemoveUnit::populateTable() {
 void RemoveUnit::on_rem_unitTable_cellClicked(int row, int column)
 {
     selectedRow = row;
-    selectedColumn = column;
 }
 
 void RemoveUnit::on_remove_PushButton_clicked()

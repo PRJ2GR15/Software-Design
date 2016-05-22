@@ -7,7 +7,7 @@
 //------------------------------------------------------------------------
 //
 // REV. DATE/AUTHOR CHANGE DESCRIPTION
-// 1.0 <rev. date/author> <Change description>
+// 1.0 <17-05/2016/Nikolai J. Topping> <Oprettet fil.>
 // 1.1 <18.05/2016/Anders Brondbjerg Knudsen> <Tilf�jelse af entry>
 // 1.2 <19.05/2016/Nikolai J. Topping> <Migreret inhold fra QT projekt>
 //========================================================================

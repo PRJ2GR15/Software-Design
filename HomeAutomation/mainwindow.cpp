@@ -27,11 +27,14 @@ MainWindow::MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *pa
     removeUnitPtr = new RemoveUnit(ui->MainW_StackedWidget, regRef, commRef);
     addUnitPtr = new AddUnit(ui->MainW_StackedWidget, regRef, commRef);
     editPtr = new EditEntry(ui->MainW_StackedWidget, regRef, commRef);
+    editUnitPtr = new EditUnit(ui->MainW_StackedWidget, regRef, commRef);
 
     ui->MainW_StackedWidget->addWidget(mainMenuPtr);
     ui->MainW_StackedWidget->addWidget(addUnitPtr);
-    ui->MainW_StackedWidget->addWidget(removeUnitPtr);
+    ui->MainW_StackedWidget->addWidget(editUnitPtr);
     ui->MainW_StackedWidget->addWidget(editPtr);
+    ui->MainW_StackedWidget->addWidget(removeUnitPtr);
+
     ui->MainW_StackedWidget->setCurrentWidget(mainMenuPtr);
 }
 
@@ -64,7 +67,7 @@ void MainWindow::on_MainW_StackedWidget_currentChanged(int arg1)
         mainMenuPtr->updateFromLocal();
     } else if(tmpString.compare("Remove Unit") == 0) {
         removeUnitPtr->populateTable();
-    } else {
-        cout << "Default" << endl;
+    } else if(tmpString.compare("Edit Unit") == 0) {
+        editUnitPtr->updateTable();
     }
 }

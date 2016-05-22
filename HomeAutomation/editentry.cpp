@@ -38,7 +38,7 @@ void EditEntry::populateTable() {
             tablePtr->setRowCount(getRegistryPtr()->getRegistrySize());
             int rowCount = 0;
             vector<Unit>::iterator iter;
-            vector<Entry>::iterator test;
+
             QString inf;
             QString size;
             for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter) {

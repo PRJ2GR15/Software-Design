@@ -1,14 +1,29 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+//========================================================================
+// FILENAME : <MainWindow.h>
+// CREATED : <18/05-2016>
+// AUTHOR : <Nikolai James Topping>
+// DESCR. : <Header filen for MainWindow>
+//
+//------------------------------------------------------------------------
+//
+// REV. DATE/AUTHOR CHANGE DESCRIPTION
+// 1.0 <18-05/2016/Nikolai J. Topping> <Oprettet fil. Oprettet setters/getters. UnitRegister og MainMenu pointers.>
+// 1.1 <20-05/2016/Nikolai J. Topping> <Tilføjet RemoveUnit/AddUnit.>
+// 1.2 <20-05/2016/Nikolai J. Topping> <Tilføjet "CurrentChanged" slot funktion til stacked widget>
+// 1.3 <21-05/2016/Nikolai J. Topping> <Tilføjet EditUnit/EditEntry>
+//========================================================================
+
 
 #include <QMainWindow>
 #include <QtWidgets>
+#include "basemenu.h"
 #include "mainmenu.h"
 #include "removeunit.h"
 #include "addunit.h"
-#include "CommInterface.h"
-#include "UnitRegister.h"
 #include "editentry.h"
+#include "editunit.h"
 
 namespace Ui {
 class MainWindow;
@@ -38,6 +53,7 @@ private slots:
     void on_MainW_StackedWidget_currentChanged(int arg1);
 
 private:
+
     Ui::MainWindow *ui;
     MainMenu* mainMenuPtr;
     RemoveUnit* removeUnitPtr;
@@ -46,6 +62,7 @@ private:
     CommInterface* commPtr;
     QTableWidget* tablePtr;
     EditEntry* editPtr;
+    EditUnit* editUnitPtr;
 };
 
 #endif // MAINWINDOW_H

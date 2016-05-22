@@ -19,8 +19,8 @@ using namespace std;
 
 
 //=====================================
-// CLASS : Entry
-// DESCR. : Indeholder data om hvornår enheden skal aktiveres og slukke
+// CLASS : Entry 
+// DESCR.: Indeholder data om hvornår enheden skal aktiveres og slukke
 //=====================================
 
 class Entry

@@ -76,4 +76,7 @@ void MainWindow::on_MainW_StackedWidget_currentChanged(int arg1)
     } else if(tmpString.compare("Edit Unit") == 0) {
         editUnitPtr->updateTable();
     }
+    else if(tmpString.compare("Edit Entry") == 0) {
+            editPtr->populateTable();
+    }
 }

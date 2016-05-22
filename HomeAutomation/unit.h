@@ -50,7 +50,7 @@ public:
 	bool loadEntryData();
 	bool storeEntryData();
 	bool storeEntry(int day,Entry&obj);
-	bool compareEntry(Entry&,int)const;
+        bool compareEntry(Entry&,int);
 	bool deleteEntry(int day, int place);
 	bool deleteDayEntry(int day);
 	bool deleteEntry();

@@ -153,7 +153,7 @@ void Unit::initialEntry()
 
 bool Unit::storeEntry(int day,Entry& obj)
 {
-	if ((entryRegister_[day].size() <=maxEntries) & (!compareEntry(obj,day)))
+        if ((entryRegister_[day].size() <=maxEntries) & (compareEntry(obj,day)==false))
 	{
 		entryRegister_[day].push_back(obj);
 		return true;
@@ -167,7 +167,7 @@ bool Unit::storeEntry(int day,Entry& obj)
 // DESCR. : Benyttes for at tjekke om to objekter er ens.
 //=============================================================
 
-bool Unit::compareEntry(Entry& obj,int d) const
+bool Unit::compareEntry(Entry& obj,int d)
 {
 	
 	int max = entryRegister_[d].size();
@@ -175,7 +175,7 @@ bool Unit::compareEntry(Entry& obj,int d) const
 		
 	for (int i = 0; i < max;i++)
 	{
-            if ((entryRegister_[d][i].getHour() == obj.getHour() && (entryRegister_[d][i].getMin() == obj.getMin()) && (entryRegister_[d][i].getAction() == obj.getAction())))
+            if ((entryRegister_[d][i].getHour() == obj.getHour() && (entryRegister_[d][i].getMin() <= obj.getMin()) && (entryRegister_[d][i].getAction() == obj.getAction())))
 				return true;
 			
 	}
@@ -311,7 +311,7 @@ bool Unit::storeEntryData()
 		return false;
 	}
 
-	for (int i = 0; i < 7; i++) 
+	for (int i = 0; i < days; i++) 
 	{
 		for (int j = 0; j < entryRegister_[i].size(); j++)
 		{

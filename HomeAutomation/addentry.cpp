@@ -21,6 +21,7 @@ AddEntry::~AddEntry()
 
 void AddEntry::on_pushButton_clicked()
 {
+
     QString date = ui->comboBox->currentText();
     int valgteDag=0;
     if(date=="Mandag")
@@ -46,8 +47,7 @@ void AddEntry::on_pushButton_clicked()
     int endMin = ui->EndTime->time().minute();
 
 
-    Entry tempStart(setHour,setMin,1);
-    Entry tempEnd(endHour,endMin,0);
+
      vector<Unit>::iterator iter;
      QMessageBox msgBox;
      msgBox.setWindowTitle("Udført funktion");
@@ -56,28 +56,33 @@ void AddEntry::on_pushButton_clicked()
 
 
 
-   if((setHour<endHour)||((setHour==endHour)& (setMin<endMin)))
+     if((setHour<endHour)||((setHour==endHour)& (setMin<endMin)))
     {
-     for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter)
-     {
-         if(iter->getUnitID()==2)
+         for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter)
          {
-             iter->storeEntry(valgteDag,tempStart); //Tilføjer start tidsplan
-             iter->storeEntry(valgteDag,tempEnd);   //Tilføjer slut tidsplan
-             msgBox.setText("Tilføjelse af enheden succesfuld");
-             cout << "her er de nye entries)" <<endl;
-             iter->printEntry();
-             iter->storeEntryData();
-         }
+             if(iter->getUnitID()==2)
+             {
+                 if(iter->storeEntry(valgteDag,Entry(setHour,setMin,1))==true) //Tilføjer start tidsplan
+                 {
+                    iter->storeEntry(valgteDag,Entry(endHour,endMin,0));//Tilføjer slut tidsplan
+
+                         msgBox.setText("Tilføjelse af enheden succesfuld");
+
+                 }
+                 else
+                        msgBox.setText("Fejl- Eksisterende tidsplan findes allerede");
+            }
+
+        }
      }
 
-    }
-
-
-
-
-  else
+    else
       msgBox.setText("Tilføjelse af enheden fejlede");
    if(msgBox.exec()==QMessageBox::Ok)
-   parentPtr->setCurrentIndex(0);
+    parentPtr->setCurrentIndex(0);
+}
+
+void AddEntry::on_pushButton_2_clicked()
+{
+    parentPtr->setCurrentIndex(0);
 }

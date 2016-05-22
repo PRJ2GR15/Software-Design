@@ -12,6 +12,7 @@ EditEntry::EditEntry(QStackedWidget *parent, UnitRegister& regRef, CommInterface
     setCommPtr(commRef);
     setTablePtr(this->findChild<QTableWidget*>("EntryTable"));
     populateTable();
+
 }
 
 EditEntry::~EditEntry()
@@ -49,7 +50,7 @@ void EditEntry::populateTable() {
                 tablePtr->setItem( rowCount, 0, new QTableWidgetItem( inf ) );
 
 
-               size = QString::number(+(iter->getSize()));
+               size = QString::number(+(iter->getSize()/2));
                tablePtr->setItem(rowCount,1,new QTableWidgetItem(size));
 
                 rowCount += 1;
@@ -61,6 +62,8 @@ void EditEntry::populateTable() {
 
 void EditEntry::on_pushButton_clicked()
 {
+
+
     for(int i = 0; i < getParentPtr()->count(); ++i) {
         if(getParentPtr()->widget(i)->accessibleName().compare("Add Entry") == 0) {
             getParentPtr()->setCurrentIndex(i);
@@ -80,3 +83,21 @@ void EditEntry::on_pushButton_2_clicked()
     }
     cerr<< "Kan ikke finde Edit Old Entry" << endl;
 }
+
+void EditEntry::on_pushButton_3_clicked()
+{
+    parentPtr->setCurrentIndex(0);
+}
+
+void EditEntry::on_EntryTable_cellClicked(int row, int column)
+{
+    selectedRow=row;
+}
+
+int EditEntry::returnSelected()const
+{
+    return selectedRow;
+}
+
+
+

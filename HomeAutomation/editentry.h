@@ -13,11 +13,15 @@ class EditEntry : public QWidget, public BaseMenu
     Q_OBJECT
 
 public:
-    EditEntry(QWidget *parent, UnitRegister& regRef, CommInterface& commRef);
+    EditEntry(QStackedWidget *parent, UnitRegister& regRef, CommInterface& commRef);
     ~EditEntry();
+    void setTablePtr(QTableWidget* tableRef);
+    void populateTable();
+
 
 private:
     Ui::EditEntry *ui;
+    QTableWidget* tablePtr;
 };
 
 #endif // EDITENTRY_H

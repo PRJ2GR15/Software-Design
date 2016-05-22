@@ -28,7 +28,7 @@ public:
     EditUnit(QStackedWidget *parent, UnitRegister& regRef, CommInterface& commRef);
     ~EditUnit();
 
-    void setSelectedUnitID(unsigned char);
+    void setSelectedUnitID(int);
     unsigned char getSelectedUnitID() { return selectedUnitID; };
 
     void setTablePtr(QTableWidget* tableRef);
@@ -45,9 +45,11 @@ private slots:
 
     void on_editUnit_Table_cellClicked(int row, int column);
 
+    void on_editUnit_Save_PushButton_clicked();
+
 private:
     Ui::EditUnit *ui;
-    unsigned char selectedUnitID, selectedRoomID;
+    int selectedUnitID, selectedRoomID;
     int selectedRow;
     QTableWidget* tablePtr;
 };

@@ -21,9 +21,10 @@ public:
     }
 
     //Placeholder
-    bool getUnitStatus(unsigned char ID) {
-        return true;
-    }
+    bool getUnitStatus(unsigned char ID) { return true; }
+
+    //Placeholder
+    bool updateUnit(unsigned char previousID, unsigned char newID, unsigned char roomID);
 private:
     int a;
 };

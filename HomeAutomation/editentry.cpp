@@ -38,13 +38,23 @@ void EditEntry::populateTable() {
             tablePtr->setRowCount(getRegistryPtr()->getRegistrySize());
             int rowCount = 0;
             vector<Unit>::iterator iter;
+            vector<Entry>::iterator test;
             QString inf;
+            QString size;
             for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter) {
+
+
                 //Returnere unitID som uchar, caster til int. QString::number gemmer int som en QString.
                 inf = QString::number(+((*iter).getUnitID()));
                 tablePtr->setItem( rowCount, 0, new QTableWidgetItem( inf ) );
 
+
+               size = QString::number(+(iter->getSize()));
+               tablePtr->setItem(rowCount,1,new QTableWidgetItem(size));
+
                 rowCount += 1;
+
+
             }
         }
 }

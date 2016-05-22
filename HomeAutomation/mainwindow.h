@@ -24,6 +24,8 @@
 #include "addunit.h"
 #include "editentry.h"
 #include "editunit.h"
+#include "addentry.h"
+#include "editoldentry.h"
 
 namespace Ui {
 class MainWindow;
@@ -63,6 +65,8 @@ private:
     QTableWidget* tablePtr;
     EditEntry* editPtr;
     EditUnit* editUnitPtr;
+    AddEntry* addEntryPtr;
+    EditOldEntry* editEntryPtr;
 };
 
 #endif // MAINWINDOW_H

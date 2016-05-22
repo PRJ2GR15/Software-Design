@@ -257,39 +257,8 @@ void Unit::printEntry() const
 	{
 		for (auto col : row)
 			cout << col << endl;
-
 	}
 }
-
-unsigned char Unit::getHour()const
-{
-    for (auto row : entryRegister_)
-    {
-            for (auto col : row)
-             return col.getHour();
-
-    }
-}
-
-unsigned char Unit::getMin()const
-{
-    for (auto row : entryRegister_)
-    {
-            for (auto col : row)
-            return col.getMin();
-
-    }
-}
-bool Unit::getAction()const
-{
-    for (auto row : entryRegister_)
-    {
-            for (auto col : row)
-            return col.getAction();
-
-    }
-}
-
 
 //=============================================================
 // METHOD : Load data for Entry. 
@@ -356,7 +325,6 @@ bool Unit::storeEntryData()
 	saveData.close();
 	return true;
 }
-
 
 
 //=============================================================

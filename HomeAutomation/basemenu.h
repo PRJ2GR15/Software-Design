@@ -1,3 +1,14 @@
+//========================================================================
+// FILENAME : <BaseMenu.h>
+// CREATED : <19/05-2016>
+// AUTHOR : <Nikolai James Topping>
+// DESCR. : <Bruges som basis-klasse for alle undermenuer.>
+//
+//------------------------------------------------------------------------
+//
+// REV. DATE/AUTHOR CHANGE DESCRIPTION
+// 1.0 <19-05/2016/Nikolai J. Topping> <Oprettet fil. Tilføjet set/get metoder samt private/protected variabler.>
+//========================================================================
 #ifndef BASEMENU_H
 #define BASEMENU_H
 

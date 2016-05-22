@@ -51,7 +51,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_4">
+      <widget class="QPushButton" name="editUnit_PushButton">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -59,7 +59,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>PushButton</string>
+        <string>Rediger Enhed</string>
        </property>
       </widget>
      </item>
@@ -125,6 +125,9 @@
          <width>320</width>
          <height>251</height>
         </size>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
        </property>
        <attribute name="horizontalHeaderCascadingSectionResizes">
         <bool>false</bool>

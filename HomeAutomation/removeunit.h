@@ -1,22 +1,20 @@
 //========================================================================
 // FILENAME : <RemoveUnit.cpp>
-// CREATED : <18/05-2016>
+// CREATED : <20/05-2016>
 // AUTHOR : <Nikolai James Topping>
-// DESCR. : <Implementering af MainMenu>
+// DESCR. : <Header fil til RemoveUnit>
 //
 //------------------------------------------------------------------------
 //
 // REV. DATE/AUTHOR CHANGE DESCRIPTION
-// 1.0 <18.05/2016/Nikolai J. Topping> <Oprettet RemoveUnit>
-//
+// 1.0 <20.05/2016/Nikolai J. Topping> <Oprettet RemoveUnit>
+// 1.1 <20.05/2016/Nikolai J. Topping> <Tilføjet funktioner til click på diverse knapper. Samt funktion til at læse cellClicked>
 //========================================================================
 
 #ifndef REMOVEUNIT_H
 #define REMOVEUNIT_H
 
 #include <QWidget>
-#include "UnitRegister.h"
-#include "CommInterface.h"
 #include "basemenu.h"
 
 namespace Ui {

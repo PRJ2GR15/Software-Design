@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     removeunit.cpp \
     basemenu.cpp \
     addunit.cpp \
-    editentry.cpp
+    editentry.cpp \
+    editunit.cpp
 
 HEADERS  += mainwindow.h \
     CommInterface.h \
@@ -33,10 +34,12 @@ HEADERS  += mainwindow.h \
     removeunit.h \
     basemenu.h \
     addunit.h \
-    editentry.h
+    editentry.h \
+    editunit.h
 
 FORMS    += mainwindow.ui \
     mainmenu.ui \
     removeunit.ui \
     addunit.ui \
-    editentry.ui
+    editentry.ui \
+    editunit.ui

@@ -58,3 +58,8 @@ void EditEntry::populateTable() {
             }
         }
 }
+
+void EditEntry::on_pushButton_clicked()
+{
+
+}

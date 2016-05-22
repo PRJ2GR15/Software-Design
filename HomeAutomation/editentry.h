@@ -19,6 +19,9 @@ public:
     void populateTable();
 
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::EditEntry *ui;
     QTableWidget* tablePtr;

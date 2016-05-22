@@ -6,6 +6,7 @@ EditOldEntry::EditOldEntry(QStackedWidget *parent, UnitRegister& regRef, CommInt
     ui(new Ui::EditOldEntry)
 {
     ui->setupUi(this);
+    this->setAccessibleName("Edit Old Entry");
 }
 
 EditOldEntry::~EditOldEntry()

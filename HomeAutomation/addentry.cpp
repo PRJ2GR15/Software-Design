@@ -6,6 +6,7 @@ AddEntry::AddEntry(QStackedWidget *parent, UnitRegister& regRef, CommInterface& 
     ui(new Ui::AddEntry)
 {
     ui->setupUi(this);
+    this->setAccessibleName("Add Entry");
 }
 
 AddEntry::~AddEntry()

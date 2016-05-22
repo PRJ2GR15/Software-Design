@@ -61,5 +61,22 @@ void EditEntry::populateTable() {
 
 void EditEntry::on_pushButton_clicked()
 {
+    for(int i = 0; i < getParentPtr()->count(); ++i) {
+        if(getParentPtr()->widget(i)->accessibleName().compare("Add Entry") == 0) {
+            getParentPtr()->setCurrentIndex(i);
+            return;
+        }
+    }
+    cerr<< "Kan ikke finde Add Entry" << endl;
+}
 
+void EditEntry::on_pushButton_2_clicked()
+{
+    for(int i = 0; i < getParentPtr()->count(); ++i) {
+        if(getParentPtr()->widget(i)->accessibleName().compare("Edit Old Entry") == 0) {
+            getParentPtr()->setCurrentIndex(i);
+            return;
+        }
+    }
+    cerr<< "Kan ikke finde Edit Old Entry" << endl;
 }

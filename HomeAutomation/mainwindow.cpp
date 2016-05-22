@@ -28,7 +28,7 @@ MainWindow::MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *pa
     addUnitPtr = new AddUnit(ui->MainW_StackedWidget, regRef, commRef);
     editPtr = new EditEntry(ui->MainW_StackedWidget, regRef, commRef);
     editUnitPtr = new EditUnit(ui->MainW_StackedWidget, regRef, commRef);
-    addUnitPtr = new AddUnit(ui->MainW_StackedWidget, regRef, commRef);
+    addEntryPtr = new AddEntry(ui->MainW_StackedWidget, regRef, commRef);
     editEntryPtr = new EditOldEntry(ui->MainW_StackedWidget, regRef, commRef);
 
 
@@ -36,8 +36,8 @@ MainWindow::MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *pa
     ui->MainW_StackedWidget->addWidget(addUnitPtr);
     ui->MainW_StackedWidget->addWidget(editUnitPtr);
     ui->MainW_StackedWidget->addWidget(editPtr);
-    ui->MainW_StackedWidget->addWidget(addUnitPtr);
-    ui->MainW_StackedWidget->addWidget(editUnitPtr);
+    ui->MainW_StackedWidget->addWidget(addEntryPtr);
+    ui->MainW_StackedWidget->addWidget(editEntryPtr);
     ui->MainW_StackedWidget->addWidget(removeUnitPtr);
 
 

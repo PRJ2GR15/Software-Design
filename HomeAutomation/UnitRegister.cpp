@@ -163,7 +163,15 @@ bool UnitRegister::deleteUnit(uchar unitID)
 
 bool UnitRegister::modifyUnit(uchar unitID, uchar roomID)
 {
-	return true;
+    vector<Unit>::iterator iter;
+    for(iter = unitRegister_.begin(); iter != unitRegister_.end(); ++iter)
+    {
+        if(unitID == iter->getUnitID())
+        {
+            iter->setUnitID(unitID);
+            iter->setRoomID(roomID);
+        }
+    }
 }
 
 /*bool UnitRegister::updateTime(uchar roomID, int placeholder)

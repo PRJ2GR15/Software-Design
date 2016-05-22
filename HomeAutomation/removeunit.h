@@ -48,7 +48,7 @@ private slots:
 private:
     Ui::RemoveUnit *ui;
     QTableWidget* tablePtr;
-    int selectedRow, selectedColumn;
+    int selectedRow;
 };
 
 #endif // REMOVEUNIT_H

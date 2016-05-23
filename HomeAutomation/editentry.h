@@ -35,7 +35,7 @@ private slots:
 private:
     Ui::EditEntry *ui;
     QTableWidget* tablePtr;
-    int selectedRow;
+    int selectedRow= -1;
 };
 
 #endif // EDITENTRY_H

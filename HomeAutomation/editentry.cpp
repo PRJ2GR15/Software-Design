@@ -63,7 +63,8 @@ void EditEntry::populateTable() {
 void EditEntry::on_pushButton_clicked()
 {
     returnSelected();
-
+if(selectedRow!=-1)
+{
     for(int i = 0; i < getParentPtr()->count(); ++i) {
         if(getParentPtr()->widget(i)->accessibleName().compare("Add Entry") == 0) {
             getParentPtr()->setCurrentIndex(i);
@@ -71,6 +72,15 @@ void EditEntry::on_pushButton_clicked()
         }
     }
     cerr<< "Kan ikke finde Add Entry" << endl;
+}
+else{
+QMessageBox msgBox;
+msgBox.setWindowTitle("Fejl under Ændring");
+msgBox.addButton(QMessageBox::Ok);
+msgBox.setText("Ingen enhed valg til ændring");
+if(msgBox.exec()==QMessageBox::Ok)
+    return;
+}
 }
 
 void EditEntry::on_pushButton_2_clicked()

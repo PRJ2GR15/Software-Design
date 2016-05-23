@@ -86,10 +86,10 @@ void RemoveUnit::on_rem_unitTable_cellClicked(int row, int column)
 void RemoveUnit::on_remove_PushButton_clicked()
 {
     QModelIndex index = tablePtr->model()->index(selectedRow,0,QModelIndex());
-    QString data = tablePtr->model()->data(index).toString();
-    cout << data.toStdString() << endl;
-    getRegistryPtr()->deleteUnit(static_cast<uchar>(data.toInt()));
-    cout << "Unit with ID: " << data.toStdString() << " deleted." << endl;
+    int data = tablePtr->model()->data(index).toInt();
+    cout << data << endl;
+    getRegistryPtr()->deleteUnit(static_cast<uchar>(data));
+    cout << "Unit with ID: " << data << " deleted." << endl;
     populateTable();
 }
 

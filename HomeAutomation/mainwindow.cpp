@@ -42,6 +42,9 @@ MainWindow::MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *pa
 
 
     ui->MainW_StackedWidget->setCurrentWidget(mainMenuPtr);
+
+    QObject::connect(editPtr,SIGNAL(sendid(int)),
+                     addEntryPtr,SLOT(getUnit(int)));
 }
 
 MainWindow::~MainWindow()

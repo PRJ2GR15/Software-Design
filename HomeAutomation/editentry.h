@@ -17,7 +17,10 @@ public:
     ~EditEntry();
     void setTablePtr(QTableWidget* tableRef);
     void populateTable();
-    int returnSelected()const;
+    void returnSelected();
+
+signals:
+    void sendid(int);
 
 private slots:
 

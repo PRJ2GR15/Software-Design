@@ -19,9 +19,14 @@ AddEntry::~AddEntry()
     delete ui;
 }
 
+void AddEntry::getUnit(int id)
+{
+    unitID=id;
+}
+
 void AddEntry::on_pushButton_clicked()
 {
-
+    cout <<"Her" << unitID <<endl;
     QString date = ui->comboBox->currentText();
     int valgteDag=0;
     if(date=="Mandag")
@@ -60,7 +65,7 @@ void AddEntry::on_pushButton_clicked()
     {
          for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter)
          {
-             if(iter->getUnitID()==2)
+             if(iter->getUnitID()==unitID)
              {
                  if(iter->storeEntry(valgteDag,Entry(setHour,setMin,1))==true) //Tilføjer start tidsplan
                  {
@@ -70,7 +75,7 @@ void AddEntry::on_pushButton_clicked()
 
                  }
                  else
-                        msgBox.setText("Fejl- Eksisterende tidsplan findes allerede");
+                        msgBox.setText("Tilføjelse af enheden fejlede");
             }
 
         }

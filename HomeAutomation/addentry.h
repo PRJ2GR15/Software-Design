@@ -16,6 +16,10 @@ public:
     AddEntry(QStackedWidget *parent, UnitRegister& regRef, CommInterface& commRef);
     ~AddEntry();
 
+public slots:
+void getUnit(int id);
+
+
 private slots:
     void on_pushButton_clicked();
 
@@ -23,6 +27,7 @@ private slots:
 
 private:
     Ui::AddEntry *ui;
+    int unitID;
 };
 
 #endif // ADDENTRY_H

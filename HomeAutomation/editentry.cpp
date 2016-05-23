@@ -62,7 +62,7 @@ void EditEntry::populateTable() {
 
 void EditEntry::on_pushButton_clicked()
 {
-
+    returnSelected();
 
     for(int i = 0; i < getParentPtr()->count(); ++i) {
         if(getParentPtr()->widget(i)->accessibleName().compare("Add Entry") == 0) {
@@ -94,9 +94,12 @@ void EditEntry::on_EntryTable_cellClicked(int row, int column)
     selectedRow=row;
 }
 
-int EditEntry::returnSelected()const
+void EditEntry::returnSelected()
 {
-    return selectedRow;
+    QModelIndex index = tablePtr->model()->index(selectedRow,0,QModelIndex());
+    int data = tablePtr->model()->data(index).toInt();
+
+    emit sendid(data);
 }
 
 

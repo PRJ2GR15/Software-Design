@@ -15,6 +15,8 @@ class AddEntry : public QWidget, public BaseMenu
 public:
     AddEntry(QStackedWidget *parent, UnitRegister& regRef, CommInterface& commRef);
     ~AddEntry();
+    void setTablePtr(QTableWidget* tableRef);
+    void populateTable();
 
 public slots:
 void getUnit(int id);
@@ -27,6 +29,7 @@ private slots:
 
 private:
     Ui::AddEntry *ui;
+    QTableWidget* tablePtr;
     int unitID;
 };
 

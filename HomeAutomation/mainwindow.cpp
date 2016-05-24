@@ -82,4 +82,7 @@ void MainWindow::on_MainW_StackedWidget_currentChanged(int arg1)
     else if(tmpString.compare("Edit Entry") == 0) {
             editPtr->populateTable();
     }
+    else if(tmpString.compare("Add Entry") == 0) {
+            addEntryPtr->populateTable();
+    }
 }

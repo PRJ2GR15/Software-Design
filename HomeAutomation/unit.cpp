@@ -153,7 +153,7 @@ void Unit::initialEntry()
 
 bool Unit::storeEntry(int day,Entry& obj)
 {
-        if ((entryRegister_[day].size() <=maxEntries) & (compareEntry(obj,day)==false))
+    if ((entryRegister_[day].size() <=maxEntries) & (compareEntry(obj,day)==false))
 	{
 		entryRegister_[day].push_back(obj);
 		return true;
@@ -253,10 +253,10 @@ bool Unit::clearData()
 void Unit::printEntry() const
 {
 	
-	for (auto row : entryRegister_)
+    for (auto day : entryRegister_)
 	{
-		for (auto col : row)
-			cout << col << endl;
+        for (auto entry : day)
+            cout << entry << endl;
 	}
 }
 
@@ -267,7 +267,7 @@ void Unit::printEntry() const
 
 bool Unit::loadEntryData()
 {
-	int id = 0x00, d = 0x00, h = 0x00, m = 0x00; bool a = false;
+        int id = 0x00, d = 0x00, entryID=0x00, h = 0x00, m = 0x00; bool a = false;
 
 	ifstream entryFile;
 
@@ -282,7 +282,7 @@ bool Unit::loadEntryData()
 		while (!entryFile.eof())
 		{
             entryFile >>id >>d >> h >> m >> a;
-			Entry tempObj(h, m, a);
+                        Entry tempObj(entryID,h, m, a);
 			if (getUnitID() == id)
 			{
 				storeEntry(d, tempObj);
@@ -337,6 +337,30 @@ unsigned char Unit::getSize()const
 	}
 	return size;
 }
+
+unsigned char Unit::getDay()const
+{
+    for (int i = 0; i < days; i++)
+    {
+        for (int j = 0; j < entryRegister_[i].size(); j++)
+            return i;
+    }
+}
+
+int Unit::compareEntryID(int entries)const
+{
+    for (int i = 0; i < days; i++)
+    {
+        for (int j = 0; j < entryRegister_[i].size(); j++)
+        {
+            if(entries==entryRegister_[i][j].EntryID());
+        return i;
+        }
+    }
+
+}
+
+
 //=============================================================
 // METHOD : Print Operator 
 // DESCR. : Giver mulighed for at printe med objekt navn

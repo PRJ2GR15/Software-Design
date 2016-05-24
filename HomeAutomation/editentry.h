@@ -17,11 +17,26 @@ public:
     ~EditEntry();
     void setTablePtr(QTableWidget* tableRef);
     void populateTable();
+    void returnSelected();
 
+signals:
+    void sendid(int);
+
+private slots:
+
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_3_clicked();
+
+    void on_EntryTable_cellClicked(int row, int column);
 
 private:
     Ui::EditEntry *ui;
     QTableWidget* tablePtr;
+    int selectedRow= -1;
+    int selectedCol=0;
 };
 
 #endif // EDITENTRY_H

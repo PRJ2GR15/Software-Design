@@ -10,6 +10,7 @@
 // 1.0 <18/05-2016/Anders Brondbjerg Knudsen> <Implementering af entry. Print, operator>> og operator<< >
 // 1.1 <19/05-2016/Anders Brondbjerg Knudsen> <Opdatering af metoder efter attribut dayOfWeek fjernet.> 
 // 1.2 <19/05-2016/Anders Brondbjerg Knudsen> <Ændret så implementering ikke er inline>
+// 1.3 <24/05-2016/Anders Brondbjerg Knudsen> <Tilføjelse af EntryID>
 //========================================================================
 
 
@@ -24,10 +25,11 @@ Entry::Entry()
 {
 }
 
-Entry::Entry(unsigned char hour, unsigned char min, bool action)
+Entry::Entry(int entryID, unsigned char hour, unsigned char min, bool action)
 {
-	setHour(hour);
-	setMin(min);
+    entryID_= entryID;
+    setHour(hour);
+    setMin(min);
     setAction(action);
 }
 
@@ -109,7 +111,7 @@ bool Entry::getAction() const
 
 void Entry::print()const
 {
-	cout << +hour_ << " " << +min_ <<  " " << action_ << endl;
+        cout << entryID_ << +hour_ << " " << +min_ <<  " " << action_ << endl;
 }
 
 //=============================================================
@@ -120,6 +122,7 @@ void Entry::print()const
 
 ostream &operator<<(ostream& os, const Entry& obj)
 {
+        os << obj.EntryID() << " ";
 	os << +obj.getHour()<< " ";
 	os << +obj.getMin() << " ";
 	os << +obj.getAction() << endl;
@@ -135,7 +138,7 @@ ostream &operator<<(ostream& os, const Entry& obj)
 
 
 istream& operator>>(istream& is, Entry& obj)
-{
+{       is >> obj.entryID_;
 	is >> obj.hour_;
 	is >> obj.min_;
 	is >> obj.action_;

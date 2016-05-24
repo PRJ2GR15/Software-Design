@@ -28,14 +28,23 @@ MainWindow::MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *pa
     addUnitPtr = new AddUnit(ui->MainW_StackedWidget, regRef, commRef);
     editPtr = new EditEntry(ui->MainW_StackedWidget, regRef, commRef);
     editUnitPtr = new EditUnit(ui->MainW_StackedWidget, regRef, commRef);
+    addEntryPtr = new AddEntry(ui->MainW_StackedWidget, regRef, commRef);
+    editEntryPtr = new EditOldEntry(ui->MainW_StackedWidget, regRef, commRef);
+
 
     ui->MainW_StackedWidget->addWidget(mainMenuPtr);
     ui->MainW_StackedWidget->addWidget(addUnitPtr);
     ui->MainW_StackedWidget->addWidget(editUnitPtr);
     ui->MainW_StackedWidget->addWidget(editPtr);
+    ui->MainW_StackedWidget->addWidget(addEntryPtr);
+    ui->MainW_StackedWidget->addWidget(editEntryPtr);
     ui->MainW_StackedWidget->addWidget(removeUnitPtr);
 
+
     ui->MainW_StackedWidget->setCurrentWidget(mainMenuPtr);
+
+    QObject::connect(editPtr,SIGNAL(sendid(int)),
+                     addEntryPtr,SLOT(getUnit(int)));
 }
 
 MainWindow::~MainWindow()
@@ -69,5 +78,11 @@ void MainWindow::on_MainW_StackedWidget_currentChanged(int arg1)
         removeUnitPtr->populateTable();
     } else if(tmpString.compare("Edit Unit") == 0) {
         editUnitPtr->updateTable();
+    }
+    else if(tmpString.compare("Edit Entry") == 0) {
+            editPtr->populateTable();
+    }
+    else if(tmpString.compare("Add Entry") == 0) {
+            addEntryPtr->populateTable();
     }
 }

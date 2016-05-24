@@ -23,7 +23,9 @@ SOURCES += main.cpp\
     basemenu.cpp \
     addunit.cpp \
     editentry.cpp \
-    editunit.cpp
+    editunit.cpp \
+    addentry.cpp \
+    editoldentry.cpp
 
 HEADERS  += mainwindow.h \
     CommInterface.h \
@@ -35,11 +37,20 @@ HEADERS  += mainwindow.h \
     basemenu.h \
     addunit.h \
     editentry.h \
-    editunit.h
+    editunit.h \
+    addentry.h \
+    editoldentry.h
 
 FORMS    += mainwindow.ui \
     mainmenu.ui \
     removeunit.ui \
     addunit.ui \
     editentry.ui \
-    editunit.ui
+    editunit.ui \
+    addentry.ui \
+    editoldentry.ui
+
+DISTFILES += \
+    icon.ico
+
+win32:RC_ICONS += icon.ico

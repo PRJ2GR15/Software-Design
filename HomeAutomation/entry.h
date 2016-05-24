@@ -10,6 +10,7 @@
 // 1.0 <18/05-2016/Anders Brondbjerg Knudsen> <Oprettelse af Entry>
 // 1.1 <19/05-2016/Anders Brondbjerg Knudsen> <DayOfWeek attibut fjernes. Bliver i stedet en vector som indeholder dag og entry objekter i Unit. 
 // 1.2 <19/05-2016/Anders Brondbjerg Knudsen> <Ændret så implementering ikke er inline>
+// 1.3 <24/05-2016/Anders Brondbjerg Knudsen> <Tilføjelse af EntryID>
 //========================================================================
 
 #pragma once
@@ -27,7 +28,7 @@ class Entry
 {
 public: 
 	Entry();
-	Entry(unsigned char hour, unsigned char min, bool action);
+        Entry(int entryID,unsigned char hour, unsigned char min, bool action);
 	void setHour(unsigned char hour);
 	unsigned char getHour()const;
 	void setMin(unsigned char min);
@@ -36,8 +37,10 @@ public:
 	bool getAction()const;
 	void print()const;
 	friend istream& operator>>(istream& is, Entry& obj);
+    int EntryID()const { return entryID_;}
 	
 private:
+        int entryID_;
 	unsigned char hour_;
 	unsigned char min_;
 	bool action_;

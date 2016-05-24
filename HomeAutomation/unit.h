@@ -57,12 +57,24 @@ public:
 	bool updateEntry(int day, int place, unsigned char hour, unsigned char min, bool action);
 	bool clearData();
 	void printEntry()const;
+        int compareEntryID(int entries)const;
 	unsigned char getSize()const;
+        unsigned char getDay()const;
+        int getEntryID()const
+        {
+            return entryID_;
+        }
+        void countEntryID()
+        {
+            entryID_++;
+        }
+
 private:
 	unsigned char unitID_; 
 	unsigned char roomID_;
 	unsigned char houseCode_;
 	bool status_;
+        int entryID_=0;
 	vector <vector<Entry> > entryRegister_; // Oprettelse et to dimensionel. Indeholder 7 dage med entry objekter. 
 	
 };

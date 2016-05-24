@@ -12,6 +12,8 @@ AddEntry::AddEntry(QStackedWidget *parent, UnitRegister& regRef, CommInterface& 
     parentPtr = parent;
     setRegistryPtr(regRef);
     setCommPtr(comRef);
+    setTablePtr(this->findChild<QTableWidget*>("entry_Table"));
+    populateTable();
 }
 
 AddEntry::~AddEntry()
@@ -24,9 +26,87 @@ void AddEntry::getUnit(int id)
     unitID=id;
 }
 
+void AddEntry::setTablePtr(QTableWidget* tableRef) {
+    if(tableRef != NULL) {
+        tablePtr = tableRef;
+        //Sørger for at man ikke kan redigere i vores table.
+        tablePtr->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        tablePtr->setSelectionBehavior(QAbstractItemView::SelectRows);
+        tablePtr->setSelectionMode(QAbstractItemView::SingleSelection);
+    }
+    else
+        cerr << "Couldn't register table address" << endl;
+}
+
+void AddEntry::populateTable()
+{
+    int rows=2;//Da starttid og sluttids udfyldes på en linje, men hentes ind som to.
+    int rowCount =0;
+    QString inf;
+    if(getRegistryPtr() != NULL)
+        if(tablePtr != NULL)
+        {
+            vector<Unit>::iterator iter;
+
+            for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter)
+            {
+                if(iter->getUnitID()==unitID)
+                {
+                    int entries = iter->getEntryID();
+                    tablePtr->setRowCount(iter->getSize()/rows);
+
+                    for(int i = 0 ; i<entries ; i++)
+                    {
+                        int day = iter->compareEntryID(i);
+
+                        if(day==0)
+                        {
+                        inf="Mandag";
+                        }
+                        else if(day==1)
+                        {
+                        inf="Tirsdag";
+                        }
+                        else if(day==2)
+                        {
+                        inf="Onsdag";
+                        }
+                        else if(day==3)
+                        {
+                        inf="Torsdag";
+                        }
+                        else if(day==4)
+                        {
+                        inf="Fredag";
+                        }
+                        else if(day==5)
+                        {
+                        inf="Lørdag";
+                        }
+                        else
+                            inf="Søndag";
+
+                        tablePtr->setItem(rowCount,0,new QTableWidgetItem(inf) );
+                         rowCount+=1;
+                    }
+
+
+
+                   // tablePtr->setItem(rowCount,0,new QTableWidgetItem(inf) );
+
+
+                    rowCount+=1;
+
+                }
+            }
+        }
+}
+
 void AddEntry::on_pushButton_clicked()
 {
-    cout <<"Her" << unitID <<endl;
+
+
+
     QString date = ui->comboBox->currentText();
     int valgteDag=0;
     if(date=="Mandag")
@@ -67,12 +147,14 @@ void AddEntry::on_pushButton_clicked()
          {
              if(iter->getUnitID()==unitID)
              {
-                 if(iter->storeEntry(valgteDag,Entry(setHour,setMin,1))==true) //Tilføjer start tidsplan
+
+                 if(iter->storeEntry(valgteDag,Entry(iter->getEntryID(),setHour,setMin,1))==true) //Tilføjer start tidsplan
                  {
-                    iter->storeEntry(valgteDag,Entry(endHour,endMin,0));//Tilføjer slut tidsplan
+
+                    iter->storeEntry(valgteDag,Entry(iter->getEntryID(),endHour,endMin,0));//Tilføjer slut tidsplan
 
                          msgBox.setText("Tilføjelse af enheden succesfuld");
-
+                         iter->countEntryID();
                  }
                  else
                         msgBox.setText("Tilføjelse af enheden fejlede");

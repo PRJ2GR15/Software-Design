@@ -40,7 +40,7 @@ public:
     int EntryID()const { return entryID_;}
 	
 private:
-    int entryID_;
+        int entryID_;
 	unsigned char hour_;
 	unsigned char min_;
 	bool action_;

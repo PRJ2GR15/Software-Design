@@ -85,6 +85,10 @@ if(msgBox.exec()==QMessageBox::Ok)
 
 void EditEntry::on_pushButton_2_clicked()
 {
+    returnSelected();
+        cout << selectedCol<<endl;
+    if(selectedRow!=-1 && selectedCol>0)
+    {
     for(int i = 0; i < getParentPtr()->count(); ++i) {
         if(getParentPtr()->widget(i)->accessibleName().compare("Edit Old Entry") == 0) {
             getParentPtr()->setCurrentIndex(i);
@@ -92,6 +96,18 @@ void EditEntry::on_pushButton_2_clicked()
         }
     }
     cerr<< "Kan ikke finde Edit Old Entry" << endl;
+    }
+    else{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Fejl under Ændring");
+    msgBox.addButton(QMessageBox::Ok);
+    if(selectedRow==-1)
+    msgBox.setText("Ingen enhed valg til ændring");
+    else
+        msgBox.setText("Ingen tidsplan at ændre");
+    if(msgBox.exec()==QMessageBox::Ok)
+        return;
+    }
 }
 
 void EditEntry::on_pushButton_3_clicked()
@@ -102,6 +118,10 @@ void EditEntry::on_pushButton_3_clicked()
 void EditEntry::on_EntryTable_cellClicked(int row, int column)
 {
     selectedRow=row;
+
+    QModelIndex colNr = tablePtr->model()->index(selectedRow,1,QModelIndex());
+    selectedCol = tablePtr->model()->data(colNr).toInt(); //Benyttes for at vide om der er nogle aktive tidsplaner at ændre.
+
 }
 
 void EditEntry::returnSelected()

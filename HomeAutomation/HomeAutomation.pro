@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     editentry.cpp \
     editunit.cpp \
     addentry.cpp \
-    editoldentry.cpp
+    editoldentry.cpp \
+    Serial.cpp
 
 HEADERS  += mainwindow.h \
     CommInterface.h \
@@ -39,7 +40,8 @@ HEADERS  += mainwindow.h \
     editentry.h \
     editunit.h \
     addentry.h \
-    editoldentry.h
+    editoldentry.h \
+    Serial.h
 
 FORMS    += mainwindow.ui \
     mainmenu.ui \

@@ -12,6 +12,7 @@ EditEntry::EditEntry(QStackedWidget *parent, UnitRegister& regRef, CommInterface
     setCommPtr(commRef);
     setTablePtr(this->findChild<QTableWidget*>("EntryTable"));
     populateTable();
+
 }
 
 EditEntry::~EditEntry()
@@ -38,13 +39,78 @@ void EditEntry::populateTable() {
             tablePtr->setRowCount(getRegistryPtr()->getRegistrySize());
             int rowCount = 0;
             vector<Unit>::iterator iter;
+
             QString inf;
+            QString size;
             for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter) {
+
+
                 //Returnere unitID som uchar, caster til int. QString::number gemmer int som en QString.
                 inf = QString::number(+((*iter).getUnitID()));
                 tablePtr->setItem( rowCount, 0, new QTableWidgetItem( inf ) );
 
+
+               size = QString::number(+(iter->getSize()/2));
+               tablePtr->setItem(rowCount,1,new QTableWidgetItem(size));
+
                 rowCount += 1;
+
+
             }
         }
 }
+
+void EditEntry::on_pushButton_clicked()
+{
+    returnSelected();
+if(selectedRow!=-1)
+{
+    for(int i = 0; i < getParentPtr()->count(); ++i) {
+        if(getParentPtr()->widget(i)->accessibleName().compare("Add Entry") == 0) {
+            getParentPtr()->setCurrentIndex(i);
+            return;
+        }
+    }
+    cerr<< "Kan ikke finde Add Entry" << endl;
+}
+else{
+QMessageBox msgBox;
+msgBox.setWindowTitle("Fejl under Ændring");
+msgBox.addButton(QMessageBox::Ok);
+msgBox.setText("Ingen enhed valg til ændring");
+if(msgBox.exec()==QMessageBox::Ok)
+    return;
+}
+}
+
+void EditEntry::on_pushButton_2_clicked()
+{
+    for(int i = 0; i < getParentPtr()->count(); ++i) {
+        if(getParentPtr()->widget(i)->accessibleName().compare("Edit Old Entry") == 0) {
+            getParentPtr()->setCurrentIndex(i);
+            return;
+        }
+    }
+    cerr<< "Kan ikke finde Edit Old Entry" << endl;
+}
+
+void EditEntry::on_pushButton_3_clicked()
+{
+    parentPtr->setCurrentIndex(0);
+}
+
+void EditEntry::on_EntryTable_cellClicked(int row, int column)
+{
+    selectedRow=row;
+}
+
+void EditEntry::returnSelected()
+{
+    QModelIndex index = tablePtr->model()->index(selectedRow,0,QModelIndex());
+    int data = tablePtr->model()->data(index).toInt();
+
+    emit sendid(data);
+}
+
+
+

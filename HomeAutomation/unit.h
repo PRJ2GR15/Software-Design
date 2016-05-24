@@ -50,13 +50,14 @@ public:
 	bool loadEntryData();
 	bool storeEntryData();
 	bool storeEntry(int day,Entry&obj);
-	bool compareEntry(Entry&,int)const;
+        bool compareEntry(Entry&,int);
 	bool deleteEntry(int day, int place);
 	bool deleteDayEntry(int day);
 	bool deleteEntry();
 	bool updateEntry(int day, int place, unsigned char hour, unsigned char min, bool action);
 	bool clearData();
 	void printEntry()const;
+	unsigned char getSize()const;
 private:
 	unsigned char unitID_; 
 	unsigned char roomID_;

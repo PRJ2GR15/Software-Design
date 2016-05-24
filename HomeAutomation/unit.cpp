@@ -153,7 +153,7 @@ void Unit::initialEntry()
 
 bool Unit::storeEntry(int day,Entry& obj)
 {
-	if ((entryRegister_[day].size() <=maxEntries) & (!compareEntry(obj,day)))
+        if ((entryRegister_[day].size() <=maxEntries) & (compareEntry(obj,day)==false))
 	{
 		entryRegister_[day].push_back(obj);
 		return true;
@@ -167,7 +167,7 @@ bool Unit::storeEntry(int day,Entry& obj)
 // DESCR. : Benyttes for at tjekke om to objekter er ens.
 //=============================================================
 
-bool Unit::compareEntry(Entry& obj,int d) const
+bool Unit::compareEntry(Entry& obj,int d)
 {
 	
 	int max = entryRegister_[d].size();
@@ -311,7 +311,7 @@ bool Unit::storeEntryData()
 		return false;
 	}
 
-	for (int i = 0; i < 7; i++) 
+	for (int i = 0; i < days; i++) 
 	{
 		for (int j = 0; j < entryRegister_[i].size(); j++)
 		{
@@ -326,7 +326,17 @@ bool Unit::storeEntryData()
 	return true;
 }
 
-
+unsigned char Unit::getSize()const
+{
+	
+	unsigned char size=0;
+	
+	for(int i= 0; i<7;i++)
+	{
+		size += entryRegister_[i].size();
+	}
+	return size;
+}
 //=============================================================
 // METHOD : Print Operator 
 // DESCR. : Giver mulighed for at printe med objekt navn

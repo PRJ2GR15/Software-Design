@@ -30,7 +30,7 @@
        <rect>
         <x>270</x>
         <y>30</y>
-        <width>221</width>
+        <width>231</width>
         <height>231</height>
        </rect>
       </property>
@@ -63,7 +63,7 @@
        </property>
       </column>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>20</x>

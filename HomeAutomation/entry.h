@@ -29,11 +29,11 @@ class Entry
 public: 
 	Entry();
         Entry(int entryID,unsigned char hour, unsigned char min, bool action);
-	void setHour(unsigned char hour);
+        bool setHour(unsigned char hour);
 	unsigned char getHour()const;
-	void setMin(unsigned char min);
+        bool setMin(unsigned char min);
 	unsigned char getMin()const;
-	void setAction(bool action);
+        bool setAction(bool action);
 	bool getAction()const;
 	void print()const;
 	friend istream& operator>>(istream& is, Entry& obj);

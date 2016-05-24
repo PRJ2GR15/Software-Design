@@ -39,12 +39,15 @@ Entry::Entry(int entryID, unsigned char hour, unsigned char min, bool action)
 //=============================================================
 
 
-void Entry::setHour(unsigned char hour)
+bool Entry::setHour(unsigned char hour)
 {
 	if (hour >= 0 && hour <= 23)
+        {
 		hour_ = hour;
+                return true;
+        }
 	else
-		return;
+                return false;
 }
 
 //=============================================================
@@ -62,12 +65,15 @@ unsigned char Entry::getHour() const
 // DESCR. : Tilladte værdier fra 0 til 59
 //=============================================================
 
-void Entry::setMin(unsigned char min)
+bool Entry::setMin(unsigned char min)
 {
 	if (min >= 0 && min <= 59)
+        {
 		min_ = min;
+                return true;
+        }
 	else
-		return;
+                return false;
 }
 
 //=============================================================
@@ -86,9 +92,10 @@ unsigned char Entry::getMin() const
 //          0 = Planlægges at skulle slukkes.
 //=============================================================
 
-void Entry::setAction(bool action)
+bool Entry::setAction(bool action)
 {
 	action_ = action;
+        return true;
 
 }
 

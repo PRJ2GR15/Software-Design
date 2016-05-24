@@ -215,17 +215,26 @@ void EditOldEntry::on_SaveEntry_clicked()
                                  cout << "test" <<endl;
                                 if(entry.getAction()==1)
                                 {
-                                    if((entry.setHour(EditstartHour)==true)&& entry.setMin(EditstartMin)==true);
+                                    if((entry.setHour(EditstartHour)==true)&& entry.setMin(EditstartMin)==true)
+                                    {
+                                         iter->storeEntry(valgteDag,entry); //Også en bette test da
+                                        cout << "testHER HER " <<endl;
+                                        entry.print();
                                     msgBox.setText("Test 1 ");
+                                    }
                                 }
                                 else
                                        msgBox.setText("Tilføjelse af enheden fejlede1");
 
                                 if(entry.getAction()==0)
                                 {
-                                    if((entry.setHour(EditendHour))==true && (entry.setMin(EditendMin)==true));
+                                    if((entry.setHour(EditendHour))==true && (entry.setMin(EditendMin)==true))
+                                     {
+                                        iter->storeEntry(valgteDag,entry); //Test 12312
                                     msgBox.setText("Test 2 ");
-                                    iter->countEntryID();
+                                    cout << "test2" <<endl;
+                                    entry.print();
+                                   }
                                 }
 
                                 else

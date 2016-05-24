@@ -153,7 +153,7 @@ void Unit::initialEntry()
 
 bool Unit::storeEntry(int day,Entry& obj)
 {
-        if ((entryRegister_[day].size() <=maxEntries) & (compareEntry(obj,day)==false))
+    if ((entryRegister_[day].size() <=maxEntries) & (compareEntry(obj,day)==false))
 	{
 		entryRegister_[day].push_back(obj);
 		return true;
@@ -253,10 +253,10 @@ bool Unit::clearData()
 void Unit::printEntry() const
 {
 	
-	for (auto row : entryRegister_)
+    for (auto day : entryRegister_)
 	{
-                for (auto col : row)
-                        cout << col << endl;
+        for (auto entry : day)
+            cout << entry << endl;
 	}
 }
 

@@ -37,11 +37,10 @@ public:
 	bool getAction()const;
 	void print()const;
 	friend istream& operator>>(istream& is, Entry& obj);
-        int EntryID()const
-        { return entryID_;}
+    int EntryID()const { return entryID_;}
 	
 private:
-        int entryID_;
+    int entryID_;
 	unsigned char hour_;
 	unsigned char min_;
 	bool action_;

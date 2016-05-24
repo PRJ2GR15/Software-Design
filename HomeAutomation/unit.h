@@ -36,46 +36,59 @@ class Unit
 {
 public: 
 	Unit(unsigned char unitID, unsigned char roomID, unsigned char houseCode, bool status);
+    //UNIT/ROOM ID MANIPULATORS
 	void setUnitID(unsigned char unitID);
 	unsigned char getUnitID() const;
 	void setRoomID(unsigned char roomID);
 	unsigned char getRoomID() const;
 	void setHouseCode(unsigned char houseCode);
 	unsigned char getHouseCode()const;
+    //UNIT/ROOM ID MANIPULATORS END
+
+    //STATUS + PRINT FUNKTIONER
 	void setStatus(bool status);
 	bool getStatus() const;
 	void print()const;
 	friend istream& operator>>(istream& is, Unit& obj);
-	void initialEntry();
+    //STATUS + PRINT FUNKTIONER END
+
+    void initialEntry();
+    //HENT OG STORE ENTRY FUNKTIONER
 	bool loadEntryData();
 	bool storeEntryData();
 	bool storeEntry(int day,Entry&obj);
-        bool compareEntry(Entry&,int);
+    //HENT OG STORE ENTRY FUNKTIONER END
+
+    bool compareEntry(Entry&,int);
+    //DELETE OG UPDATE ENTRY FUNKTIONER
 	bool deleteEntry(int day, int place);
 	bool deleteDayEntry(int day);
 	bool deleteEntry();
 	bool updateEntry(int day, int place, unsigned char hour, unsigned char min, bool action);
 	bool clearData();
-	void printEntry()const;
-        int compareEntryID(int entries)const;
-	unsigned char getSize()const;
-        unsigned char getDay()const;
-        int getEntryID()const
-        {
-            return entryID_;
-        }
-        void countEntryID()
-        {
-            entryID_++;
-        }
+    //DELETE OG UPDATE ENTRY FUNKTIONER END
 
+	void printEntry()const;
+    int compareEntryID(int entries)const;
+	unsigned char getSize()const;
+    unsigned char getDay()const;
+
+    int getEntryID() const {
+        return entryID_;
+    }
+    void countEntryID()
+    {
+        entryID_++;
+    }
+
+    const vector<vector<Entry> >& getEntryRegisterRef() { return entryRegister_; }
 private:
 	unsigned char unitID_; 
 	unsigned char roomID_;
 	unsigned char houseCode_;
 	bool status_;
-        int entryID_=0;
-	vector <vector<Entry> > entryRegister_; // Oprettelse et to dimensionel. Indeholder 7 dage med entry objekter. 
+    int entryID_=0;
+    vector<vector<Entry> > entryRegister_; // Oprettelse et to dimensionel. Indeholder 7 dage med entry objekter.
 	
 };
 

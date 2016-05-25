@@ -28,12 +28,12 @@ class Entry
 {
 public: 
 	Entry();
-        Entry(int entryID,unsigned char hour, unsigned char min, bool action);
-        bool setHour(unsigned char hour);
+    Entry(int entryID,unsigned char hour, unsigned char min, bool action);
+    bool setHour(unsigned char hour);
 	unsigned char getHour()const;
-        bool setMin(unsigned char min);
+    bool setMin(unsigned char min);
 	unsigned char getMin()const;
-        bool setAction(bool action);
+    bool setAction(bool action);
 	bool getAction()const;
 	void print()const;
 	friend istream& operator>>(istream& is, Entry& obj);

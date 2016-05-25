@@ -64,7 +64,7 @@ public:
 	bool deleteEntry(int day, int place);
 	bool deleteDayEntry(int day);
 	bool deleteEntry();
-	bool updateEntry(int day, int place, unsigned char hour, unsigned char min, bool action);
+        bool updateEntry(int day, int place, unsigned char hour, unsigned char min);
 	bool clearData();
     //DELETE OG UPDATE ENTRY FUNKTIONER END
 

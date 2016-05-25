@@ -185,13 +185,13 @@ bool UnitRegister::modifyUnit(uchar originalUnitID, uchar unitID, uchar roomID)
 // DESCR. : 
 //=============================================================
 
-bool UnitRegister::updateTime(uchar unitID,int day, int placeholder, uchar hour, uchar min, bool action)
+bool UnitRegister::updateTime(uchar unitID,int day, int placeholder, uchar hour, uchar min)
 {
     vector<Unit>::iterator iter;
     for(iter=unitRegister_.begin();iter!=unitRegister_.end();++iter)
         if(iter->getUnitID()==unitID)
     {
-            if(iter->updateEntry(day,placeholder,hour,min,action)==false)
+            if(iter->updateEntry(day,placeholder,hour,min)==false)
                 return false;
     }
     return true;

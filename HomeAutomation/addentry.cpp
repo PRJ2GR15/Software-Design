@@ -52,7 +52,7 @@ void AddEntry::populateTable()
             {
                 if(iter->getUnitID()==unitID)
                 {
-                    cout << "/nher" <<endl;
+
                     iter->printEntry();
                     tablePtr->setRowCount(iter->getSize()/rows);
                     vector< vector<Entry> > myRef = iter->getEntryRegisterRef();

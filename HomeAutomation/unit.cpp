@@ -220,11 +220,10 @@ bool Unit::deleteEntry()
 // DESCR. : Benyttes for at opdater allerede eksisterende tidsplan
 //=============================================================
 
-bool Unit::updateEntry(int day, int place, unsigned char hour, unsigned char min, bool action)
+bool Unit::updateEntry(int day, int place, unsigned char hour, unsigned char min)
 {
 	entryRegister_[day][place].setHour(hour);
 	entryRegister_[day][place].setMin(min);
-	entryRegister_[day][place].setAction(action);
 	return true;
 }
 

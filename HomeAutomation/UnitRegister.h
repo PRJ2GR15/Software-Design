@@ -39,7 +39,7 @@ public:
     bool modifyUnit(uchar originalUnitID, uchar unitID, uchar roomID);
     bool AddNewtime(uchar unitID, int day, Entry&obj);
     //bool updateTime(uchar roomID, int placeholder);
-    bool updateTime(uchar unitID, int day, int placeholder, uchar hour, uchar min, bool action);
+    bool updateTime(uchar unitID, int day, int placeholder, uchar hour, uchar min);
     bool loadData();
 
     void updateStates(function<bool(uchar)> f) {

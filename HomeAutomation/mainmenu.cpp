@@ -134,6 +134,9 @@ void MainMenu::on_addUnit_PushButton_clicked()
 
 void MainMenu::on_remUnit_PushButton_clicked()
 {
+    char cmd[5] = {0xF0, 0xF0, 0x01, 0x0F, 0x0F};
+    getCommPtr()->sendCommand(cmd, 5);
+    getCommPtr()->readInputBuffer();
     for(int i = 0; i < getParentPtr()->count(); ++i) {
         if(getParentPtr()->widget(i)->accessibleName().compare("Remove Unit") == 0) {
             getParentPtr()->setCurrentIndex(i);

@@ -11,7 +11,9 @@
 //========================================================================
 #ifndef COMMINTERFACE_H
 #define COMMINTERFACE_H
-
+#pragma comment(lib, "SerialCom.lib")
+#include "unit.h"
+#include "SerialCom.h"
 
 class CommInterface
 {
@@ -20,6 +22,14 @@ public:
         int a = 0;
     }
 
+    void openComPort(int port, int baud, int dataBit, int paritet, int stopBit);
+    void closeComPort();
+    void sendCommand(char* cmd, int cmdSize);
+    void readInputBuffer();
+
+    /*Unit getUnit() {
+    }*/
+
     //Placeholder
     bool getUnitStatus(unsigned char ID) { return true; }
 
@@ -27,6 +37,7 @@ public:
     bool updateUnit(unsigned char previousID, unsigned char newID, unsigned char roomID);
 private:
     int a;
+    SerialCom serialCom;
 };
 
 #endif // COMMINTERFACE_H

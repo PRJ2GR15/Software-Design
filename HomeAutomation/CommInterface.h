@@ -11,8 +11,9 @@
 //========================================================================
 #ifndef COMMINTERFACE_H
 #define COMMINTERFACE_H
+#pragma comment(lib, "SerialCom.lib")
 #include "unit.h"
-#include "Serial.h"
+#include "SerialCom.h"
 
 class CommInterface
 {
@@ -21,21 +22,13 @@ public:
         int a = 0;
     }
 
-    Unit getUnit() {
-        const int commandSize = 5;
-        CSerial* s = new CSerial();
-        //Get unit command = F0F0 06 0F0F
-        unsigned char data[commandSize] = {0xF0, 0xF0, 0x06, 0x0F, 0x0F};
-        if(!s->Open(3, 115000))
-        {
-            cout << "Could not open COM Port: " << port << endl;
-            return;
-        }
-        s->SendData(data, commandSize);
-        cout << "Data sent" << endl;
-        s->Close();
-        delete s;
-    }
+    void openComPort(int port, int baud, int dataBit, int paritet, int stopBit);
+    void closeComPort();
+    void sendCommand(char* cmd, int cmdSize);
+    void readInputBuffer();
+
+    /*Unit getUnit() {
+    }*/
 
     //Placeholder
     bool getUnitStatus(unsigned char ID) { return true; }
@@ -44,6 +37,7 @@ public:
     bool updateUnit(unsigned char previousID, unsigned char newID, unsigned char roomID);
 private:
     int a;
+    SerialCom serialCom;
 };
 
 #endif // COMMINTERFACE_H

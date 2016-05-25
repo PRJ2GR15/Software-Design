@@ -49,6 +49,7 @@ MainWindow::MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *pa
 
 MainWindow::~MainWindow()
 {
+    commPtr->closeComPort();
     delete ui;
 }
 

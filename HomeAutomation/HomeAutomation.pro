@@ -25,8 +25,7 @@ SOURCES += main.cpp\
     editentry.cpp \
     editunit.cpp \
     addentry.cpp \
-    editoldentry.cpp \
-    Serial.cpp
+    editoldentry.cpp
 
 HEADERS  += mainwindow.h \
     CommInterface.h \
@@ -40,8 +39,7 @@ HEADERS  += mainwindow.h \
     editentry.h \
     editunit.h \
     addentry.h \
-    editoldentry.h \
-    Serial.h
+    editoldentry.h
 
 FORMS    += mainwindow.ui \
     mainmenu.ui \
@@ -56,3 +54,10 @@ DISTFILES += \
     icon.ico
 
 win32:RC_ICONS += icon.ico
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/./ -lSerialCom
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/./ -lSerialCom
+else:unix: LIBS += -L$$PWD/./ -lSerialCom
+
+INCLUDEPATH += $$PWD/.
+DEPENDPATH += $$PWD/.

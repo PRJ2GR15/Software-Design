@@ -95,5 +95,6 @@ void RemoveUnit::on_remove_PushButton_clicked()
 
 void RemoveUnit::on_cancel_PushButton_clicked()
 {
+    getCommPtr()->readInputBuffer();
     parentPtr->setCurrentIndex(0);
 }

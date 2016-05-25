@@ -181,7 +181,7 @@ bool CommInterface::validatePin() {
     else
         return false;
 }
-bool CommInterface::getUnitStatus(unsigned char unitID)
+/*bool CommInterface::getUnitStatus(unsigned char unitID)
 {
     //Sender hent unit status kommando
     const int cmdSize = 6;
@@ -210,9 +210,9 @@ bool CommInterface::getUnitStatus(unsigned char unitID)
         cout << "Status på UnitID: " << +cmd[3] << " FALSE" << endl;
         return false;
     }
-}
-void CommInterface::getAllUnits()
-{
+}*/
+//void CommInterface::getAllUnits()
+//{
     //Forventet svar tilbage: 512 * 7 bytes. 3584 bytes. Per Unit.
     //Data gemmes i format:
     /*
@@ -221,7 +221,7 @@ void CommInterface::getAllUnits()
     Der skal altid hentes 512 bytes.
     HVIS: Byte 0, Byte 1, Byte 2 og Byte 3 alle = 0xFA, så er der ikke flere enheder at hente
     */
-    Unit tmpUnit(1,1,0,1);
+    /*Unit tmpUnit(1,1,0,1);
     //Sender hent unit status kommando
     const int arraySize = 8;
     int byteCounter = 0;
@@ -257,17 +257,6 @@ void CommInterface::getAllUnits()
             byteCounter++;
         }
 
-        /*for(int i = 0; i < 4; i++) {
-            if(byteArray[i] == 0xFA)
-                errCount++;
-            if(errCount >= 4)
-            {
-                errCount = 0;
-                //RETURN OG GÅ UD AF LOOP. NOGET. DER ER IKKE FLERE ENHEDER.
-                return Unit(0,0,0,0);
-            }
-        }*/
-
         //Hvis man har fat i de første 8 bytes, hvor Unit ID indgår
         if(byteCounter <= 7)
         {
@@ -292,3 +281,5 @@ void CommInterface::getAllUnits()
         }
     }
 }
+*/
+

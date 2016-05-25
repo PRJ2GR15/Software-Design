@@ -29,14 +29,14 @@ public:
     bool PCConnected();
     void PCDisconnected();
     bool validatePin();
-    bool getUnitStatus(unsigned char unitID);
+    //bool getUnitStatus(unsigned char unitID);
     //void getAllUnits();
 
     /*Unit getUnit() {
     }*/
 
     //Placeholder
-    //bool getUnitStatus(unsigned char ID) { return true; }
+    bool getUnitStatus(unsigned char ID) { return true; }
 
     //Placeholder
     bool updateUnit(unsigned char previousID, unsigned char newID, unsigned char roomID);

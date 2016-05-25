@@ -52,6 +52,8 @@ void AddEntry::populateTable()
             {
                 if(iter->getUnitID()==unitID)
                 {
+                    cout << "/nher" <<endl;
+                    iter->printEntry();
                     tablePtr->setRowCount(iter->getSize()/rows);
                     vector< vector<Entry> > myRef = iter->getEntryRegisterRef();
                     int dayCounter = 0;
@@ -82,7 +84,7 @@ void AddEntry::populateTable()
                                 inf = "Søndag";
                                 break;
                             default:
-                                inf = "Fisse";
+                                inf = "default";
                             }
                             if(entry.getAction()) {
                                 QString tmpQString;
@@ -131,48 +133,7 @@ void AddEntry::populateTable()
                         }
                         dayCounter++;
                     }
-                    //vector<Entry>::iterator myIter2;
-                    /*for(myIter1 = iter->getEntryRegisterRef()->begin(); myIter1 != iter->getEntryRegisterRef()->end(); ++myIter1)
-                    {
-
-                    }*/
-
-
-                    /*for(int i = 0 ; i<entries ; i++)
-                    {
-                        int day = iter->compareEntryID(i);
-                        if(day==0)
-                        {
-                        inf="Mandag";
-                        }
-                        else if(day==1)
-                        {
-                        inf="Tirsdag";
-                        }
-                        else if(day==2)
-                        {
-                        inf="Onsdag";
-                        }
-                        else if(day==3)
-                        {
-                        inf="Torsdag";
-                        }
-                        else if(day==4)
-                        {
-                        inf="Fredag";
-                        }
-                        else if(day==5)
-                        {
-                        inf="Lørdag";
-                        }
-                        else
-                            inf="Søndag";*/
-
-                        //tablePtr->setItem(rowCount,0,new QTableWidgetItem(inf) );
-                        //rowCount+=1;
-                    //}
-                   // tablePtr->setItem(rowCount,0,new QTableWidgetItem(inf) );
-                    rowCount+=1;
+                      rowCount+=1;
                 }
             }
         }
@@ -198,8 +159,8 @@ void AddEntry::on_pushButton_clicked()
         valgteDag=6;
 
     //Få start tid
-    int setHour = ui->StartTime->time().hour();
-    int setMin = ui->StartTime->time().minute();
+    int startHour = ui->StartTime->time().hour();
+    int startMin = ui->StartTime->time().minute();
     //Få slutid
     int endHour = ui->EndTime->time().hour();
     int endMin = ui->EndTime->time().minute();
@@ -209,16 +170,16 @@ void AddEntry::on_pushButton_clicked()
      msgBox.setWindowTitle("Udført funktion");
      msgBox.addButton(QMessageBox::Ok);
 
-     if((setHour<endHour)||((setHour==endHour)& (setMin<endMin)))
+     if((startHour<endHour)||((startHour==endHour)& (startMin<endMin)))
     {
          for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter)
          {
              if(iter->getUnitID()==unitID)
              {
-                 if(iter->storeEntry(valgteDag,Entry(iter->getEntryID(),setHour,setMin,1))==true) //Tilføjer start tidsplan
-                 {
-
-                    iter->storeEntry(valgteDag,Entry(iter->getEntryID(),endHour,endMin,0));//Tilføjer slut tidsplan
+                if((iter->compareEntry(Entry(iter->getEntryID(),startHour,startMin,1),valgteDag)==false) && (iter->compareEntry(Entry(iter->getEntryID(),endHour,endMin,0),valgteDag))==false)
+                     {
+                         iter->storeEntry(valgteDag,Entry(iter->getEntryID(),startHour,startMin,1));
+                         iter->storeEntry(valgteDag,Entry(iter->getEntryID(),endHour,endMin,0));//Tilføjer start tidsplan
 
                          msgBox.setText("Tilføjelse af enheden succesfuld");
                          iter->countEntryID();

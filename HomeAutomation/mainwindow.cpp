@@ -45,6 +45,9 @@ MainWindow::MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *pa
 
     QObject::connect(editPtr,SIGNAL(sendid(int)),
                      addEntryPtr,SLOT(getUnit(int)));
+
+    QObject::connect(editPtr,SIGNAL(sendid(int)),
+                        editEntryPtr,SLOT(getUnit(int)));
 }
 
 MainWindow::~MainWindow()
@@ -86,4 +89,7 @@ void MainWindow::on_MainW_StackedWidget_currentChanged(int arg1)
     else if(tmpString.compare("Add Entry") == 0) {
             addEntryPtr->populateTable();
     }
+    else if(tmpString.compare("Edit Old Entry") == 0)
+       {      editEntryPtr->populateTable();
+       }
 }

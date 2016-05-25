@@ -36,6 +36,7 @@ private:
     Ui::EditEntry *ui;
     QTableWidget* tablePtr;
     int selectedRow= -1;
+    int selectedCol=0;
 };
 
 #endif // EDITENTRY_H

@@ -153,7 +153,7 @@ void Unit::initialEntry()
 
 bool Unit::storeEntry(int day,Entry& obj)
 {
-    if ((entryRegister_[day].size() <=maxEntries) & (compareEntry(obj,day)==false))
+    if (entryRegister_[day].size() <=maxEntries)
 	{
 		entryRegister_[day].push_back(obj);
 		return true;

@@ -19,13 +19,18 @@ class CommInterface
 {
 public:
     CommInterface() {
-        int a = 0;
+        //int a = 0;
     }
 
-    void openComPort(int port, int baud, int dataBit, int paritet, int stopBit);
+    bool openComPort(int port, int baud, int dataBit, int paritet, int stopBit);
     void closeComPort();
     void sendCommand(char* cmd, int cmdSize);
-    void readInputBuffer();
+    int readInputBuffer();
+    bool PCConnected();
+    void PCDisconnected();
+    bool validatePin();
+    //bool getUnitStatus(unsigned char unitID);
+    //void getAllUnits();
 
     /*Unit getUnit() {
     }*/
@@ -35,8 +40,10 @@ public:
 
     //Placeholder
     bool updateUnit(unsigned char previousID, unsigned char newID, unsigned char roomID);
+protected:
+    bool portOpened;
 private:
-    int a;
+    //int a;
     SerialCom serialCom;
 };
 

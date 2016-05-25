@@ -86,7 +86,7 @@ if(msgBox.exec()==QMessageBox::Ok)
 void EditEntry::on_pushButton_2_clicked()
 {
     returnSelected();
-        cout << selectedCol<<endl;
+
     if(selectedRow!=-1 && selectedCol>0)
     {
     for(int i = 0; i < getParentPtr()->count(); ++i) {
@@ -134,3 +134,31 @@ void EditEntry::returnSelected()
 
 
 
+
+
+void EditEntry::on_RemoveEntry_clicked()
+{
+    returnSelected();
+
+    if(selectedRow!=-1 && selectedCol>0)
+    {
+    for(int i = 0; i < getParentPtr()->count(); ++i) {
+        if(getParentPtr()->widget(i)->accessibleName().compare("Remove Entry") == 0) {
+            getParentPtr()->setCurrentIndex(i);
+            return;
+        }
+    }
+    cerr<< "Kan ikke finde Remove Entry" << endl;
+    }
+    else{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Fejl under Ændring");
+    msgBox.addButton(QMessageBox::Ok);
+    if(selectedRow==-1)
+    msgBox.setText("Ingen tidsplan valgt til ændring");
+    else
+        msgBox.setText("Ingen tidsplan at fjerne");
+    if(msgBox.exec()==QMessageBox::Ok)
+        return;
+    }
+}

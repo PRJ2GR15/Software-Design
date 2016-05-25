@@ -25,7 +25,7 @@ Entry::Entry()
 {
 }
 
-Entry::Entry(int entryID, unsigned char hour, unsigned char min, bool action)
+Entry::Entry(unsigned char entryID, unsigned char hour, unsigned char min, bool action)
 {
     entryID_= entryID;
     setHour(hour);
@@ -118,7 +118,7 @@ bool Entry::getAction() const
 
 void Entry::print()const
 {
-        cout << entryID_ << +hour_ << " " << +min_ <<  " " << action_ << endl;
+        cout << +entryID_ << +hour_ << " " << +min_ <<  " " << action_ << endl;
 }
 
 //=============================================================
@@ -129,7 +129,7 @@ void Entry::print()const
 
 ostream &operator<<(ostream& os, const Entry& obj)
 {
-        os << obj.EntryID() << " ";
+        os << +obj.EntryID() << " ";
 	os << +obj.getHour()<< " ";
 	os << +obj.getMin() << " ";
 	os << +obj.getAction() << endl;

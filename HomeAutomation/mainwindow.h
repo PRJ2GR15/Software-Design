@@ -26,6 +26,7 @@
 #include "editunit.h"
 #include "addentry.h"
 #include "editoldentry.h"
+#include "removeentry.h"
 
 namespace Ui {
 class MainWindow;
@@ -67,6 +68,7 @@ private:
     EditUnit* editUnitPtr;
     AddEntry* addEntryPtr;
     EditOldEntry* editEntryPtr;
+    RemoveEntry* removeEntryPtr;
 };
 
 #endif // MAINWINDOW_H

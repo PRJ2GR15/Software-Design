@@ -30,7 +30,7 @@ MainWindow::MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *pa
     editUnitPtr = new EditUnit(ui->MainW_StackedWidget, regRef, commRef);
     addEntryPtr = new AddEntry(ui->MainW_StackedWidget, regRef, commRef);
     editEntryPtr = new EditOldEntry(ui->MainW_StackedWidget, regRef, commRef);
-
+    removeEntryPtr = new RemoveEntry(ui->MainW_StackedWidget, regRef, commRef);
 
     ui->MainW_StackedWidget->addWidget(mainMenuPtr);
     ui->MainW_StackedWidget->addWidget(addUnitPtr);
@@ -39,7 +39,7 @@ MainWindow::MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *pa
     ui->MainW_StackedWidget->addWidget(addEntryPtr);
     ui->MainW_StackedWidget->addWidget(editEntryPtr);
     ui->MainW_StackedWidget->addWidget(removeUnitPtr);
-
+    ui->MainW_StackedWidget->addWidget(removeEntryPtr);
 
     ui->MainW_StackedWidget->setCurrentWidget(mainMenuPtr);
 
@@ -48,6 +48,9 @@ MainWindow::MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *pa
 
     QObject::connect(editPtr,SIGNAL(sendid(int)),
                         editEntryPtr,SLOT(getUnit(int)));
+
+    QObject::connect(editPtr,SIGNAL(sendid(int)),
+                     removeEntryPtr,SLOT(getUnit(int)));
 }
 
 MainWindow::~MainWindow()
@@ -92,5 +95,9 @@ void MainWindow::on_MainW_StackedWidget_currentChanged(int arg1)
     }
     else if(tmpString.compare("Edit Old Entry") == 0)
        {      editEntryPtr->populateTable();
+       }
+
+    else if(tmpString.compare("Remove Entry") == 0)
+       {      removeEntryPtr->populateTable();
        }
 }

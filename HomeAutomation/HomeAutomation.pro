@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     editentry.cpp \
     editunit.cpp \
     addentry.cpp \
-    editoldentry.cpp
+    editoldentry.cpp \
+    removeentry.cpp
 
 HEADERS  += mainwindow.h \
     CommInterface.h \
@@ -39,7 +40,8 @@ HEADERS  += mainwindow.h \
     editentry.h \
     editunit.h \
     addentry.h \
-    editoldentry.h
+    editoldentry.h \
+    removeentry.h
 
 FORMS    += mainwindow.ui \
     mainmenu.ui \
@@ -48,7 +50,8 @@ FORMS    += mainwindow.ui \
     editentry.ui \
     editunit.ui \
     addentry.ui \
-    editoldentry.ui
+    editoldentry.ui \
+    removeentry.ui
 
 DISTFILES += \
     icon.ico

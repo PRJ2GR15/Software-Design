@@ -31,7 +31,6 @@ Unit::Unit(unsigned char unitID, unsigned char roomID, unsigned char houseCode, 
 	status_ = status;
 	initialEntry();
 	loadEntryData();
-        setEntries();
 }
 
 //=============================================================
@@ -362,26 +361,17 @@ int Unit::compareEntryID(int entries)const
 
 void Unit::setEntries()
 {
-    unsigned char MaxEntries=70; //Da der maks kan være 10 entries værdier
+    unsigned char MaxEntries=10; //Da der maks kan være 10 entries værdier
 
     for(unsigned char i =1; i <= MaxEntries ; i++ )
     {
         EntriesID.push_back(i);
     }
-
-
-
-    for (auto day : entryRegister_)
-        {
-        for (auto entry : day)
-            EntriesID.erase(remove(EntriesID.begin(),EntriesID.end(),entry.EntryID()),EntriesID.end());
-        }
 }
-
 
 unsigned char Unit::getIDEntry()
 {
-
+    vector<unsigned char>::iterator iter;
     if(!EntriesID.empty())
     {
          unsigned char ID= EntriesID.back();
@@ -390,18 +380,6 @@ unsigned char Unit::getIDEntry()
     }
 
 }
-
-void Unit::addDeletedEntry(unsigned char ID)
-{
-  if(find(EntriesID.begin(),EntriesID.end(),ID)!=EntriesID.end())
-  {
-
-  }
-  else
-      EntriesID.push_back(ID);
-}
-
-
 
 //=============================================================
 // METHOD : Print Operator 

@@ -99,7 +99,7 @@ void EditOldEntry::populateTable()
                                         tmpQString.append(QString::number(+entry.getMin()));
                                 }
                                 else {
-                                    QString tmpQString = QString::number(+entry.getHour());
+                                    tmpQString = QString::number(+entry.getHour()) + ":";
                                     if(entry.getMin() < 10) {
                                         tmpQString.append("0" + QString::number(+entry.getMin() ) );
                                     }
@@ -120,7 +120,7 @@ void EditOldEntry::populateTable()
                                         tmpQString.append(QString::number(+entry.getMin()));
                                 }
                                 else {
-                                    QString tmpQString = QString::number(+entry.getHour());
+                                    tmpQString = QString::number(+entry.getHour()) + ":";
                                     if(entry.getMin() < 10) {
                                         tmpQString.append("0" + QString::number(+entry.getMin() ) );
                                     }
@@ -221,11 +221,6 @@ void EditOldEntry::on_SaveEntry_clicked()
                           OldEntryDag=6;
 
 
-
-
-
-
-
     //Få hvilken tid som brugeren ønsker ændret til
 
       int EditstartHour = ui->EditStartTime->time().hour();
@@ -259,7 +254,6 @@ void EditOldEntry::on_SaveEntry_clicked()
                     {
                         if(myRef[valgteDag][j].EntryID()==entryID)
                         {
-                             cout << "TEST " <<endl;
                             if(myRef[valgteDag][j].getAction()==1)
                             {
                                     iter->updateEntry(valgteDag,j,EditstartHour,EditstartMin);
@@ -279,22 +273,24 @@ void EditOldEntry::on_SaveEntry_clicked()
               else
                {
 
-                    cout << "test" <<endl;
+
                  for(int j = myRef[OldEntryDag].size()-1; j>=0;j--)
                  {
-                     cout << j ;
+
                      if(myRef[OldEntryDag][j].EntryID()==entryID)
                      {
+
                          if(myRef[OldEntryDag][j].getAction()==1)
-                         {       cout << j;
+                         {
 
                                  iter->deleteEntry(OldEntryDag,j);
-                                 iter->storeEntry(valgteDag,Entry(0,EditstartHour,EditstartMin,1));
+                                 iter->storeEntry(valgteDag,Entry(entryID,EditstartHour,EditstartMin,1));
+                                 iter->printEntry();
                          }
                          else
                          {
                                  iter->deleteEntry(OldEntryDag,j);
-                                 if(iter->storeEntry(valgteDag,Entry(0,EditendHour,EditendMin,0))==true)
+                                 if(iter->storeEntry(valgteDag,Entry(entryID,EditendHour,EditendMin,0))==true)
                                  {
                                      msgBox.setText("Tidsplanen er nu opdateret");
                                      if(msgBox.exec()==QMessageBox::Ok)

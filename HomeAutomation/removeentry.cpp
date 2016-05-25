@@ -1,33 +1,31 @@
-#include "addentry.h"
-#include "ui_addentry.h"
-#include "entry.h"
-#include <QInputDialog>
+#include "removeentry.h"
+#include "ui_removeentry.h"
 
-AddEntry::AddEntry(QStackedWidget *parent, UnitRegister& regRef, CommInterface& comRef) :
+RemoveEntry::RemoveEntry(QStackedWidget *parent, UnitRegister &regRef, CommInterface &commRef) :
     QWidget(parent),
-    ui(new Ui::AddEntry)
+    ui(new Ui::RemoveEntry)
 {
     ui->setupUi(this);
-    this->setAccessibleName("Add Entry");
-
+    this->setAccessibleName("Remove Entry");
     parentPtr = parent;
     setRegistryPtr(regRef);
-    setCommPtr(comRef);
-    setTablePtr(this->findChild<QTableWidget*>("entry_Table"));
+    setCommPtr(commRef);
+
+    setTablePtr(this->findChild<QTableWidget*>("EntriesTable"));
     populateTable();
 }
 
-AddEntry::~AddEntry()
+RemoveEntry::~RemoveEntry()
 {
     delete ui;
 }
 
-void AddEntry::getUnit(int id)
+void RemoveEntry::getUnit(int id)
 {
     unitID=id;
 }
 
-void AddEntry::setTablePtr(QTableWidget* tableRef) {
+void RemoveEntry::setTablePtr(QTableWidget* tableRef) {
     if(tableRef != NULL) {
         tablePtr = tableRef;
         //Sørger for at man ikke kan redigere i vores table.
@@ -39,26 +37,29 @@ void AddEntry::setTablePtr(QTableWidget* tableRef) {
         cerr << "Couldn't register table address" << endl;
 }
 
-void AddEntry::populateTable()
+void RemoveEntry::populateTable()
 {
+
     int rows=2;//Da starttid og sluttids udfyldes på en linje, men hentes ind som to.
     int rowCount =0;
     QString inf;
     if(getRegistryPtr() != NULL)
+
         if(tablePtr != NULL)
         {
+
             vector<Unit>::iterator iter;
             for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter)
             {
                 if(iter->getUnitID()==unitID)
                 {
 
-
                     tablePtr->setRowCount(iter->getSize()/rows);
                     vector< vector<Entry> > myRef = iter->getEntryRegisterRef();
+
                     int dayCounter = 0;
                     int rowCounter = 0;
-                    map<unsigned char, int> myMap;
+
                     for(auto day : myRef) {
                         for(auto entry : day) {
                             switch(dayCounter) {
@@ -99,7 +100,7 @@ void AddEntry::populateTable()
                                         tmpQString.append(QString::number(+entry.getMin()));
                                 }
                                 else {
-                                    tmpQString = QString::number(+entry.getHour()) + ":";
+                                   tmpQString = QString::number(+entry.getHour()) + ":";
                                     if(entry.getMin() < 10) {
                                         tmpQString.append("0" + QString::number(+entry.getMin() ) );
                                     }
@@ -139,9 +140,100 @@ void AddEntry::populateTable()
         }
 }
 
-void AddEntry::on_pushButton_clicked()
+
+
+void RemoveEntry::on_RemoveEntry_2_clicked()
 {
-    QString date = ui->comboBox->currentText();
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Fejl under Ændring");
+    msgBox.addButton(QMessageBox::Ok);
+
+    if(selectedRow!=-1)
+    {
+        map<unsigned char,int>::iterator it = next(myMap.begin(),selectedRow);
+                 entryID = +it->first;
+
+
+    }
+    else
+    {
+        {
+            msgBox.setText("Ingen tidsplan valgt til ændring");
+            if(msgBox.exec()==QMessageBox::Ok)
+                return;
+        }
+    }
+
+    // Hvilken dag er det på valgte entry i tabelen.
+
+    QString DayEntry = ui->EntriesTable->item(selectedRow,0)->text();
+
+    int DayIntEntry=0;
+
+    if(DayEntry=="Mandag")
+         DayIntEntry=0;
+    else if(DayEntry=="Tirsdag")
+         DayIntEntry=1;
+    else if(DayEntry=="Onsdag")
+         DayIntEntry=2;
+    else if(DayEntry=="Torsdag")
+         DayIntEntry=3;
+    else if(DayEntry=="Fredag")
+         DayIntEntry=4;
+    else if(DayEntry=="Lørdag")
+         DayIntEntry=5;
+    else
+         DayIntEntry=6;
+
+
+
+
+    vector<Unit>::iterator iter;
+
+for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter)
+ {
+    if(iter->getUnitID()==unitID)
+    {
+
+        vector< vector<Entry> > myRef = iter->getEntryRegisterRef();
+
+         for(int j = myRef[DayIntEntry].size()-1; j>= 0; j--)
+         {
+            if(myRef[DayIntEntry][j].EntryID()==entryID)
+             {
+                 iter->addDeletedEntry(myRef[DayIntEntry][j].EntryID());
+                 iter->deleteEntry(DayIntEntry,j);
+              }
+         }
+
+         msgBox.setText("Tidsplanen er fjernet");
+         if(msgBox.exec()==QMessageBox::Ok)
+         parentPtr->setCurrentIndex(0);
+    }
+  }
+}
+
+
+
+
+void RemoveEntry::on_EntriesTable_cellClicked(int row, int column)
+{
+    selectedRow = row;
+}
+
+void RemoveEntry::on_Annuller_clicked()
+{
+    parentPtr->setCurrentIndex(0);
+}
+
+void RemoveEntry::on_RemoveEntriesForDay_clicked()
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Fjerne tidsplan");
+    msgBox.addButton(QMessageBox::Ok);
+
+    QString date = ui->ComboDayBox->currentText();
+
     int valgteDag=0;
     if(date=="Mandag")
         valgteDag=0;
@@ -158,52 +250,29 @@ void AddEntry::on_pushButton_clicked()
     else
         valgteDag=6;
 
-    //Få start tid
-    int startHour = ui->StartTime->time().hour();
-    int startMin = ui->StartTime->time().minute();
-    //Få slutid
-    int endHour = ui->EndTime->time().hour();
-    int endMin = ui->EndTime->time().minute();
+    vector<Unit>::iterator iter;
 
-     vector<Unit>::iterator iter;
-     QMessageBox msgBox;
-     msgBox.setWindowTitle("Udført funktion");
-     msgBox.addButton(QMessageBox::Ok);
-
-     if((startHour<endHour)||((startHour==endHour)& (startMin<endMin)))
+for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter)
+ {
+    if(iter->getUnitID()==unitID)
     {
-         for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter)
+
+        vector< vector<Entry> > myRef = iter->getEntryRegisterRef();
+
+         for(int j = myRef[valgteDag].size()-1; j>= 0; j--)
          {
-             if(iter->getUnitID()==unitID)
+            if(myRef[valgteDag][j].getAction()==1) // Vi ved at der findes to med samme id.
              {
-                if((iter->compareEntry(Entry(iter->getEntryID(),startHour,startMin,1),valgteDag)==false) && (iter->compareEntry(Entry(iter->getEntryID(),endHour,endMin,0),valgteDag))==false)
-                 {
-                         // Be om at få et fælles EntryID)
-                          unsigned char ID= iter->getIDEntry();
+                 iter->addDeletedEntry(myRef[valgteDag][j].EntryID());
+             }
+         }
 
-                         if((iter->storeEntry(valgteDag,Entry(ID,startHour,startMin,1))==true)&& (
-                         iter->storeEntry(valgteDag,Entry(ID,endHour,endMin,0))==true))//Tilføjer start tidsplan
-                         {
-                         msgBox.setText("Tilføjelse af enheden succesfuld");
-                         }
-                         else
-                         msgBox.setText("Det maksimale antal tidsplaner for enkle dag er nået");
+         iter->deleteDayEntry(valgteDag);
+         msgBox.setText("Tidsplanen er fjernet");
+         if(msgBox.exec()==QMessageBox::Ok)
+         parentPtr->setCurrentIndex(0);
+    }
+  }
 
-                 }
-                 else
-                        msgBox.setText("Tilføjelse af enheden fejlede");
-            }
 
-        }
-     }
-
-    else
-      msgBox.setText("Tilføjelse af enheden fejlede");
-   if(msgBox.exec()==QMessageBox::Ok)
-    parentPtr->setCurrentIndex(0);
-}
-
-void AddEntry::on_pushButton_2_clicked()
-{
-    parentPtr->setCurrentIndex(0);
 }

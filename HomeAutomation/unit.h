@@ -20,7 +20,7 @@
 #include <fstream>
 #include <vector>
 #include <iterator>
-
+#include <algorithm>
 using namespace std;
 
 //=====================================
@@ -80,6 +80,9 @@ public:
     {
         entryID_++;
     }
+    void setEntries();
+    unsigned char getIDEntry();
+    void addDeletedEntry(unsigned char ID);
 
     const vector<vector<Entry> >& getEntryRegisterRef() { return entryRegister_; }
 private:
@@ -89,6 +92,7 @@ private:
 	bool status_;
     int entryID_=0;
     vector<vector<Entry> > entryRegister_; // Oprettelse et to dimensionel. Indeholder 7 dage med entry objekter.
+    vector<unsigned char> EntriesID;
 	
 };
 

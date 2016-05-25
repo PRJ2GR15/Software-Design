@@ -32,6 +32,10 @@ private slots:
 
     void on_EntryTable_cellClicked(int row, int column);
 
+
+
+    void on_RemoveEntry_clicked();
+
 private:
     Ui::EditEntry *ui;
     QTableWidget* tablePtr;

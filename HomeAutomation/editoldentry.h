@@ -22,7 +22,6 @@ void getUnit(int id);
 
 private slots:
 
-
 void on_EditEntryTable_cellClicked(int row, int column);
 
 void on_Annuller_clicked();

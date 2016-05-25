@@ -28,7 +28,7 @@ class Entry
 {
 public: 
 	Entry();
-    Entry(int entryID,unsigned char hour, unsigned char min, bool action);
+    Entry(unsigned char entryID,unsigned char hour, unsigned char min, bool action);
     bool setHour(unsigned char hour);
 	unsigned char getHour()const;
     bool setMin(unsigned char min);
@@ -37,10 +37,10 @@ public:
 	bool getAction()const;
 	void print()const;
 	friend istream& operator>>(istream& is, Entry& obj);
-    int EntryID()const { return entryID_;}
+    unsigned char EntryID()const { return +entryID_;}
 	
 private:
-        int entryID_;
+        unsigned char entryID_;
 	unsigned char hour_;
 	unsigned char min_;
 	bool action_;

@@ -52,7 +52,7 @@ MainWindow::MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *pa
 
 MainWindow::~MainWindow()
 {
-    commPtr->PCDisconnected();
+    //commPtr->PCDisconnected();
     commPtr->closeComPort();
     delete ui;
 }

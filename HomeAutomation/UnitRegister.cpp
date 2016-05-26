@@ -20,7 +20,7 @@
 UnitRegister::UnitRegister()
 {
 	//outputFile = "./register.txt";
-	loadData();
+    //loadData();
 }
 
 //=============================================================

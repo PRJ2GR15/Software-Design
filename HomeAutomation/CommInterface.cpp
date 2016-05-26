@@ -15,8 +15,8 @@
 #include <stdlib.h>
 #include <fstream>
 
-bool CommInterface::updateUnit(unsigned char previousID, unsigned char newID, unsigned char roomID) {
-    return true;
+void CommInterface::updateUnit(unsigned char previousID, unsigned char newID, unsigned char roomID) {
+    return;
 }
 
 bool CommInterface::openComPort(int port, int baud, int dataBit, int paritet, int stopBit) {
@@ -24,7 +24,7 @@ bool CommInterface::openComPort(int port, int baud, int dataBit, int paritet, in
     try
     {
         //serialCom.open(port, baud, dataBit, paritet, stopBit);
-        serialCom.open(3, 9600, 8, PARITY_EVEN, 1);
+        serialCom.open(3, 57600, 8, PARITY_EVEN, 1);
 
     }
     catch (const char *e)
@@ -50,7 +50,6 @@ void CommInterface::closeComPort() {
     cout << "Serial port closed" << endl;
     portOpened = false;
 }
-
 void CommInterface::sendCommand(char *cmd, int cmdSize) {
     try
     {
@@ -63,7 +62,6 @@ void CommInterface::sendCommand(char *cmd, int cmdSize) {
         //exit(1);
     }
 }
-
 int CommInterface::readInputBuffer() {
     int bytesRead = 0;
     try
@@ -71,7 +69,7 @@ int CommInterface::readInputBuffer() {
         {
             //Ja... Sleep. Puha - Giver lige arduinoen en chance for at svare tilbage.
             //Sleep i 100ms
-            _sleep(150);
+            _sleep(100);
             if(serialCom.inWatingBuffer() == 0)
             {
                 cout << "Der er ikke noget data at finde. CommInterface::readInputBuffer" << endl;
@@ -82,7 +80,7 @@ int CommInterface::readInputBuffer() {
                     cout << "Noget gik galt. CommInterface::readInputBuffer" << endl;
                     return bytesRead;
                 }
-                    output << 0;
+                output << 0;
                 output.close();
                 return bytesRead;
             }
@@ -112,7 +110,6 @@ int CommInterface::readInputBuffer() {
         //exit(1);
     }
 }
-
 bool CommInterface::PCConnected()
 {
     //Sender PC Tilsluttet kommando
@@ -131,7 +128,6 @@ bool CommInterface::PCConnected()
     int reply;
     input >> reply;
     input.close();
-    cout << reply << endl;
     if(reply == 0x0F)
         return true;
     else
@@ -156,7 +152,6 @@ void CommInterface::PCDisconnected()
     int reply;
     input >> reply;
     input.close();
-    //cout << "Reply fra PC Frakoblet" << endl << "Forventet: 15" << endl << "Modtaget: " << reply << endl;
 }
 bool CommInterface::validatePin() {
     //Sender valider(check om pin er indtastet)pin kommando
@@ -175,7 +170,6 @@ bool CommInterface::validatePin() {
     int reply;
     input >> reply;
     input.close();
-    cout << "Output fra Validate pin: " << reply << endl;
     if(reply == 0x01)
         return true;
     else
@@ -211,8 +205,8 @@ bool CommInterface::validatePin() {
         return false;
     }
 }*/
-//void CommInterface::getAllUnits()
-//{
+void CommInterface::getAllUnits()
+{
     //Forventet svar tilbage: 512 * 7 bytes. 3584 bytes. Per Unit.
     //Data gemmes i format:
     /*
@@ -221,18 +215,27 @@ bool CommInterface::validatePin() {
     Der skal altid hentes 512 bytes.
     HVIS: Byte 0, Byte 1, Byte 2 og Byte 3 alle = 0xFA, så er der ikke flere enheder at hente
     */
-    /*Unit tmpUnit(1,1,0,1);
+    Unit tmpUnit(1,1,0,1);
     //Sender hent unit status kommando
     const int arraySize = 8;
     int byteCounter = 0;
     int byteArray[arraySize];
-    int day;
+    int day = 0;
     const int cmdSize = 5;
     char cmd[cmdSize] = {0xF0, 0xF0, 0x06, 0x0F, 0x0F};
-    sendCommand(cmd, cmdSize);
+    sendCommand(cmd, 5);
+    //600 - Magic number. Skal nok ændres efter det er testet med SD-Kort
+    _sleep(600);
     int bytesToProcess = readInputBuffer();
+
+    if(bytesToProcess <= 3583)
+    {
+        cout << "Inde i CommInterface::getAllUnits. BTP <= 3583" << endl;
+        return;
+    }
+
     ifstream input;
-    input.open("serielData.txt", ios::in);
+    input.open("serialData.txt", ios::in);
     if(!input)
     {
         cout << "Noget gik galt. CommInterface::getAllUnits" << endl;
@@ -240,46 +243,90 @@ bool CommInterface::validatePin() {
     }
     while(!input.eof())
     {
-        if(bytesToProcess <= 4)
-            //DER ER EN FEJL. STOP HER.
-            return;
-
-        //Hvis jeg har talt til 511, så må jeg have kørt den første blok data igennem. Den næste blok der kommer
-        //Hører derfor til
-        if(byteCounter >= 511)
-        {
-
-        }
-
-        int errCount = 0;
-        for(int i = 0; i < arraySize || input.eof(); i++) {
+        for(int i = 0; i < arraySize; i++) {
             input >> byteArray[i];
             byteCounter++;
         }
-
         //Hvis man har fat i de første 8 bytes, hvor Unit ID indgår
-        if(byteCounter <= 7)
+        if(byteCounter <= 8)
         {
             tmpUnit.setUnitID(byteArray[0]);
             tmpUnit.setRoomID(byteArray[2]);
-            day = byteArray[3];
             //Hvis entryID er == 0x00, er der ingen entries at tilføje.
-            if(byteArray[4] == 0x00)
-                return tmpUnit;
-            tmpUnit.storeEntry(day,Entry(byteArray[4], byteArray[5], byteArray[6], byteArray[7]));
+            if(byteArray[4] != 0x00)
+                tmpUnit.storeEntry(day,Entry(byteArray[4], byteArray[5], byteArray[6], byteArray[7]));
         }
-        //Nu er vi i vildmarken. Vi er forbi de første 8 bytes, og nu skal resten af de uendelige bytes behandles.
-        //Efter byte 7, læses de næste 8 bytes fra filen ind i byteArray, mønstret vil være som følgende:
-        //Byte 0: Entry ID, Byte 1: Time, Byte 2: Minut, Byte 3: Handling, Byte 4: Entry ID, Byte 5: Time, Byte 6: Minut, Byte 7: Handling
-        //Hvis et Entry ID == 0x00 er der ikke flere entries at arbejde med, og de tilbageværende bytes ud af de 512 er skrald.
-        //Under er en sloppy løsning til at lade som om mit array med 8 bytes, i virkeligheden er 2 arrays med 4 bytes. Uden egentlig at lave et. Fordi.
-        for(int i = 0; i < 2; i++) {
-            if(byteArray[0+(4*i)] != 0x00)
+        else
+        {
+            //Nu er vi i vildmarken. Vi er forbi de første 8 bytes, og nu skal resten af de uendelige bytes behandles.
+            //Efter byte 7, læses de næste 8 bytes fra filen ind i byteArray, mønstret vil være som følgende:
+            //Byte 0: Entry ID, Byte 1: Time, Byte 2: Minut, Byte 3: Handling, Byte 4: Entry ID, Byte 5: Time, Byte 6: Minut, Byte 7: Handling
+            //Hvis et Entry ID == 0x00 er der ikke flere entries at arbejde med, og de tilbageværende bytes ud af de 512 er skrald.
+            //Under er en sloppy løsning til at lade som om mit array med 8 bytes, i virkeligheden er 2 arrays med 4 bytes. Uden egentlig at lave et. Fordi.
+            for(int i = 0; i < 2; i++) {
+                if(byteArray[0+(4*i)] != 0x00)
+                {
+                    tmpUnit.storeEntry(day,Entry(byteArray[0+(4*i)], byteArray[1+(4*i)], byteArray[2+(4*i)], byteArray[3+(4*i)]));
+                }
+            }
+        }
+        //Når bytecounter når 512, har jeg læst og behandlet alt data fra ÉN dag. Derfor skal day counteren øges med 1.
+        if(byteCounter >= 512)
+        {
+            byteCounter = 0;
+            ++day;
+            //Hvis dag er 7, så har jeg behandlet samtlige 7 * 512 blokke af data. Derfor er jeg nået enden af min serialData.txt fil.
+            //Mit while loop vil derfor stoppe når jeg kommmer til enden, den enhed jeg har arbejdet med skal derfor gemmes i vores register, da jeg er færdig med den.
+            if(day >= 7)
             {
-                tmpUnit.storeEntry(day,Entry(byteArray[0+(4*i)], byteArray[1+(4*i)], byteArray[2+(4*i)], byteArray[3+(4*i)]));
+                unitRegPtr->storeUnit(tmpUnit);
             }
         }
     }
+    //Uden for while loopet nu, men jeg skal blive ved med at hente enheder op, indtil jeg får mine fire "error" bytes(0xFAFAFAFA). Derfor kalder jeg bare getAllUnits en gang til.
+    getAllUnits();
 }
-*/
-
+/*bool CommInterface::editUnit(unsigned char previousID, unsigned char newID, unsigned char roomID) {
+    //Sender Edit Unit kommando
+    const int cmdSize = 8;
+    char cmd[cmdSize] = {0xF0, 0xF0, 0x09, previousID, newID, roomID, 0x0F, 0x0F};
+    sendCommand(cmd, cmdSize);
+    readInputBuffer();
+    ifstream input;
+    input.open("serialData.txt", ios::in);
+    if(!input)
+    {
+        cout << "Noget gik galt. CommInterface::PCConnected" << endl;
+        return false;
+    }
+    //Forventet svar fra Edit Unit kommando = 1 byte.
+    int reply;
+    input >> reply;
+    input.close();
+    if(reply == 0x0F)
+        return true;
+    else
+        return false;
+}*/
+bool CommInterface::deleteUnit(unsigned char unitID) {
+    //Sender Delete Unit kommando
+    const int cmdSize = 6;
+    char cmd[cmdSize] = {0xF0, 0xF0, 0x08, unitID, 0x0F, 0x0F};
+    sendCommand(cmd, cmdSize);
+    readInputBuffer();
+    ifstream input;
+    input.open("serialData.txt", ios::in);
+    if(!input)
+    {
+        cout << "Noget gik galt. CommInterface::PCConnected" << endl;
+        return false;
+    }
+    //Forventet svar fra delete unit kommando = 1 byte.
+    int reply;
+    input >> reply;
+    input.close();
+    if(reply == 0x0F)
+        return true;
+    else
+        return false;
+}

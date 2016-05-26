@@ -28,6 +28,7 @@
 #include "addentry.h"
 #include "editoldentry.h"
 #include "removeentry.h"
+#include "waitforpin.h"
 
 namespace Ui {
 class MainWindow;
@@ -40,6 +41,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *parent);
     ~MainWindow();
+
+    void getPin() { waitPtr->waitForValidate(); }
 
     void setRegistryPtr(UnitRegister& regRef);
 
@@ -70,6 +73,7 @@ private:
     AddEntry* addEntryPtr;
     EditOldEntry* editEntryPtr;
     RemoveEntry* removeEntryPtr;
+    waitForPin* waitPtr;
 };
 
 #endif // MAINWINDOW_H

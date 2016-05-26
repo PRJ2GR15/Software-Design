@@ -15,11 +15,11 @@ int main(int argc, char *argv[])
     cI.openComPort(3, 57600, 8, PARITY_EVEN, 1);
     UnitRegister uR;
     cI.setRegPtr(uR);
-    cI.getAllUnits();
     MainWindow w(uR, cI, 0);
     w.setRegistryPtr(uR);
     w.setCommPtr(cI);
     w.show();
+    w.getPin();
     //cI.PCConnected();
 
     return a.exec();

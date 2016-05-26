@@ -156,9 +156,11 @@ void CommInterface::PCDisconnected()
     input.close();
 }
 bool CommInterface::validatePin() {
+    _sleep(4000);
     //Sender valider(check om pin er indtastet)pin kommando
     const int cmdSize = 5;
     char cmd[cmdSize] = {0xF0, 0xF0, 0x03, 0x0F, 0x0F};
+    cout << "CommInterface::validatePin : sent command" << endl;
     sendCommand(cmd, cmdSize);
     readInputBuffer();
     ifstream input;

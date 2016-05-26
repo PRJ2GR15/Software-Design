@@ -31,7 +31,9 @@ MainWindow::MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *pa
     addEntryPtr = new AddEntry(ui->MainW_StackedWidget, regRef, commRef);
     editEntryPtr = new EditOldEntry(ui->MainW_StackedWidget, regRef, commRef);
     removeEntryPtr = new RemoveEntry(ui->MainW_StackedWidget, regRef, commRef);
+    waitPtr = new waitForPin(ui->MainW_StackedWidget, commRef);
 
+    ui->MainW_StackedWidget->addWidget(waitPtr);
     ui->MainW_StackedWidget->addWidget(mainMenuPtr);
     ui->MainW_StackedWidget->addWidget(addUnitPtr);
     ui->MainW_StackedWidget->addWidget(editUnitPtr);
@@ -41,7 +43,7 @@ MainWindow::MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *pa
     ui->MainW_StackedWidget->addWidget(removeUnitPtr);
     ui->MainW_StackedWidget->addWidget(removeEntryPtr);
 
-    ui->MainW_StackedWidget->setCurrentWidget(mainMenuPtr);
+    ui->MainW_StackedWidget->setCurrentWidget(waitPtr);
 
     QObject::connect(editPtr,SIGNAL(sendid(int)),
                      addEntryPtr,SLOT(getUnit(int)));

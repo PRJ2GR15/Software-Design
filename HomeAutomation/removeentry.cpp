@@ -144,62 +144,24 @@ void RemoveEntry::on_RemoveEntry_2_clicked()
     msgBox.setWindowTitle("Fejl under Ændring");
     msgBox.addButton(QMessageBox::Ok);
 
-    if(selectedRow != -1)
+    if(selectedRow == -1)
     {
-        map<unsigned char,int>::iterator it = next(myMap.begin(), selectedRow);
-        entryID = +it->first;
+        msgBox.setText("Ingen tidsplan valgt til ændring");
+        if(msgBox.exec()==QMessageBox::Ok)
+            return;
     }
-    else
+
+    vector<Unit>::iterator iter;
+    for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter)
     {
+        if(iter->getUnitID()==unitID)
         {
-            msgBox.setText("Ingen tidsplan valgt til ændring");
+            iter->deleteEntry(entryID);
+            msgBox.setText("Tidsplanen er fjernet");
             if(msgBox.exec()==QMessageBox::Ok)
-                return;
+                parentPtr->setCurrentIndex(0);
         }
     }
-
-    // Hvilken dag er det på valgte entry i tabelen.
-
-    QString DayEntry = ui->EntriesTable->item(selectedRow,0)->text();
-
-    int DayIntEntry=0;
-
-    if(DayEntry=="Mandag")
-         DayIntEntry=0;
-    else if(DayEntry=="Tirsdag")
-         DayIntEntry=1;
-    else if(DayEntry=="Onsdag")
-         DayIntEntry=2;
-    else if(DayEntry=="Torsdag")
-         DayIntEntry=3;
-    else if(DayEntry=="Fredag")
-         DayIntEntry=4;
-    else if(DayEntry=="Lørdag")
-         DayIntEntry=5;
-    else
-         DayIntEntry=6;
-
-vector<Unit>::iterator iter;
-for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter)
- {
-    if(iter->getUnitID()==unitID)
-    {
-        vector< vector<Entry> > myRef = iter->getEntryRegisterRef();
-
-         for(int j = myRef[DayIntEntry].size()-1; j>= 0; j--)
-         {
-            if(myRef[DayIntEntry][j].EntryID() == entryID)
-            {
-                 iter->addDeletedEntry(entryID);
-                 iter->deleteEntry(DayIntEntry,j);
-            }
-         }
-
-         msgBox.setText("Tidsplanen er fjernet");
-         if(msgBox.exec()==QMessageBox::Ok)
-         parentPtr->setCurrentIndex(0);
-    }
-  }
 }
 
 
@@ -208,6 +170,11 @@ for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter)
 void RemoveEntry::on_EntriesTable_cellClicked(int row, int column)
 {
     selectedRow = row;
+    for(auto it = myMap.begin(); it != myMap.end(); ++it)
+    {
+        if(it->second == selectedRow)
+            entryID = +it->first;
+    }
 }
 
 void RemoveEntry::on_Annuller_clicked()

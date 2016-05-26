@@ -61,10 +61,10 @@ public:
 
     bool compareEntry(Entry&,int);
     //DELETE OG UPDATE ENTRY FUNKTIONER
-	bool deleteEntry(int day, int place);
+    bool deleteEntry(unsigned char entryID);
 	bool deleteDayEntry(int day);
 	bool deleteEntry();
-        bool updateEntry(int day, int place, unsigned char hour, unsigned char min);
+    bool updateEntry(int day, int place, unsigned char hour, unsigned char min);
 	bool clearData();
     //DELETE OG UPDATE ENTRY FUNKTIONER END
 
@@ -73,13 +73,6 @@ public:
 	unsigned char getSize()const;
     unsigned char getDay()const;
 
-    int getEntryID() const {
-        return entryID_;
-    }
-    void countEntryID()
-    {
-        entryID_++;
-    }
     void setEntries();
     unsigned char getIDEntry();
     void addDeletedEntry(unsigned char ID);
@@ -90,7 +83,6 @@ private:
 	unsigned char roomID_;
 	unsigned char houseCode_;
 	bool status_;
-    int entryID_=0;
     vector<vector<Entry> > entryRegister_; // Oprettelse et to dimensionel. Indeholder 7 dage med entry objekter.
     vector<unsigned char> EntriesID;
 	

@@ -89,6 +89,7 @@ void EditOldEntry::populateTable()
                             if(entry.getAction()) {
                                 QString tmpQString;
                                 myMap[entry.EntryID()] = rowCounter;
+                                cout << "EditOldEntry::populateTable() : Entry ID: " << +entry.EntryID() << " Mapped to row : " << rowCounter << endl;
                                 tablePtr->setItem(rowCounter,0,new QTableWidgetItem(inf) );
                                 if(+entry.getHour() < 10) {
                                     tmpQString = "0" + QString::number(+entry.getHour()) + ":";
@@ -145,6 +146,11 @@ void EditOldEntry::populateTable()
 void EditOldEntry::on_EditEntryTable_cellClicked(int row, int column)
 {
     selectedRow=row;
+    for(auto it = myMap.begin(); it != myMap.end(); ++it)
+    {
+        if(it->second == selectedRow)
+            entryID = +it->first;
+    }
 }
 
 void EditOldEntry::on_Annuller_clicked()
@@ -157,168 +163,58 @@ void EditOldEntry::on_SaveEntry_clicked()
     QMessageBox msgBox;
     msgBox.setWindowTitle("Fejl under Ændring");
     msgBox.addButton(QMessageBox::Ok);
-
-    if(selectedRow!=-1)
+    //Check om der er valgt en row.
+    if(selectedRow == -1)
     {
-        map<unsigned char,int>::iterator it = next(myMap.begin(),selectedRow);
-                 entryID = +it->first;
+        msgBox.setText("Ingen tidsplan valgt til ændring");
+        if(msgBox.exec()==QMessageBox::Ok)
+        {
+            return;
+        }
+    }
+
+    //Få hvilken dag som brugeren ønsker ændret til.
+    map<QString, int> dayMap = { {"Mandag", 0}, {"Tirsdag", 1}, {"Onsdag", 2}, {"Torsdag", 3},
+                                  {"Fredag", 4}, {"Lørdag", 5}, {"Søndag", 6} };
+    QString date = ui->DayBox->currentText();
+    int selectedDay = dayMap[date];
+    cout << "editOldEntry::SaveEntry_clicked : " << selectedDay << endl;
+
+    //Få hvilken tid som brugeren ønsker ændret til
+    int startHour = ui->EditStartTime->time().hour();
+    int startMin = ui->EditStartTime->time().minute();
+    //Få slutid
+    int endHour = ui->EditEndTime->time().hour();
+    int endMin = ui->EditEndTime->time().minute();
+
+    //validering af tiden
+    vector<Unit>::iterator iter;
 
 
+    if( ( startHour < endHour ) || ( ( startHour == endHour ) && ( startMin < endMin ) ) )
+    {
+        for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter)
+        {
+            if(iter->getUnitID()==unitID) // Finder den rigtige Unit udfra UnitID
+            {
+                iter->deleteEntry(entryID);
+                unsigned char newEntryID = iter->getIDEntry();
+                iter->storeEntry(selectedDay, Entry(newEntryID, startHour, startMin, 1) );
+                iter->storeEntry(selectedDay, Entry(newEntryID, endHour, endMin, 0) );
+                msgBox.setText("Tidsplanen er nu opdateret");
+                if(msgBox.exec()==QMessageBox::Ok)
+                {
+                    parentPtr->setCurrentIndex(0);
+                }
+            }
+        }
     }
     else
     {
-        {
-            msgBox.setText("Ingen tidsplan valgt til ændring");
-            if(msgBox.exec()==QMessageBox::Ok)
-                return;
-        }
+        msgBox.setText("Ugyldigt tidspunkt - sluttidspunkt før starttidspukt");
+        if(msgBox.exec()==QMessageBox::Ok)
+            return;
     }
-
-
-    //Få hvilken dag som brugeren ønsker ændret til.
-
-    QString date = ui->DayBox->currentText();
-
-
-                    int valgteDag=0;
-                    if(date=="Mandag")
-                        valgteDag=0;
-                    else if(date=="Tirsdag")
-                        valgteDag=1;
-                    else if(date=="Onsdag")
-                        valgteDag=2;
-                    else if(date=="Torsdag")
-                        valgteDag=3;
-                    else if(date=="Fredag")
-                        valgteDag=4;
-                    else if(date=="Lørdag")
-                        valgteDag=5;
-                    else
-                        valgteDag=6;
-
-
-                    //Få den gamle dag
-                         int OldEntryDag=0;
-
-       QString OldEntry = ui->EditEntryTable->item(selectedRow,0)->text();
-
-
-
-
-                     if(OldEntry=="Mandag")
-                          OldEntryDag=0;
-                     else if(OldEntry=="Tirsdag")
-                          OldEntryDag=1;
-                     else if(OldEntry=="Onsdag")
-                          OldEntryDag=2;
-                     else if(OldEntry=="Torsdag")
-                          OldEntryDag=3;
-                     else if(OldEntry=="Fredag")
-                          OldEntryDag=4;
-                     else if(OldEntry=="Lørdag")
-                          OldEntryDag=5;
-                     else
-                          OldEntryDag=6;
-
-
-    //Få hvilken tid som brugeren ønsker ændret til
-
-      int EditstartHour = ui->EditStartTime->time().hour();
-      int EditstartMin = ui->EditStartTime->time().minute();
-                        //Få slutid
-      int EditendHour = ui->EditEndTime->time().hour();
-      int EditendMin = ui->EditEndTime->time().minute();
-
- //validering af tiden
-
-      vector<Unit>::iterator iter;
-
-      if((EditstartHour<EditendHour)||((EditstartHour==EditendHour)& (EditstartMin<EditendMin)))
-           {
-             for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter)
-                {
-                  if(iter->getUnitID()==unitID) // Finder den rigtige Unit udfra UnitID
-                   {
-                     // Tjekker at tidsplanen i forvejen ikke ligger i systemet
-                     if((iter->compareEntry(Entry(iter->getEntryID(),EditstartHour,EditstartMin,1),valgteDag)==false) && (iter->compareEntry(Entry(iter->getEntryID(),EditendHour,EditendMin,0),valgteDag))==false)
-                       {
-            //Tjekke om den ønskede dag er ens
-            vector< vector<Entry> > myRef = iter->getEntryRegisterRef();
-
-                    //Hvis dagene er ens
-             if(date==ui->EditEntryTable->item(selectedRow,0)->text())
-                {
-
-
-                    for(int j = 0; j<myRef[valgteDag].size();++j)
-                    {
-                        if(myRef[valgteDag][j].EntryID()==entryID)
-                        {
-                            if(myRef[valgteDag][j].getAction()==1)
-                            {
-                                    iter->updateEntry(valgteDag,j,EditstartHour,EditstartMin);
-                            }
-                            else
-                            {    if(iter->updateEntry(valgteDag,j,EditendHour,EditendMin)==true)
-                                    {
-                                        msgBox.setText("Tidsplanen er nu opdateret");
-                                        if(msgBox.exec()==QMessageBox::Ok)
-                                        parentPtr->setCurrentIndex(0);
-                                    }
-                            }
-                        }
-                    }
-                }
-                                  //Hvis det ikke er samme dag.
-              else
-               {
-
-
-                 for(int j = myRef[OldEntryDag].size()-1; j>=0;j--)
-                 {
-
-                     if(myRef[OldEntryDag][j].EntryID()==entryID)
-                     {
-
-                         if(myRef[OldEntryDag][j].getAction()==1)
-                         {
-
-                                 iter->deleteEntry(OldEntryDag,j);
-                                 iter->storeEntry(valgteDag,Entry(entryID,EditstartHour,EditstartMin,1));
-                                 iter->printEntry();
-                         }
-                         else
-                         {
-                                 iter->deleteEntry(OldEntryDag,j);
-                                 if(iter->storeEntry(valgteDag,Entry(entryID,EditendHour,EditendMin,0))==true)
-                                 {
-                                     msgBox.setText("Tidsplanen er nu opdateret");
-                                     if(msgBox.exec()==QMessageBox::Ok)
-                                     parentPtr->setCurrentIndex(0);
-                                 }
-                        }
-                     }
-                 }
-
-               }
-                     }
-                    else
-                    {
-                     msgBox.setText("Tiden findes allerede i tidsplanen");
-                     if(msgBox.exec()==QMessageBox::Ok)
-                     return;
-                    }
-
-
-               }
-          }
-        }
-      else
-      {
-          msgBox.setText("Ugyldigt tidspunkt - sluttidspunkt før starttidspukt");
-          if(msgBox.exec()==QMessageBox::Ok)
-          return;
-      }
 }
 
 

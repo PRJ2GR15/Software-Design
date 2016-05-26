@@ -142,23 +142,11 @@ void AddEntry::populateTable()
 
 void AddEntry::on_pushButton_clicked()
 {
+    map<QString, int> dayMap = { {"Mandag", 0}, {"Tirsdag", 1}, {"Onsdag", 2}, {"Torsdag", 3},
+                                  {"Fredag", 4}, {"Lørdag", 5}, {"Søndag", 6} };
     QString date = ui->comboBox->currentText();
-    int valgteDag=0;
-    if(date=="Mandag")
-        valgteDag=0;
-    else if(date=="Tirsdag")
-        valgteDag=1;
-    else if(date=="Onsdag")
-        valgteDag=2;
-    else if(date=="Torsdag")
-        valgteDag=3;
-    else if(date=="Fredag")
-        valgteDag=4;
-    else if(date=="Lørdag")
-        valgteDag=5;
-    else
-        valgteDag=6;
 
+    int selectedDay = dayMap[date];
     //Få start tid
     int startHour = ui->StartTime->time().hour();
     int startMin = ui->StartTime->time().minute();
@@ -172,36 +160,48 @@ void AddEntry::on_pushButton_clicked()
      msgBox.addButton(QMessageBox::Ok);
 
      if( (startHour<endHour) || ( (startHour==endHour) & (startMin<endMin) ))
-    {
+     {
          for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter)
          {
              if(iter->getUnitID()==unitID)
              {
-                if((iter->compareEntry(Entry(iter->getEntryID(),startHour,startMin,1),valgteDag)==false) && (iter->compareEntry(Entry(iter->getEntryID(),endHour,endMin,0),valgteDag))==false)
+                unsigned char ID = iter->getIDEntry();
+                Entry tmpStartEntry(ID, startHour, startMin, 1); Entry tmpStopEntry(ID, endHour, endMin, 0);
+                if( (iter->compareEntry(tmpStartEntry, selectedDay) == false) && (iter->compareEntry(tmpStopEntry, selectedDay) ) == false)
                 {
-                    //Be om at få et fælles EntryID)
-                    unsigned char ID = iter->getIDEntry();
-
-                    if((iter->storeEntry(valgteDag,Entry(ID,startHour,startMin,1))==true) &&
-                       (iter->storeEntry(valgteDag,Entry(ID,endHour,endMin,0))==true))//Tilføjer start tidsplan
+                    if( iter->storeEntry(selectedDay, tmpStartEntry) )
                     {
-                         msgBox.setText("Tilføjelse af enheden succesfuld");
+                        iter->storeEntry(selectedDay, tmpStopEntry);
+                        msgBox.setText("Tilføjelse af enheden godkendt");
+                        if(msgBox.exec()==QMessageBox::Ok)
+                            parentPtr->setCurrentIndex(0);
                     }
                     else
-                         msgBox.setText("Det maksimale antal tidsplaner for enkle dag er nået");
-
-                 }
-                 else
+                    {
+                        iter->addDeletedEntry(ID);
                         msgBox.setText("Tilføjelse af enheden fejlede");
+                        if(msgBox.exec()==QMessageBox::Ok)
+                            parentPtr->setCurrentIndex(0);
+                    }
+                }
+                else
+                {
+                    iter->addDeletedEntry(ID);
+                    msgBox.setText("Tilføjelse af enheden fejlede");
+                    if(msgBox.exec()==QMessageBox::Ok)
+                        parentPtr->setCurrentIndex(0);
+                }
+
             }
 
         }
-     }
-
+    }
     else
-      msgBox.setText("Tilføjelse af enheden fejlede");
-   if(msgBox.exec()==QMessageBox::Ok)
-    parentPtr->setCurrentIndex(0);
+    {
+        msgBox.setText("Tilføjelse af enheden fejlede");
+        if(msgBox.exec()==QMessageBox::Ok)
+            parentPtr->setCurrentIndex(0);
+    }
 }
 
 void AddEntry::on_pushButton_2_clicked()

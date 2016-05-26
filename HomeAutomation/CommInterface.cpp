@@ -293,44 +293,57 @@ bool CommInterface::editUnit(unsigned char previousID, unsigned char newID, unsi
     const int cmdSize = 8;
     char cmd[cmdSize] = {0xF0, 0xF0, 0x09, previousID, newID, roomID, 0x0F, 0x0F};
     sendCommand(cmd, cmdSize);
-    readInputBuffer();
-    ifstream input;
-    input.open("serialData.txt", ios::in);
-    if(!input)
+    int replySize = readInputBuffer();
+    if(replySize == 1)
     {
-        cout << "Noget gik galt. CommInterface::PCConnected" << endl;
+        ifstream input;
+        input.open("serialData.txt", ios::in);
+        if(!input)
+        {
+            cerr << "Fil ikke åbnet. CommInterface::sendUnit" << endl;
+            return false;
+        }
+        int reply;
+        input >> reply;
+        input.close();
+        if(reply == 0x0F)
+            return true;
+        else
+            return false;
+    } else// if(replySize == 4)
+    {
+        cerr << "CommInterface::editUnit. Did not get approved command" << endl;
         return false;
     }
-    //Forventet svar fra Edit Unit kommando = 1 byte.
-    int reply;
-    input >> reply;
-    input.close();
-    if(reply == 0x0F)
-        return true;
-    else
-        return false;
 }
 bool CommInterface::deleteUnit(unsigned char unitID) {
     //Sender Delete Unit kommando
     const int cmdSize = 6;
     char cmd[cmdSize] = {0xF0, 0xF0, 0x08, unitID, 0x0F, 0x0F};
     sendCommand(cmd, cmdSize);
-    readInputBuffer();
-    ifstream input;
-    input.open("serialData.txt", ios::in);
-    if(!input)
+    int replySize = readInputBuffer();
+    //Forventet svar: 1 Byte godkendt, 4 byte fejl.
+    if(replySize == 1)
     {
-        cout << "Noget gik galt. CommInterface::PCConnected" << endl;
+        ifstream input;
+        input.open("serialData.txt", ios::in);
+        if(!input)
+        {
+            cerr << "Fil ikke åbnet. CommInterface::sendUnit" << endl;
+            return false;
+        }
+        int reply;
+        input >> reply;
+        input.close();
+        if(reply == 0x0F)
+            return true;
+        else
+            return false;
+    } else// if(replySize == 4)
+    {
+        cerr << "CommInterface::deleteUnit. Did not get approved command" << endl;
         return false;
     }
-    //Forventet svar fra delete unit kommando = 1 byte.
-    int reply;
-    input >> reply;
-    input.close();
-    if(reply == 0x0F)
-        return true;
-    else
-        return false;
 }
 bool CommInterface::sendUnit(unsigned char unitID, unsigned char roomID)
 {
@@ -362,4 +375,131 @@ bool CommInterface::sendUnit(unsigned char unitID, unsigned char roomID)
         return false;
     }
 
+}
+bool CommInterface::readAckCommand()
+{
+    int replySize = readInputBuffer();
+    if(replySize != 0)
+    {
+        ifstream input;
+        input.open("serialData.txt", ios::in);
+        if(!input)
+        {
+            cerr << "Fil ikke åbnet. CommInterface::sendUnit" << endl;
+            return false;
+        }
+        int reply;
+        input >> reply;
+        input.close();
+        if(reply == 0x0F)
+            return true;
+        else
+            return false;
+    }
+    else// if(replySize == 4)
+    {
+        cerr << "CommInterface::sendEntries. Did not get approved command" << endl;
+        return false;
+    }
+}
+bool CommInterface::sendEntries(Unit& obj, int day)
+{
+    unsigned char unitID = obj.getUnitID(); unsigned char roomID = obj.getRoomID();
+    vector<vector<Entry> > entryRegPtr = obj.getEntryRegisterRef();
+    char dataToSend[1] = {0x00};
+    //Hvis der ingen entries er at sende.
+    if(entryRegPtr[day].size() == 0)
+    {
+        //Send start kommando. Få et svar.
+        const int cmdSize = 3;
+        char cmd[cmdSize] = {0xF0, 0xF0, 0x0A};
+        sendCommand(cmd, cmdSize);
+        int replySize = readInputBuffer();
+        if(replySize != 0)
+        {
+            ifstream input;
+            input.open("serialData.txt", ios::in);
+            if(!input)
+            {
+                cerr << "Fil ikke åbnet. CommInterface::sendUnit" << endl;
+                return false;
+            }
+            int reply;
+            input >> reply;
+            input.close();
+            if(reply != 0x0F)
+                return false;
+        }
+        else// if(replySize == 4)
+        {
+            cerr << "CommInterface::sendEntries. Did not get approved command" << endl;
+            return false;
+        }
+        //Nu sendes den "rigtige data"
+        char noEntries[4] = {unitID, roomID, day, 0x00};
+        for(int i = 0; i < 4; i++)
+        {
+            dataToSend[0] = noEntries[i];
+            sendCommand(dataToSend, 1);
+            replySize = readInputBuffer();
+            if(!readAckCommand())
+            {
+                cerr << "CommInterface::sendEntries - ved ingen entries : ack command fejl" << endl;
+                return false;
+            }
+        }
+        //Stop delen af command.
+        dataToSend[0] = 0x0F;
+        sendCommand(dataToSend, 1); sendCommand(dataToSend, 1);
+        return true;
+    }
+    else
+    {
+        const int cmdSize = 3;
+        char cmd[cmdSize] = {0xF0, 0xF0, 0x0A};
+        sendCommand(cmd, cmdSize);
+        int replySize = readInputBuffer();
+        //Hent og læs svaret
+        if(!readAckCommand())
+        {
+            cerr << "CommInterface::sendEntries - ved nogen entries : ack command fejl" << endl;
+            return false;
+        }
+
+        //SEND NOGEN F*****G ENTRIES.
+        for(int i = 0; i < entryRegPtr[day].size(); i++)
+        {
+            dataToSend[0] = entryRegPtr[day][i].EntryID();
+            sendCommand(dataToSend, 1);
+            if(!readAckCommand())
+            {
+                cerr << "CommInterface::sendEntries - efter sendt EntryID : fejl" << endl;
+                return false;
+            }
+            dataToSend[0] = entryRegPtr[day][i].getHour();
+            sendCommand(dataToSend, 1);
+            if(!readAckCommand())
+            {
+                cerr << "CommInterface::sendEntries - efter sendt time : fejl" << endl;
+                return false;
+            }
+            dataToSend[0] = entryRegPtr[day][i].getMin();
+            sendCommand(dataToSend, 1);
+            if(!readAckCommand())
+            {
+                cerr << "CommInterface::sendEntries - efter sendt minut : fejl" << endl;
+                return false;
+            }
+            dataToSend[0] = entryRegPtr[day][i].getAction();
+            sendCommand(dataToSend, 1);
+            if(!readAckCommand())
+            {
+                cerr << "CommInterface::sendEntries - efter sendt handling : fejl" << endl;
+                return false;
+            }
+        }
+        dataToSend[0] = 0x0F;
+        sendCommand(dataToSend, 1); sendCommand(dataToSend, 1);
+        return true;
+    }
 }

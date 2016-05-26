@@ -72,7 +72,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Rediger Tidsplan</string>
+        <string>Tidsplan</string>
        </property>
       </widget>
      </item>
@@ -158,7 +158,7 @@
      <item>
       <widget class="QPushButton" name="updateButton">
        <property name="text">
-        <string>PushButton</string>
+        <string>Opdater Enhedsregister</string>
        </property>
       </widget>
      </item>

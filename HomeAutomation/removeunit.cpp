@@ -89,7 +89,7 @@ void RemoveUnit::on_remove_PushButton_clicked()
     int data = tablePtr->model()->data(index).toInt();
     cout << data << endl;
     getRegistryPtr()->deleteUnit(static_cast<uchar>(data));
-    cout << "Unit with ID: " << data << " deleted." << endl;
+    getCommPtr()->deleteUnit(data);
     populateTable();
 }
 

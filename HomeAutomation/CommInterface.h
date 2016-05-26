@@ -35,8 +35,8 @@ public:
     bool sendUnit(unsigned char unitID, unsigned char roomID);
     bool deleteUnit(unsigned char unitID);
     bool editUnit(unsigned char previousID, unsigned char newID, unsigned char roomID);
-
-
+    bool sendEntries(Unit& obj, int day);
+    bool readAckCommand();
 
     //Placeholder
     bool getUnitStatus(unsigned char ID) {

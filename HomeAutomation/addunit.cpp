@@ -46,21 +46,18 @@ AddUnit::~AddUnit()
 void AddUnit::on_pushButton_clicked()
 {
  //ID value fra SpinBox 1
-  int IDValue=ui->spinBox->value();
+  int unitID=ui->spinBox->value();
 
  //roomValue fra spinBox 2
-  int roomValue = ui->spinBox_2->value();
-
-//Temp Unit indeholdende overstående data
-  Unit tempUnit(IDValue,roomValue,2,1);
-  cout << tempUnit;
+  int roomID = ui->spinBox_2->value();
 
   QMessageBox msgBox;
   msgBox.setWindowTitle("Udført funktion");
   msgBox.addButton(QMessageBox::Ok);
 
-  if(getRegistryPtr()->storeUnit(tempUnit)==true)
+  if(getRegistryPtr()->storeUnit(Unit(unitID,roomID,0,0)) == true)
   {
+      getCommPtr()->sendUnit(unitID, roomID);
       msgBox.setText("Tilføjelse af enheden succesfuld");
   }
   else

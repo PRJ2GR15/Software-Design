@@ -3,6 +3,12 @@
 
 int main(int argc, char *argv[])
 {
+    QSharedMemory mem("someKey");
+    if(!mem.create(1))
+    {
+       QMessageBox::critical(0,"Instance detected!","Application is already running!\nApplication terminating...","Ok");
+       exit(0);
+    }
     QApplication a(argc, argv);
     CommInterface cI;
     //Setup af com port

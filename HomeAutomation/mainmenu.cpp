@@ -59,10 +59,10 @@ void MainMenu::setTablePtr(QTableWidget* tableRef) {
 
 void MainMenu::updateFromCommandBox() {
     if(getRegistryPtr() != NULL)
+    {
         //Lambda expression - Opdaterer status for enhederne i enhedsregistret.
         //99% magi. Source: http://stackoverflow.com/questions/37300108/iterate-through-vector-contained-in-another-class -- LOL
         getRegistryPtr()->updateStates([&](uchar ID) { return getCommPtr()->getUnitStatus(ID); });
-
         if(tablePtr != NULL) {
             tablePtr->setRowCount(getRegistryPtr()->getRegistrySize());
             int rowCount = 0;
@@ -70,12 +70,12 @@ void MainMenu::updateFromCommandBox() {
             QString inf;
             for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter) {
                 //Returnere unitID som uchar, caster til int. QString::number gemmer int som en QString.
-                inf = QString::number(+((*iter).getUnitID()));
+                inf = QString::number(+(iter->getUnitID()));
                 tablePtr->setItem( rowCount, 0, new QTableWidgetItem( inf ) );
                 //Returnere RoomID som uchar, caster til int. QString::number gemmer int som en QString.
-                inf = QString::number(+((*iter).getRoomID()));
+                inf = QString::number(+(iter->getRoomID()));
                 tablePtr->setItem( rowCount, 1, new QTableWidgetItem( inf ) );
-                if(+((*iter).getStatus()))
+                if(+( iter->getStatus() ) )
                     inf = "Tændt";
                 else
                     inf = "Slukket";
@@ -83,6 +83,7 @@ void MainMenu::updateFromCommandBox() {
                 rowCount += 1;
             }
         }
+    }
 }
 
 void MainMenu::updateFromLocal() {
@@ -117,8 +118,9 @@ void MainMenu::updateFromLocal() {
 //=============================================================
 void MainMenu::on_updateButton_clicked()
 {
-    //updateFromCommandBox();
-    updateFromLocal();
+    getCommPtr()->getAllUnits();
+    updateFromCommandBox();
+    //updateFromLocal();
     //getRegistryPtr()->getStoredUnits();
 }
 

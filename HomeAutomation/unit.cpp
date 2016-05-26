@@ -137,7 +137,7 @@ void Unit::initialEntry()
 // METHOD : Store Entry. 
 // DESCR. : Benyttes for at ligge en tidsplan ind i Unit.
 //=============================================================
-bool Unit::storeEntry(int day,Entry& obj)
+bool Unit::storeEntry(int day, Entry& obj)
 {
     if (entryRegister_[day].size() <=maxEntries)
 	{
@@ -151,7 +151,7 @@ bool Unit::storeEntry(int day,Entry& obj)
 
 //=============================================================
 // METHOD : Compare Entry. 
-// DESCR. : Benyttes for at tjekke om to objekter er ens.
+// DESCR. : Benyttes for at tjekke om en entry allerede findes i registret for den dag..
 //=============================================================
 bool Unit::compareEntry(Entry& obj,int d)
 {
@@ -161,8 +161,8 @@ bool Unit::compareEntry(Entry& obj,int d)
 		
 	for (int i = 0; i < max;i++)
 	{
-            if ((entryRegister_[d][i].getHour() == obj.getHour() && (entryRegister_[d][i].getMin() == obj.getMin()) && (entryRegister_[d][i].getAction() == obj.getAction())))
-				return true;
+        if ( (entryRegister_[d][i].getHour() == obj.getHour() && (entryRegister_[d][i].getMin() == obj.getMin()) && (entryRegister_[d][i].getAction() == obj.getAction())))
+            return true;
 			
 	}
 	return false; //Samme tidsplan findes ikke
@@ -172,10 +172,37 @@ bool Unit::compareEntry(Entry& obj,int d)
 // METHOD : Delete Entry. 
 // DESCR. : Benyttes for at slette en Entry fra Vectoren
 //=============================================================
-bool Unit::deleteEntry(int day,int place)
+bool Unit::deleteEntry(unsigned char entryID)
 {
-	entryRegister_[day].erase(entryRegister_[day].begin() + place);
-	return true;
+    //bool entryDeleted = false;
+    for(int i = 0; i < days; i++)
+    {
+        for(int j = entryRegister_[i].size()-1; j >= 0; j--)
+        {
+            if(entryID == entryRegister_[i][j].EntryID())
+            {
+                entryRegister_[i].erase(entryRegister_[i].begin() + j);
+            }
+        }
+    }
+    addDeletedEntry(entryID);
+
+    /*for (auto day : entryRegister_) {
+        auto erase_begin = std::remove_if(
+                    day.begin(),
+                    day.end(),
+                    [=](const Entry& entry) { return entry.EntryID() == entryID; }
+        );
+        day.erase(erase_begin, day.end());
+    }*/
+    /*
+    if(entryDeleted)
+    {
+        addDeletedEntry(entryID);
+        return true;
+    }*/
+    //entryRegister_[day].erase(entryRegister_[day].begin() + place);
+    return false;
 }
 
 //=============================================================

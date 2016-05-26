@@ -52,6 +52,7 @@ void AddEntry::populateTable()
             {
                 if(iter->getUnitID()==unitID)
                 {
+                    iter->printEntry();
 
 
                     tablePtr->setRowCount(iter->getSize()/rows);
@@ -170,23 +171,23 @@ void AddEntry::on_pushButton_clicked()
      msgBox.setWindowTitle("Udført funktion");
      msgBox.addButton(QMessageBox::Ok);
 
-     if((startHour<endHour)||((startHour==endHour)& (startMin<endMin)))
+     if( (startHour<endHour) || ( (startHour==endHour) & (startMin<endMin) ))
     {
          for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter)
          {
              if(iter->getUnitID()==unitID)
              {
                 if((iter->compareEntry(Entry(iter->getEntryID(),startHour,startMin,1),valgteDag)==false) && (iter->compareEntry(Entry(iter->getEntryID(),endHour,endMin,0),valgteDag))==false)
-                 {
-                         // Be om at få et fælles EntryID)
-                          unsigned char ID= iter->getIDEntry();
+                {
+                    //Be om at få et fælles EntryID)
+                    unsigned char ID = iter->getIDEntry();
 
-                         if((iter->storeEntry(valgteDag,Entry(ID,startHour,startMin,1))==true)&& (
-                         iter->storeEntry(valgteDag,Entry(ID,endHour,endMin,0))==true))//Tilføjer start tidsplan
-                         {
+                    if((iter->storeEntry(valgteDag,Entry(ID,startHour,startMin,1))==true) &&
+                       (iter->storeEntry(valgteDag,Entry(ID,endHour,endMin,0))==true))//Tilføjer start tidsplan
+                    {
                          msgBox.setText("Tilføjelse af enheden succesfuld");
-                         }
-                         else
+                    }
+                    else
                          msgBox.setText("Det maksimale antal tidsplaner for enkle dag er nået");
 
                  }

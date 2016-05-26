@@ -10,7 +10,6 @@
 // 1.0 <18-05/2016/Nikolai J. Topping> <Oprettet fil. Oprettet setters/getters. Oprettet updateButton slot for clicked>
 // 1.1 <20-05/2016/Nikolai J. Topping> <Oprettet metoder for addunit og remove unit knapperne>
 //========================================================================
-
 #ifndef MAINMENU_H
 #define MAINMENU_H
 

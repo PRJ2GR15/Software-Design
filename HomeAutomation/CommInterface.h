@@ -12,7 +12,7 @@
 #ifndef COMMINTERFACE_H
 #define COMMINTERFACE_H
 #pragma comment(lib, "SerialCom.lib")
-#include "unit.h"
+//#include "unit.h"
 #include "SerialCom.h"
 #include "UnitRegister.h"
 
@@ -22,6 +22,7 @@ public:
     CommInterface() {
     }
 
+    void setRegPtr(UnitRegister& regRef) { unitRegPtr = &regRef; }
     bool openComPort(int port, int baud, int dataBit, int paritet, int stopBit);
     void closeComPort();
     void sendCommand(char* cmd, int cmdSize);
@@ -31,19 +32,22 @@ public:
     bool validatePin();
     //bool getUnitStatus(unsigned char unitID);
     void getAllUnits();
+    bool sendUnit(unsigned char unitID, unsigned char roomID);
     bool deleteUnit(unsigned char unitID);
-    //bool editUnit(unsigned char prevUnitID, unsigned char newUnitID);
+    bool editUnit(unsigned char previousID, unsigned char newID, unsigned char roomID);
 
-    void setRegPtr(UnitRegister& regRef) { unitRegPtr = &regRef; }
 
-    /*Unit getUnit() {
-    }*/
 
     //Placeholder
-    bool getUnitStatus(unsigned char ID) { return true; }
+    bool getUnitStatus(unsigned char ID) {
+        if(ID != -1)
+            return true;
+        else
+            return false;
+    }
 
-    //Placeholder
-    void updateUnit(unsigned char previousID, unsigned char newID, unsigned char roomID);
+
+
 protected:
     bool portOpened;
     UnitRegister* unitRegPtr;

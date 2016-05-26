@@ -9,22 +9,23 @@
 // REV. DATE/AUTHOR CHANGE DESCRIPTION
 // 1.0 <18-05/2016/Nikolai J. Topping> <Oprettet fil. Tilføjet placeholder getUnitStatus funktion>
 // 1.1 <24-05/2016/Nikolai J. Topping> <Tilføjet SerialCom bibliotek. Tilføjet begyndende kommunikation>
+// 1.2 <25-05/2016/Nikolai J. Topping> <Tilføjet sendCommand, readInputBuffer, PCConnected, PCDisconnected, validatePin, getAllUnits, editUit, deleteUnit>
 //========================================================================
 #include "CommInterface.h"
 #include <iostream>
 #include <stdlib.h>
 #include <fstream>
 
-void CommInterface::updateUnit(unsigned char previousID, unsigned char newID, unsigned char roomID) {
+/*void CommInterface::updateUnit(unsigned char previousID, unsigned char newID, unsigned char roomID) {
     return;
-}
+}*/
 
 bool CommInterface::openComPort(int port, int baud, int dataBit, int paritet, int stopBit) {
     //Parity: 0 = PARITY_NONE, 1 = PARITY_ODD, 2 = PARITY_EVEN
     try
     {
         //serialCom.open(port, baud, dataBit, paritet, stopBit);
-        serialCom.open(3, 57600, 8, PARITY_EVEN, 1);
+        serialCom.open(port, baud, dataBit, paritet, stopBit);
 
     }
     catch (const char *e)
@@ -37,7 +38,6 @@ bool CommInterface::openComPort(int port, int baud, int dataBit, int paritet, in
     portOpened = true;
     return true;
 }
-
 void CommInterface::closeComPort() {
     try
     {
@@ -103,6 +103,7 @@ int CommInterface::readInputBuffer() {
             }
 
         }
+        return -1;
     }
     catch (const char *e)
     {
@@ -140,7 +141,8 @@ void CommInterface::PCDisconnected()
     const int cmdSize = 5;
     char cmd[cmdSize] = {0xF0, 0xF0, 0x02, 0x0F, 0x0F};
     sendCommand(cmd, cmdSize);
-    readInputBuffer();
+    if(readInputBuffer() == -1)
+        return;
     ifstream input;
     input.open("serialData.txt", ios::in);
     if(!input)
@@ -286,7 +288,7 @@ void CommInterface::getAllUnits()
     //Uden for while loopet nu, men jeg skal blive ved med at hente enheder op, indtil jeg får mine fire "error" bytes(0xFAFAFAFA). Derfor kalder jeg bare getAllUnits en gang til.
     getAllUnits();
 }
-/*bool CommInterface::editUnit(unsigned char previousID, unsigned char newID, unsigned char roomID) {
+bool CommInterface::editUnit(unsigned char previousID, unsigned char newID, unsigned char roomID) {
     //Sender Edit Unit kommando
     const int cmdSize = 8;
     char cmd[cmdSize] = {0xF0, 0xF0, 0x09, previousID, newID, roomID, 0x0F, 0x0F};
@@ -307,7 +309,7 @@ void CommInterface::getAllUnits()
         return true;
     else
         return false;
-}*/
+}
 bool CommInterface::deleteUnit(unsigned char unitID) {
     //Sender Delete Unit kommando
     const int cmdSize = 6;
@@ -329,4 +331,35 @@ bool CommInterface::deleteUnit(unsigned char unitID) {
         return true;
     else
         return false;
+}
+bool CommInterface::sendUnit(unsigned char unitID, unsigned char roomID)
+{
+    //Kommando for at sende en enhed = 0xF0F0 , 0x07 , unitID, roomID, 0x0F0F
+    const int cmdSize = 7;
+    char cmd[cmdSize] = {0xF0, 0xF0, 0x07, unitID, roomID, 0x0F, 0x0F};
+    sendCommand(cmd, cmdSize);
+    int replySize = readInputBuffer();
+    //Forventet svar: 1 Byte godkendt, 4 byte fejl.
+    if(replySize == 1)
+    {
+        ifstream input;
+        input.open("serialData.txt", ios::in);
+        if(!input)
+        {
+            cerr << "Fil ikke åbnet. CommInterface::sendUnit" << endl;
+            return false;
+        }
+        int reply;
+        input >> reply;
+        input.close();
+        if(reply == 0x0F)
+            return true;
+        else
+            return false;
+    } else// if(replySize == 4)
+    {
+        cerr << "CommInterface::sendUnit. Did not get approved command" << endl;
+        return false;
+    }
+
 }

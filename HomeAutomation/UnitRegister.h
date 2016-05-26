@@ -11,11 +11,9 @@
 // 1.1 <19.05/2016/Nikolai J. Topping> <Migreret inhold fra QT projekt>
 // 1.2 <21/05-2016/Anders Brondbjerg Knudsen <Tilføjet addNewTime og upDate time>
 //========================================================================
-#pragma once
-#include <vector>
-#include <iostream>
-#include <fstream>
-#include <iterator>
+#ifndef UNITREGISTER_H
+#define UNITREGISTER_H
+
 #include <string>
 #include <functional>
 #include <QtCore>
@@ -73,3 +71,4 @@ private:
 };
 
 istream& operator>>(istream&, const UnitRegister &);
+#endif

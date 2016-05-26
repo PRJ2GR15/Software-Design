@@ -12,8 +12,9 @@
 // 1.2 <19/05-2016/Anders Brondbjerg Knudsen> <Ændret så implementering ikke er inline>
 // 1.3 <24/05-2016/Anders Brondbjerg Knudsen> <Tilføjelse af EntryID>
 //========================================================================
+#ifndef ENTRY_H
+#define ENTRY_H
 
-#pragma once
 #include <iostream>
 
 using namespace std;
@@ -40,7 +41,7 @@ public:
     unsigned char EntryID()const { return +entryID_;}
 	
 private:
-        unsigned char entryID_;
+    unsigned char entryID_;
 	unsigned char hour_;
 	unsigned char min_;
 	bool action_;
@@ -48,4 +49,4 @@ private:
 
 ostream& operator<<(ostream& os, const Entry& obj);
 
-
+#endif

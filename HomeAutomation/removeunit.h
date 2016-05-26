@@ -10,7 +10,6 @@
 // 1.0 <20.05/2016/Nikolai J. Topping> <Oprettet RemoveUnit>
 // 1.1 <20.05/2016/Nikolai J. Topping> <Tilføjet funktioner til click på diverse knapper. Samt funktion til at læse cellClicked>
 //========================================================================
-
 #ifndef REMOVEUNIT_H
 #define REMOVEUNIT_H
 

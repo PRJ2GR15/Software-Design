@@ -13,10 +13,10 @@
 // 1.3 <19/05-2016/Anders Brondbjerg Knudsen> <Ændret så implementering ikke er inline> 
 // 1.3 <20/05-2016/Anders Brondbjerg Knudsen> <Tilføjelse af metoder til Entry> 
 //========================================================================
-#include "Entry.h"
+#ifndef UNIT_H
+#define UNIT_H
 
-#pragma once
-#include <iostream>
+#include "Entry.h"
 #include <fstream>
 #include <vector>
 #include <iterator>
@@ -30,7 +30,7 @@ using namespace std;
 //=====================================
 
 const int days= 7; //Bruger i Vector- Antal dage- 0=mandag, 1 = tirsdag, 2 = onsdag, 3 = torsdag, 4 = fredag, 5= lørdag, 6= søndag.
-const int maxEntries = 20; //Maks antal entries som kan tilføjes. 
+const int maxEntries = 20; //Maks antal entries som kan tilføjes. Per dag.
 
 class Unit
 {
@@ -97,3 +97,4 @@ private:
 };
 
 	ostream& operator<<(ostream& os, const Unit& obj);
+#endif

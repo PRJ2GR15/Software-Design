@@ -54,6 +54,7 @@ FORMS    += mainwindow.ui \
     removeentry.ui
 
 DISTFILES += \
+    newIcon.ico \
     icon.ico
 
 win32:RC_ICONS += icon.ico

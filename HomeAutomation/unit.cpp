@@ -12,17 +12,13 @@
 // 1.2 <19/05-2016/Anders Brondbjerg Knudsen> <Ændret så implementering ikke er inline> 
 // 1.3 <20/05-2016/Anders Brondbjerg Knudsen> <Tilføjelse af metoder til Entry> 
 //========================================================================
-
-
 #include "Unit.h"
 #include <fstream>
-
 
 //=============================================================
 // METHOD : Explicit Constructor
 // DESCR. : 
 //=============================================================
-
 Unit::Unit(unsigned char unitID, unsigned char roomID, unsigned char houseCode, bool status)
 {
 	setUnitID(unitID);
@@ -30,15 +26,13 @@ Unit::Unit(unsigned char unitID, unsigned char roomID, unsigned char houseCode, 
 	setHouseCode(houseCode);
 	status_ = status;
 	initialEntry();
-	loadEntryData();
-        setEntries();
+    setEntries();
 }
 
 //=============================================================
 // METHOD : Sætter UnitID
 // DESCR. : Tilladte værdier fra 1 til 255 
 //=============================================================
-
 void Unit::setUnitID(unsigned char unitID)
 {
 	if (unitID >= 1 && unitID <= 255)
@@ -51,7 +45,6 @@ void Unit::setUnitID(unsigned char unitID)
 // METHOD : Returner UnitID
 // DESCR. : 
 //=============================================================
-
 unsigned char Unit::getUnitID() const
 {
 	return unitID_;
@@ -61,7 +54,6 @@ unsigned char Unit::getUnitID() const
 // METHOD : Sætter RoomID
 // DESCR. : Ingen validering
 //=============================================================
-
 void Unit::setRoomID(unsigned char roomID)
 {
 	roomID_ = roomID;
@@ -72,7 +64,6 @@ void Unit::setRoomID(unsigned char roomID)
 // METHOD : Returner RoomID
 // DESCR. : 
 //=============================================================
-
 unsigned char Unit::getRoomID() const
 {
 	return roomID_;
@@ -82,7 +73,6 @@ unsigned char Unit::getRoomID() const
 // METHOD : Sætter HouseCode
 // DESCR. : Tilladte værdier fra 1 til 15
 //=============================================================
-
 void Unit::setHouseCode(unsigned char houseCode)
 {
 	if (houseCode >= 1 && houseCode <= 15)
@@ -96,7 +86,6 @@ void Unit::setHouseCode(unsigned char houseCode)
 // METHOD : Returner HouseCode
 // DESCR. : 
 //=============================================================
-
 unsigned char Unit::getHouseCode() const
 {
 	return houseCode_;
@@ -106,7 +95,6 @@ unsigned char Unit::getHouseCode() const
 // METHOD : Sæt status for en enhed 
 // DESCR. : 1 = tændt. 0 = slukket
 //=============================================================
-
 void Unit::setStatus(bool status)
 {
 	status_ = status;
@@ -121,7 +109,6 @@ bool Unit::getStatus() const
 // METHOD : Print
 // DESCR. : Printer information om Unit
 //=============================================================
-
 void Unit::print() const
 {
 	cout << "\nUnitID: " << static_cast<int>(getUnitID()) 
@@ -139,7 +126,6 @@ void Unit::print() const
 // METHOD : Initialiserer Entry. 
 // DESCR. : Initialiserer størrelse på Entry. 7*20. Da vi har 7 dage, med maks 20 entries. 
 //=============================================================
-
 void Unit::initialEntry()
 {
 	vector<Entry>temp(0);
@@ -149,14 +135,14 @@ void Unit::initialEntry()
 
 //=============================================================
 // METHOD : Store Entry. 
-// DESCR. : Benyttes for at ligge en tidsplan ind i Unit. 
+// DESCR. : Benyttes for at ligge en tidsplan ind i Unit.
 //=============================================================
-
 bool Unit::storeEntry(int day,Entry& obj)
 {
     if (entryRegister_[day].size() <=maxEntries)
 	{
 		entryRegister_[day].push_back(obj);
+        EntriesID.erase(remove(EntriesID.begin(), EntriesID.end(), obj.EntryID()), EntriesID.end());
 		return true;
 	}
 	else
@@ -167,7 +153,6 @@ bool Unit::storeEntry(int day,Entry& obj)
 // METHOD : Compare Entry. 
 // DESCR. : Benyttes for at tjekke om to objekter er ens.
 //=============================================================
-
 bool Unit::compareEntry(Entry& obj,int d)
 {
 	
@@ -187,7 +172,6 @@ bool Unit::compareEntry(Entry& obj,int d)
 // METHOD : Delete Entry. 
 // DESCR. : Benyttes for at slette en Entry fra Vectoren
 //=============================================================
-
 bool Unit::deleteEntry(int day,int place)
 {
 	entryRegister_[day].erase(entryRegister_[day].begin() + place);
@@ -198,7 +182,6 @@ bool Unit::deleteEntry(int day,int place)
 // METHOD : DeleteDayEntry. 
 // DESCR. : Benyttes for at slette en dags tidsplan
 //=============================================================
-
 bool Unit::deleteDayEntry(int day)
 {
 	entryRegister_[day].clear();
@@ -209,7 +192,6 @@ bool Unit::deleteDayEntry(int day)
 // METHOD : deleteEntry. 
 // DESCR. : Benyttes for slette tidsplan
 //=============================================================
-
 bool Unit::deleteEntry()
 {
 	entryRegister_.clear();
@@ -220,7 +202,6 @@ bool Unit::deleteEntry()
 // METHOD : UpdateEntry. 
 // DESCR. : Benyttes for at opdater allerede eksisterende tidsplan
 //=============================================================
-
 bool Unit::updateEntry(int day, int place, unsigned char hour, unsigned char min)
 {
 	entryRegister_[day][place].setHour(hour);
@@ -249,7 +230,6 @@ bool Unit::clearData()
 // METHOD : Print metode. 
 // DESCR. : Print alle Entries som er tilføjet i pågældende Unit
 //=============================================================
-
 void Unit::printEntry() const
 {
 	
@@ -264,7 +244,6 @@ void Unit::printEntry() const
 // METHOD : Load data for Entry. 
 // DESCR. : Indlæser gemt data fra txt.fil ved allerede oprettede tidsplaner
 //=============================================================
-
 bool Unit::loadEntryData()
 {
         int id = 0x00, d = 0x00, entryID=0x00, h = 0x00, m = 0x00; bool a = false;
@@ -296,30 +275,22 @@ bool Unit::loadEntryData()
 // METHOD : StoreEntrydata 
 // DESCR. : Benyttes for at gemme oprettede entries til et txt.file 
 //=============================================================
-
-
-
 bool Unit::storeEntryData()
 {
 	ofstream saveData;
-
 	saveData.open("entry.txt",ofstream::app);
-
 	if(!saveData)
 	{
 		cerr << "Filen findes ikke" << endl;
 		return false;
 	}
-
 	for (int i = 0; i < days; i++) 
 	{
 		for (int j = 0; j < entryRegister_[i].size(); j++)
 		{
 			saveData << +unitID_ << " "; 
 			saveData << i << " ";
-			saveData << entryRegister_[i][j];
-
-			
+			saveData << entryRegister_[i][j];		
 		}
 	}
 	saveData.close();
@@ -362,38 +333,27 @@ int Unit::compareEntryID(int entries)const
 
 void Unit::setEntries()
 {
-    unsigned char MaxEntries=70; //Da der maks kan være 10 entries værdier
+    unsigned char MaxEntries=70; //Da der maks kan være 10 par entries per dag.
 
-    for(unsigned char i =1; i <= MaxEntries ; i++ )
+    for(unsigned char i = 1; i <= MaxEntries ; i++ )
     {
         EntriesID.push_back(i);
     }
-
-
-
-    for (auto day : entryRegister_)
-        {
-        for (auto entry : day)
-            EntriesID.erase(remove(EntriesID.begin(),EntriesID.end(),entry.EntryID()),EntriesID.end());
-        }
 }
-
 
 unsigned char Unit::getIDEntry()
 {
-
     if(!EntriesID.empty())
     {
-         unsigned char ID= EntriesID.back();
-         EntriesID.pop_back();
-    return ID;
+        unsigned char ID = EntriesID.back();
+        EntriesID.pop_back();
+        return ID;
     }
-
 }
 
 void Unit::addDeletedEntry(unsigned char ID)
 {
-  if(find(EntriesID.begin(),EntriesID.end(),ID)!=EntriesID.end())
+  if(find(EntriesID.begin(), EntriesID.end(), ID) != EntriesID.end())
   {
 
   }
@@ -407,8 +367,6 @@ void Unit::addDeletedEntry(unsigned char ID)
 // METHOD : Print Operator 
 // DESCR. : Giver mulighed for at printe med objekt navn
 //=============================================================
-
-
 ostream &operator<<(ostream& os, const Unit& obj)
 {	
 	

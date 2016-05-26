@@ -39,7 +39,6 @@ void RemoveEntry::setTablePtr(QTableWidget* tableRef) {
 
 void RemoveEntry::populateTable()
 {
-
     int rows=2;//Da starttid og sluttids udfyldes på en linje, men hentes ind som to.
     int rowCount =0;
     QString inf;
@@ -139,21 +138,16 @@ void RemoveEntry::populateTable()
             }
         }
 }
-
-
-
 void RemoveEntry::on_RemoveEntry_2_clicked()
 {
     QMessageBox msgBox;
     msgBox.setWindowTitle("Fejl under Ændring");
     msgBox.addButton(QMessageBox::Ok);
 
-    if(selectedRow!=-1)
+    if(selectedRow != -1)
     {
-        map<unsigned char,int>::iterator it = next(myMap.begin(),selectedRow);
-                 entryID = +it->first;
-
-
+        map<unsigned char,int>::iterator it = next(myMap.begin(), selectedRow);
+        entryID = +it->first;
     }
     else
     {
@@ -185,25 +179,20 @@ void RemoveEntry::on_RemoveEntry_2_clicked()
     else
          DayIntEntry=6;
 
-
-
-
-    vector<Unit>::iterator iter;
-
+vector<Unit>::iterator iter;
 for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter)
  {
     if(iter->getUnitID()==unitID)
     {
-
         vector< vector<Entry> > myRef = iter->getEntryRegisterRef();
 
          for(int j = myRef[DayIntEntry].size()-1; j>= 0; j--)
          {
-            if(myRef[DayIntEntry][j].EntryID()==entryID)
-             {
-                 iter->addDeletedEntry(myRef[DayIntEntry][j].EntryID());
+            if(myRef[DayIntEntry][j].EntryID() == entryID)
+            {
+                 iter->addDeletedEntry(entryID);
                  iter->deleteEntry(DayIntEntry,j);
-              }
+            }
          }
 
          msgBox.setText("Tidsplanen er fjernet");

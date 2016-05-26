@@ -5,7 +5,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     CommInterface cI;
-    cI.openComPort(3, 9600, 8, 2, 1);
+    //Setup af com port
+    cI.openComPort(3, 57600, 8, PARITY_EVEN, 1);
     UnitRegister uR;
     cI.setRegPtr(uR);
     cI.getAllUnits();

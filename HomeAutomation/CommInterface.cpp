@@ -13,6 +13,7 @@
 //========================================================================
 #include "CommInterface.h"
 #include <iostream>
+#include <QtWidgets>
 #include <stdlib.h>
 #include <fstream>
 
@@ -156,7 +157,6 @@ void CommInterface::PCDisconnected()
     input.close();
 }
 bool CommInterface::validatePin() {
-    _sleep(4000);
     //Sender valider(check om pin er indtastet)pin kommando
     const int cmdSize = 5;
     char cmd[cmdSize] = {0xF0, 0xF0, 0x03, 0x0F, 0x0F};
@@ -179,36 +179,39 @@ bool CommInterface::validatePin() {
     else
         return false;
 }
-/*bool CommInterface::getUnitStatus(unsigned char unitID)
+bool CommInterface::getUnitStatus(unsigned char unitID)
 {
     //Sender hent unit status kommando
     const int cmdSize = 6;
     char cmd[cmdSize] = {0xF0, 0xF0, 0x05, unitID, 0x0F, 0x0F};
-    cout << "Opdaterer UnitID: " << +cmd[3] << endl;
     sendCommand(cmd, cmdSize);
-    readInputBuffer();
+    int replySize = readInputBuffer();
+    if(replySize == 0)
+    {
+        cerr << "CommInterface::getUnitStatus - Intet svar fra opdater enhed. Returnerer false." << endl;
+        return false;
+    }
     ifstream input;
     input.open("serialData.txt", ios::in);
     if(!input)
     {
-        cout << "Noget gik galt. CommInterface::PCDisconnected" << endl;
+        cerr << "serialData.txt ikke åbnet - CommInterface::PCDisconnected" << endl;
         return false;
     }
-    //Forventet svar fra valider(check om pin er indtastet)pin kommando = 1 byte.
+    //Forventet svar fra get unit status kommando = 1 byte.
     int reply;
     input >> reply;
     input.close();
     if(reply == 0x01)
     {
-        cout << "Status på UnitID: " << +cmd[3] << " TRUE" << endl;
         return true;
     }
     else
     {
-        cout << "Status på UnitID: " << +cmd[3] << " FALSE" << endl;
         return false;
     }
-}*/
+}
+
 void CommInterface::getAllUnits()
 {
     //Forventet svar tilbage: 512 * 7 bytes. 3584 bytes. Per Unit.
@@ -228,13 +231,14 @@ void CommInterface::getAllUnits()
     const int cmdSize = 5;
     char cmd[cmdSize] = {0xF0, 0xF0, 0x06, 0x0F, 0x0F};
     sendCommand(cmd, 5);
+    cout << "CommInterface::getAllUnits - Sent Command" << endl;
     //600 - Magic number. Skal nok ændres efter det er testet med SD-Kort
     _sleep(600);
     int bytesToProcess = readInputBuffer();
 
     if(bytesToProcess <= 3583)
     {
-        cout << "Inde i CommInterface::getAllUnits. BTP <= 3583" << endl;
+        cout << bytesToProcess << endl;
         return;
     }
 
@@ -465,6 +469,12 @@ bool CommInterface::sendEntries(Unit& obj, int day)
         if(!readAckCommand())
         {
             cerr << "CommInterface::sendEntries - ved nogen entries : ack command fejl" << endl;
+            return false;
+        }
+        dataToSend[0] = day;
+        if(!readAckCommand())
+        {
+            cerr << "CommInterface::sendEntries - ved nogen entries : send day ack command fejl" << endl;
             return false;
         }
 

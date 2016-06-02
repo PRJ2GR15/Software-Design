@@ -33,7 +33,7 @@ MainWindow::MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *pa
     removeEntryPtr = new RemoveEntry(ui->MainW_StackedWidget, regRef, commRef);
     waitPtr = new waitForPin(ui->MainW_StackedWidget, commRef);
 
-    ui->MainW_StackedWidget->addWidget(waitPtr);
+
     ui->MainW_StackedWidget->addWidget(mainMenuPtr);
     ui->MainW_StackedWidget->addWidget(addUnitPtr);
     ui->MainW_StackedWidget->addWidget(editUnitPtr);
@@ -42,6 +42,7 @@ MainWindow::MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *pa
     ui->MainW_StackedWidget->addWidget(editEntryPtr);
     ui->MainW_StackedWidget->addWidget(removeUnitPtr);
     ui->MainW_StackedWidget->addWidget(removeEntryPtr);
+    ui->MainW_StackedWidget->addWidget(waitPtr);
 
     ui->MainW_StackedWidget->setCurrentWidget(waitPtr);
 
@@ -86,11 +87,13 @@ void MainWindow::on_MainW_StackedWidget_currentChanged(int arg1)
         mainMenuPtr->updateFromLocal();
     } else if(tmpString.compare("Remove Unit") == 0) {
         removeUnitPtr->populateTable();
+        removeUnitPtr->selectedRow = -1;
     } else if(tmpString.compare("Edit Unit") == 0) {
         editUnitPtr->updateTable();
     }
     else if(tmpString.compare("Edit Entry") == 0) {
             editPtr->populateTable();
+            editPtr->selectedRow = -1;
     }
     else if(tmpString.compare("Add Entry") == 0) {
             addEntryPtr->populateTable();

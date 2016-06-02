@@ -30,7 +30,7 @@ public:
     bool PCConnected();
     void PCDisconnected();
     bool validatePin();
-    //bool getUnitStatus(unsigned char unitID);
+    bool getUnitStatus(unsigned char unitID);
     void getAllUnits();
     bool sendUnit(unsigned char unitID, unsigned char roomID);
     bool deleteUnit(unsigned char unitID);
@@ -39,12 +39,12 @@ public:
     bool readAckCommand();
 
     //Placeholder
-    bool getUnitStatus(unsigned char ID) {
+    /*bool getUnitStatus(unsigned char ID) {
         if(ID != -1)
             return true;
         else
             return false;
-    }
+    }*/
 
 
 

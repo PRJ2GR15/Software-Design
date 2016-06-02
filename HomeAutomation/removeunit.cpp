@@ -87,10 +87,35 @@ void RemoveUnit::on_remove_PushButton_clicked()
 {
     QModelIndex index = tablePtr->model()->index(selectedRow,0,QModelIndex());
     int data = tablePtr->model()->data(index).toInt();
-    cout << data << endl;
-    getRegistryPtr()->deleteUnit(static_cast<uchar>(data));
-    getCommPtr()->deleteUnit(data);
-    populateTable();
+    if( getRegistryPtr()->deleteUnit(static_cast<uchar>(data)) )
+    {
+        getCommPtr()->deleteUnit(data);
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Enhed Fjernet");
+        msgBox.addButton(QMessageBox::Ok);
+        msgBox.setText("Enheden er blevet fjernet.");
+        if(msgBox.exec()==QMessageBox::Ok)
+        {
+            populateTable();
+            return;
+        }
+    }
+    else
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Fejl Under Fjernelse");
+        msgBox.addButton(QMessageBox::Ok);
+        msgBox.setText("Ingen enhed fjernet.");
+        if(msgBox.exec()==QMessageBox::Ok)
+        {
+            populateTable();
+            return;
+        }
+    }
+    //getCommPtr()->deleteUnit(data);
+    //populateTable();
+
+
 }
 
 void RemoveUnit::on_cancel_PushButton_clicked()

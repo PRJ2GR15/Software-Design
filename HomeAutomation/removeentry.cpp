@@ -224,7 +224,7 @@ for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter)
          }
 
          iter->deleteDayEntry(valgteDag);
-         msgBox.setText("Tidsplanen er fjernet");
+         msgBox.setText("Dagen er ryddet.");
          if(msgBox.exec()==QMessageBox::Ok)
          parentPtr->setCurrentIndex(0);
     }

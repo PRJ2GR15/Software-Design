@@ -34,6 +34,7 @@ public:
     void setTablePtr(QTableWidget* tableRef);
 
     void populateTable();
+    int selectedRow= -1;
 
 private slots:
     //void on_rem_unitTable_cellEntered(int row, int column);
@@ -47,7 +48,7 @@ private slots:
 private:
     Ui::RemoveUnit *ui;
     QTableWidget* tablePtr;
-    int selectedRow;
+    //int selectedRow;
 };
 
 #endif // REMOVEUNIT_H

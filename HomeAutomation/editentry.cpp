@@ -76,9 +76,9 @@ void EditEntry::on_pushButton_clicked()
     else
     {
         QMessageBox msgBox;
-        msgBox.setWindowTitle("Fejl under Ændring");
+        msgBox.setWindowTitle("Fejl under tilføjelse");
         msgBox.addButton(QMessageBox::Ok);
-        msgBox.setText("Ingen enhed valg til ændring");
+        msgBox.setText("Ingen enhed valg til tilføjelse af tidsplan");
         if(msgBox.exec()==QMessageBox::Ok)
             return;
     }

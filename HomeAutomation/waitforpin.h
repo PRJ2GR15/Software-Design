@@ -17,7 +17,8 @@ public:
     waitForPin(QStackedWidget *parent, CommInterface &commRef);
     ~waitForPin();
 
-    void waitForValidate();
+private slots:
+    void on_codeAccept_PushButton_clicked();
 
 private:
     Ui::waitForPin *ui;

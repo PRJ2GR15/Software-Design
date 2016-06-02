@@ -42,8 +42,6 @@ public:
     MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *parent);
     ~MainWindow();
 
-    void getPin() { waitPtr->waitForValidate(); }
-
     void setRegistryPtr(UnitRegister& regRef);
 
     void setTablePtr(QTableWidget* tableRef);

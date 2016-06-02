@@ -18,6 +18,7 @@ public:
     void setTablePtr(QTableWidget* tableRef);
     void populateTable();
     void returnSelected();
+    int selectedRow= -1;
 
 signals:
     void sendid(int);
@@ -35,11 +36,11 @@ private slots:
 
 
     void on_RemoveEntry_clicked();
-
+protected:
+    //int selectedRow= -1;
 private:
     Ui::EditEntry *ui;
     QTableWidget* tablePtr;
-    int selectedRow= -1;
     int selectedCol=0;
 };
 

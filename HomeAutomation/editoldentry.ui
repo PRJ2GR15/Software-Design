@@ -37,7 +37,7 @@
     <rect>
      <x>30</x>
      <y>50</y>
-     <width>161</width>
+     <width>167</width>
      <height>201</height>
     </rect>
    </property>
@@ -136,7 +136,7 @@
       <item>
        <widget class="QPushButton" name="SaveEntry">
         <property name="text">
-         <string>Tilføj tidsplan</string>
+         <string>Gem Ændringer</string>
         </property>
        </widget>
       </item>

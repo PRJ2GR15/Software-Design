@@ -60,18 +60,14 @@ bool UnitRegister::loadData()
 
 bool UnitRegister::storeUnit(Unit& unitRef)
 {
-	if (!compareID(unitRef.getUnitID()))
+    if ( !compareID(unitRef.getUnitID()) )
 	{
 		unitRegister_.push_back(unitRef);
         return true;
 	}
     else
     {
-        vector<Unit>::iterator iter;
-        for(iter = unitRegister_.begin(); iter != unitRegister_.end(); ++iter) {
-            if(iter->getUnitID() == unitRef.getUnitID())
-                *iter = unitRef;
-        }
+        return false;
     }
 }
 

@@ -16,17 +16,27 @@ waitForPin::~waitForPin()
     delete ui;
 }
 
-void waitForPin::waitForValidate()
+void waitForPin::on_codeAccept_PushButton_clicked()
 {
-    bool validated = false;
-
-    do
+    if(commPtr->validatePin())
     {
-        cout << "waitForPin:: in do while" << endl;
-        validated = commPtr->validatePin();
-        if(validated)
-            break;
-    } while(!validated);
-    parentPtr->setCurrentIndex(0);
-
+        commPtr->getAllUnits();
+        parentPtr->setCurrentIndex(0);
+    }
+    else
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Pin ikke godkendt.");
+        msgBox.addButton(QMessageBox::Ok);
+        msgBox.setText("Korrekt pin er IKKE indtastet.");
+        if(msgBox.exec()==QMessageBox::Ok)
+        {
+            for(int i = 0; i < parentPtr->count(); ++i) {
+                if(parentPtr->widget(i)->accessibleName().compare("Wait4Pin") == 0) {
+                    parentPtr->setCurrentIndex(i);
+                    return;
+                }
+            }
+        }
+    }
 }

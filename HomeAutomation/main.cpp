@@ -19,7 +19,6 @@ int main(int argc, char *argv[])
     w.setRegistryPtr(uR);
     w.setCommPtr(cI);
     w.show();
-    w.getPin();
     //cI.PCConnected();
 
     return a.exec();

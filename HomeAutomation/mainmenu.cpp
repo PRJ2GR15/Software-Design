@@ -118,10 +118,7 @@ void MainMenu::updateFromLocal() {
 //=============================================================
 void MainMenu::on_updateButton_clicked()
 {
-    getCommPtr()->getAllUnits();
     updateFromCommandBox();
-    //updateFromLocal();
-    //getRegistryPtr()->getStoredUnits();
 }
 
 void MainMenu::on_addUnit_PushButton_clicked()

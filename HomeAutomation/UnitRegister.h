@@ -39,6 +39,7 @@ public:
     //bool updateTime(uchar roomID, int placeholder);
     bool updateTime(uchar unitID, int day, int placeholder, uchar hour, uchar min);
     bool loadData();
+    void clearRegister() { unitRegister_.clear(); }
 
     void updateStates(function<bool(uchar)> f) {
         for(const auto& Unit: unitRegister_)

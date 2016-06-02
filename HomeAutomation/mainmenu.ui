@@ -158,7 +158,7 @@
      <item>
       <widget class="QPushButton" name="updateButton">
        <property name="text">
-        <string>Opdater Enhedsregister</string>
+        <string>Opdater Enhedsstatus</string>
        </property>
       </widget>
      </item>

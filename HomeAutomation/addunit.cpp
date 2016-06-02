@@ -50,6 +50,7 @@ void AddUnit::on_pushButton_clicked()
 
  //roomValue fra spinBox 2
   int roomID = ui->spinBox_2->value();
+  cout << "add:unit: tilføj enhed : Room ID: " << roomID << endl;
 
   QMessageBox msgBox;
   msgBox.setWindowTitle("Udført funktion");

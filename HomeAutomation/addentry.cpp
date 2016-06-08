@@ -120,7 +120,13 @@ void AddEntry::populateTable()
         }
 }
 
-void AddEntry::on_pushButton_clicked()
+
+void AddEntry::on_Cancel_clicked()
+{
+    parentPtr->setCurrentIndex(0);
+}
+
+void AddEntry::on_AddTheEntry_clicked()
 {
     map<QString, int> dayMap = { {"Mandag", 0}, {"Tirsdag", 1}, {"Onsdag", 2}, {"Torsdag", 3},
                                   {"Fredag", 4}, {"Lørdag", 5}, {"Søndag", 6} };
@@ -182,9 +188,4 @@ void AddEntry::on_pushButton_clicked()
         if(msgBox.exec()==QMessageBox::Ok)
             parentPtr->setCurrentIndex(0);
     }
-}
-
-void AddEntry::on_pushButton_2_clicked()
-{
-    parentPtr->setCurrentIndex(0);
 }

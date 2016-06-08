@@ -23,9 +23,12 @@ void getUnit(int id);
 
 
 private slots:
-    void on_pushButton_clicked();
 
-    void on_pushButton_2_clicked();
+
+    void on_Cancel_clicked();
+
+
+    void on_AddTheEntry_clicked();
 
 private:
     Ui::AddEntry *ui;

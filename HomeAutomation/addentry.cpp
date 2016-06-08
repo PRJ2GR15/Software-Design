@@ -44,49 +44,29 @@ void AddEntry::populateTable()
     int rows=2;//Da starttid og sluttids udfyldes på en linje, men hentes ind som to.
     int rowCount =0;
     QString inf;
+
+    //Sørg for at registry pointer er sat
     if(getRegistryPtr() != NULL)
+        //Sørg for at tablePtr er sat
         if(tablePtr != NULL)
         {
             vector<Unit>::iterator iter;
+            //Gennemløber unitRegister ved at hente et par iterators.
             for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter)
             {
+                //Hvis enheden med unitID valgt under "EditEntry" menuen er fundet
                 if(iter->getUnitID()==unitID)
                 {
-                    iter->printEntry();
-
-
+                    //
                     tablePtr->setRowCount(iter->getSize()/rows);
                     vector< vector<Entry> > myRef = iter->getEntryRegisterRef();
                     int dayCounter = 0;
                     int rowCounter = 0;
                     map<unsigned char, int> myMap;
+                    map<int, string> dayMap = { {0, "Mandag"}, {1, "Tirsdag"}, {2, "Onsdag"}, {3, "Torsdag"}, {4, "Fredag"}, {5, "Lørdag"}, {6, "Søndag"} };
                     for(auto day : myRef) {
                         for(auto entry : day) {
-                            switch(dayCounter) {
-                            case 0:
-                                inf = "Mandag";
-                                break;
-                            case 1:
-                                inf = "Tirsdag";
-                                break;
-                            case 2:
-                                inf = "Onsdag";
-                                break;
-                            case 3:
-                                inf = "Torsdag";
-                                break;
-                            case 4:
-                                inf = "Fredag";
-                                break;
-                            case 5:
-                                inf = "Lørdag";
-                                break;
-                            case 6:
-                                inf = "Søndag";
-                                break;
-                            default:
-                                inf = "default";
-                            }
+                            inf = QString::fromStdString(dayMap[dayCounter]);
                             if(entry.getAction()) {
                                 QString tmpQString;
                                 myMap[entry.EntryID()] = rowCounter;

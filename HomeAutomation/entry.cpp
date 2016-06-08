@@ -111,34 +111,6 @@ bool Entry::getAction() const
 
 
 //=============================================================
-// METHOD : Print
-// DESCR. : Printer information om Entry
-//=============================================================
-
-
-void Entry::print()const
-{
-        cout << +entryID_ << +hour_ << " " << +min_ <<  " " << action_ << endl;
-}
-
-//=============================================================
-// METHOD : Print Operator 
-// DESCR. : Giver mulighed for at printe med objekt navn
-//=============================================================
-
-
-ostream &operator<<(ostream& os, const Entry& obj)
-{
-        os << +obj.EntryID() << " ";
-	os << +obj.getHour()<< " ";
-	os << +obj.getMin() << " ";
-	os << +obj.getAction() << endl;
-
-	return os;
-	
-}
-
-//=============================================================
 // METHOD : Input operator
 // DESCR. : Giver mulighed for at indlæse data til objekt. 
 //=============================================================

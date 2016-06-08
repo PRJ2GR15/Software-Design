@@ -48,14 +48,12 @@ public:
     //STATUS + PRINT FUNKTIONER
 	void setStatus(bool status);
 	bool getStatus() const;
-	void print()const;
+	
 	friend istream& operator>>(istream& is, Unit& obj);
     //STATUS + PRINT FUNKTIONER END
 
     void initialEntry();
     //HENT OG STORE ENTRY FUNKTIONER
-	bool loadEntryData();
-	bool storeEntryData();
 	bool storeEntry(int day,Entry&obj);
     //HENT OG STORE ENTRY FUNKTIONER END
 
@@ -63,15 +61,11 @@ public:
     //DELETE OG UPDATE ENTRY FUNKTIONER
     bool deleteEntry(unsigned char entryID);
 	bool deleteDayEntry(int day);
-	bool deleteEntry();
-    bool updateEntry(int day, int place, unsigned char hour, unsigned char min);
-	bool clearData();
+	
     //DELETE OG UPDATE ENTRY FUNKTIONER END
 
-	void printEntry()const;
-    int compareEntryID(int entries)const;
+	
 	unsigned char getSize()const;
-    unsigned char getDay()const;
 
     void setEntries();
     unsigned char getIDEntry();
@@ -88,5 +82,5 @@ private:
 	
 };
 
-	ostream& operator<<(ostream& os, const Unit& obj);
+	
 #endif

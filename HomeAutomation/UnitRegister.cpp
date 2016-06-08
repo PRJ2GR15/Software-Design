@@ -19,39 +19,10 @@
 
 UnitRegister::UnitRegister()
 {
-	//outputFile = "./register.txt";
-    //loadData();
+	
 }
 
-//=============================================================
-// METHOD : 
-// DESCR. : 
-//=============================================================
 
-bool UnitRegister::loadData()
-{
-	int u = 0x00; int r = 0x00; bool s = false; int t = 0;
-	//TODO - Validering, så den rent faktisk åbner den rigtige fil, det rigtige sted
-    string path = "register.txt";
-    in.open(path,ios::in);
-    if (!in)
-	{
-		cerr << "Filen findes ikke" << endl;
-		return false;
-	}
-		
-    while (!in.eof())
-	{
-		in >> u >> r >> s >> t;
-        if (!compareID(u)) {
-            unitRegister_.push_back(Unit(static_cast<uchar>(u), static_cast<uchar>(r), s, t));
-        }
-		else
-			cout << "Unit already exists" << endl;
-	}
-	in.close();
-	return true;
-}
 
 //=============================================================
 // METHOD : 
@@ -107,31 +78,7 @@ bool UnitRegister::updateStatus(uchar unitID, bool status)
 	return false;
 }
 
-//=============================================================
-// METHOD : 
-// DESCR. : 
-//=============================================================
 
-bool UnitRegister::AddNewtime(uchar unitID,int day, Entry &obj)
-{
-    vector<Unit>::iterator iter;
-    for(iter=unitRegister_.begin();iter!=unitRegister_.end();++iter)
-        if(iter->getUnitID()==unitID)
-    {
-            if(iter->storeEntry(day,obj)==false)
-                return false;
-    }
-    return true;
-}
-
-
-
-void UnitRegister::getStoredUnits()
-{
-	vector<Unit>::iterator iter;
-	for (iter = unitRegister_.begin(); iter != unitRegister_.end(); ++iter)
-        iter->printEntry();
-}
 
 //=============================================================
 // METHOD : 
@@ -172,26 +119,7 @@ bool UnitRegister::modifyUnit(uchar originalUnitID, uchar unitID, uchar roomID)
     return false;
 }
 
-/*bool UnitRegister::updateTime(uchar roomID, int placeholder)
-{
-}*/
 
-//=============================================================
-// METHOD : 
-// DESCR. : 
-//=============================================================
-
-bool UnitRegister::updateTime(uchar unitID,int day, int placeholder, uchar hour, uchar min)
-{
-    vector<Unit>::iterator iter;
-    for(iter=unitRegister_.begin();iter!=unitRegister_.end();++iter)
-        if(iter->getUnitID()==unitID)
-    {
-            if(iter->updateEntry(day,placeholder,hour,min)==false)
-                return false;
-    }
-    return true;
-}
 
 //=============================================================
 // METHOD : 

@@ -32,16 +32,9 @@ public:
     ~UnitRegister();
     bool storeUnit(Unit&);
     bool compareID(uchar unitID) const;
-    void getStoredUnits();
     bool deleteUnit(uchar unitID);
     bool modifyUnit(uchar originalUnitID, uchar unitID, uchar roomID);
-    bool AddNewtime(uchar unitID, int day, Entry&obj);
-    //bool updateTime(uchar roomID, int placeholder);
-    bool updateTime(uchar unitID, int day, int placeholder, uchar hour, uchar min);
-    bool loadData();
-    void clearRegister() { unitRegister_.clear(); }
-
-    void updateStates(function<bool(uchar)> f) {
+     void updateStates(function<bool(uchar)> f) {
         for(const auto& Unit: unitRegister_)
         {
             updateStatus( Unit.getUnitID(), f(Unit.getUnitID()) );

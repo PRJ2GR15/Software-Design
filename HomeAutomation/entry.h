@@ -36,7 +36,6 @@ public:
 	unsigned char getMin()const;
     bool setAction(bool action);
 	bool getAction()const;
-	void print()const;
 	friend istream& operator>>(istream& is, Entry& obj);
     unsigned char EntryID()const { return +entryID_;}
 	
@@ -47,6 +46,6 @@ private:
 	bool action_;
 };
 
-ostream& operator<<(ostream& os, const Entry& obj);
+
 
 #endif

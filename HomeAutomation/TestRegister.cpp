@@ -18,7 +18,7 @@ int main()
 {
 	unsigned char c = 0x00;
 	UnitRegister m_register;
-	m_register.getStoredUnits();
+	
 
 	//entry test(23, 59, 7, 1);
 

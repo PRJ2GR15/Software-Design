@@ -105,22 +105,7 @@ bool Unit::getStatus() const
 	return status_;
 }
 
-//=============================================================
-// METHOD : Print
-// DESCR. : Printer information om Unit
-//=============================================================
-void Unit::print() const
-{
-	cout << "\nUnitID: " << static_cast<int>(getUnitID()) 
-		 << "\nRoomID: " << static_cast<int>(getRoomID()) 
-		 << "\nHouseCodeNr: "<< static_cast<int>(getHouseCode()) << endl;
 
-	if (getStatus() == true)
-		cout << "Enheden er aktiv" << endl;
-	else
-		cout << "Enheden er deactiveret" << endl;
-
-}
 
 //=============================================================
 // METHOD : Initialiserer Entry. 
@@ -215,114 +200,8 @@ bool Unit::deleteDayEntry(int day)
 	return true;
 }
 
-//=============================================================
-// METHOD : deleteEntry. 
-// DESCR. : Benyttes for slette tidsplan
-//=============================================================
-bool Unit::deleteEntry()
-{
-	entryRegister_.clear();
-	return true;
-}
 
-//=============================================================
-// METHOD : UpdateEntry. 
-// DESCR. : Benyttes for at opdater allerede eksisterende tidsplan
-//=============================================================
-bool Unit::updateEntry(int day, int place, unsigned char hour, unsigned char min)
-{
-	entryRegister_[day][place].setHour(hour);
-	entryRegister_[day][place].setMin(min);
-	return true;
-}
 
-bool Unit::clearData()
-{
-	ofstream clear;
-
-	clear.open("entry.txt", ofstream::trunc);
-
-	if (!clear)
-	{
-		cerr << "Filen findes ikke- test test" << endl;
-		return false;
-	}
-
-	clear.close();
-
-	return true;
-}
-
-//=============================================================
-// METHOD : Print metode. 
-// DESCR. : Print alle Entries som er tilføjet i pågældende Unit
-//=============================================================
-void Unit::printEntry() const
-{
-	
-    for (auto day : entryRegister_)
-	{
-        for (auto entry : day)
-            cout << entry << endl;
-	}
-}
-
-//=============================================================
-// METHOD : Load data for Entry. 
-// DESCR. : Indlæser gemt data fra txt.fil ved allerede oprettede tidsplaner
-//=============================================================
-bool Unit::loadEntryData()
-{
-        int id = 0x00, d = 0x00, entryID=0x00, h = 0x00, m = 0x00; bool a = false;
-
-	ifstream entryFile;
-
-		entryFile.open("entry.txt", ios::in);
-	
-		if (!entryFile)
-		{
-            cerr << "Filen findes ikke- test test" << endl;
-			return false;
-		}
-	
-		while (!entryFile.eof())
-		{
-            entryFile >>id >>d >> h >> m >> a;
-                        Entry tempObj(entryID,h, m, a);
-			if (getUnitID() == id)
-			{
-				storeEntry(d, tempObj);
-            }
-		}
-		entryFile.close();
-		return true;
-}
-
-//=============================================================
-// METHOD : StoreEntrydata 
-// DESCR. : Benyttes for at gemme oprettede entries til et txt.file 
-//=============================================================
-bool Unit::storeEntryData()
-{
-	ofstream saveData;
-	saveData.open("entry.txt",ofstream::app);
-	if(!saveData)
-	{
-		cerr << "Filen findes ikke" << endl;
-		return false;
-	}
-	for (int i = 0; i < days; i++) 
-	{
-		for (int j = 0; j < entryRegister_[i].size(); j++)
-		{
-			saveData << +unitID_ << " "; 
-			saveData << i << " ";
-			saveData << entryRegister_[i][j];		
-		}
-	}
-	saveData.close();
-	return true;
-}
 
 unsigned char Unit::getSize()const
 {
@@ -336,27 +215,8 @@ unsigned char Unit::getSize()const
 	return size;
 }
 
-unsigned char Unit::getDay()const
-{
-    for (int i = 0; i < days; i++)
-    {
-        for (int j = 0; j < entryRegister_[i].size(); j++)
-            return i;
-    }
-}
 
-int Unit::compareEntryID(int entries)const
-{
-    for (int i = 0; i < days; i++)
-    {
-        for (int j = 0; j < entryRegister_[i].size(); j++)
-        {
-            if(entries==entryRegister_[i][j].EntryID());
-        return i;
-        }
-    }
 
-}
 
 void Unit::setEntries()
 {
@@ -389,23 +249,6 @@ void Unit::addDeletedEntry(unsigned char ID)
 }
 
 
-
-//=============================================================
-// METHOD : Print Operator 
-// DESCR. : Giver mulighed for at printe med objekt navn
-//=============================================================
-ostream &operator<<(ostream& os, const Unit& obj)
-{	
-	
-
-	os << +obj.getUnitID() << " ";
-	os << +obj.getRoomID() << " ";
-	os << +obj.getHouseCode() << " ";
-	os << +obj.getStatus() << endl;
-	obj.printEntry();
-
-	return os;
-}
 
 //=============================================================
 // METHOD : Input operator

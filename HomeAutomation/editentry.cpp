@@ -60,61 +60,7 @@ void EditEntry::populateTable() {
         }
 }
 
-void EditEntry::on_pushButton_clicked()
-{
-    returnSelected();
-    if(selectedRow!=-1)
-    {
-        for(int i = 0; i < getParentPtr()->count(); ++i) {
-            if(getParentPtr()->widget(i)->accessibleName().compare("Add Entry") == 0) {
-                getParentPtr()->setCurrentIndex(i);
-                return;
-        }
-    }
-    cerr<< "Kan ikke finde Add Entry" << endl;
-    }
-    else
-    {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Fejl under tilføjelse");
-        msgBox.addButton(QMessageBox::Ok);
-        msgBox.setText("Ingen enhed valg til tilføjelse af tidsplan");
-        if(msgBox.exec()==QMessageBox::Ok)
-            return;
-    }
-}
 
-void EditEntry::on_pushButton_2_clicked()
-{
-    returnSelected();
-
-    if(selectedRow!=-1 && selectedCol>0)
-    {
-    for(int i = 0; i < getParentPtr()->count(); ++i) {
-        if(getParentPtr()->widget(i)->accessibleName().compare("Edit Old Entry") == 0) {
-            getParentPtr()->setCurrentIndex(i);
-            return;
-        }
-    }
-    cerr<< "Kan ikke finde Edit Old Entry" << endl;
-    }
-    else{
-    QMessageBox msgBox;
-    msgBox.setWindowTitle("Fejl under Ændring");
-    msgBox.addButton(QMessageBox::Ok);
-    if(selectedRow==-1)
-    msgBox.setText("Ingen enhed valg til ændring");
-    else
-        msgBox.setText("Ingen tidsplan at ændre");
-    if(msgBox.exec()==QMessageBox::Ok)
-        return;
-    }
-}
-
-void EditEntry::on_pushButton_3_clicked()
-{
-    parentPtr->setCurrentIndex(0);
-}
 
 void EditEntry::on_EntryTable_cellClicked(int row, int column)
 {
@@ -159,6 +105,62 @@ void EditEntry::on_RemoveEntry_clicked()
     msgBox.setText("Ingen tidsplan valgt til ændring");
     else
         msgBox.setText("Ingen tidsplan at fjerne");
+    if(msgBox.exec()==QMessageBox::Ok)
+        return;
+    }
+}
+
+void EditEntry::on_AddEntry_clicked()
+{
+    returnSelected();
+    if(selectedRow!=-1)
+    {
+        for(int i = 0; i < getParentPtr()->count(); ++i) {
+            if(getParentPtr()->widget(i)->accessibleName().compare("Add Entry") == 0) {
+                getParentPtr()->setCurrentIndex(i);
+                return;
+        }
+    }
+    cerr<< "Kan ikke finde Add Entry" << endl;
+    }
+    else
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Fejl under tilføjelse");
+        msgBox.addButton(QMessageBox::Ok);
+        msgBox.setText("Ingen enhed valg til tilføjelse af tidsplan");
+        if(msgBox.exec()==QMessageBox::Ok)
+            return;
+    }
+}
+
+void EditEntry::on_ScheduleCancel_clicked()
+{
+    parentPtr->setCurrentIndex(0);
+}
+
+void EditEntry::on_EditSchedule_clicked()
+{
+    returnSelected();
+
+    if(selectedRow!=-1 && selectedCol>0)
+    {
+    for(int i = 0; i < getParentPtr()->count(); ++i) {
+        if(getParentPtr()->widget(i)->accessibleName().compare("Edit Old Entry") == 0) {
+            getParentPtr()->setCurrentIndex(i);
+            return;
+        }
+    }
+    cerr<< "Kan ikke finde Edit Old Entry" << endl;
+    }
+    else{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Fejl under Ændring");
+    msgBox.addButton(QMessageBox::Ok);
+    if(selectedRow==-1)
+    msgBox.setText("Ingen enhed valg til ændring");
+    else
+        msgBox.setText("Ingen tidsplan at ændre");
     if(msgBox.exec()==QMessageBox::Ok)
         return;
     }

@@ -25,17 +25,17 @@ signals:
 
 private slots:
 
-    void on_pushButton_clicked();
-
-    void on_pushButton_2_clicked();
-
-    void on_pushButton_3_clicked();
-
     void on_EntryTable_cellClicked(int row, int column);
 
 
 
     void on_RemoveEntry_clicked();
+    void on_AddEntry_clicked();
+
+    void on_ScheduleCancel_clicked();
+
+    void on_EditSchedule_clicked();
+
 protected:
     //int selectedRow= -1;
 private:

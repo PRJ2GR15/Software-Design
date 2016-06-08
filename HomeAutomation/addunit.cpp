@@ -43,32 +43,32 @@ AddUnit::~AddUnit()
     delete ui;
 }
 
-void AddUnit::on_pushButton_clicked()
+
+void AddUnit::on_AddUnit_2_clicked()
 {
- //ID value fra SpinBox 1
-  int unitID=ui->spinBox->value();
+    //ID value fra SpinBox 1
+     int unitID=ui->spinBox->value();
 
- //roomValue fra spinBox 2
-  int roomID = ui->spinBox_2->value();
-  cout << "add:unit: tilføj enhed : Room ID: " << roomID << endl;
+    //roomValue fra spinBox 2
+     int roomID = ui->spinBox_2->value();
+     cout << "add:unit: tilføj enhed : Room ID: " << roomID << endl;
 
-  QMessageBox msgBox;
-  msgBox.setWindowTitle("Udført funktion");
-  msgBox.addButton(QMessageBox::Ok);
+     QMessageBox msgBox;
+     msgBox.setWindowTitle("Udført funktion");
+     msgBox.addButton(QMessageBox::Ok);
 
-  if(getRegistryPtr()->storeUnit(Unit(unitID,roomID,0,0)) == true)
-  {
-      getCommPtr()->sendUnit(unitID, roomID);
-      msgBox.setText("Tilføjelse af enheden succesfuld");
-  }
-  else
-      msgBox.setText("Tilføjelse af enheden fejlede");
-  if(msgBox.exec()==QMessageBox::Ok)
-  getParentPtr()->setCurrentIndex(0);
+     if(getRegistryPtr()->storeUnit(Unit(unitID,roomID,0,0)) == true)
+     {
+         getCommPtr()->sendUnit(unitID, roomID);
+         msgBox.setText("Tilføjelse af enheden succesfuld");
+     }
+     else
+         msgBox.setText("Tilføjelse af enheden fejlede");
+     if(msgBox.exec()==QMessageBox::Ok)
+     getParentPtr()->setCurrentIndex(0);
 }
 
-
-void AddUnit::on_pushButton_2_clicked()
+void AddUnit::on_Cancel_clicked()
 {
-    getParentPtr()->setCurrentIndex(0);
+     getParentPtr()->setCurrentIndex(0);
 }

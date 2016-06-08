@@ -148,14 +148,14 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="AddUnit_2">
          <property name="text">
           <string>Tilføj Enhed</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="Cancel">
          <property name="text">
           <string>Annullerer</string>
          </property>

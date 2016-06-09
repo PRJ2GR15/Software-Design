@@ -48,30 +48,6 @@ void EditUnit::setTablePtr(QTableWidget* tableRef)
         cerr << "Couldn't register table address" << endl;
 }
 
-/*void EditUnit::populateTable() {
-    if(getRegistryPtr() != NULL)
-        if(tablePtr != NULL) {
-            tablePtr->setRowCount(getRegistryPtr()->getRegistrySize());
-            int rowCount = 0;
-            vector<Unit>::iterator iter;
-            QString inf;
-            for(iter = getRegistryPtr()->begin(); iter != getRegistryPtr()->end(); ++iter) {
-                //Returnere unitID som uchar, caster til int. QString::number gemmer int som en QString.
-                inf = QString::number(+((*iter).getUnitID()));
-                tablePtr->setItem( rowCount, 0, new QTableWidgetItem( inf ) );
-                //Returnere RoomID som uchar, caster til int. QString::number gemmer int som en QString.
-                inf = QString::number(+((*iter).getRoomID()));
-                tablePtr->setItem( rowCount, 1, new QTableWidgetItem( inf ) );
-                if(+((*iter).getStatus()))
-                    inf = "Tændt";
-                else
-                    inf = "Slukket";
-                tablePtr->setItem( rowCount, 2, new QTableWidgetItem( inf ) );
-                rowCount += 1;
-            }
-        }
-}*/
-
 void EditUnit::updateTable()
 {
     selectedUnitID = -1; selectedRoomID = -1;

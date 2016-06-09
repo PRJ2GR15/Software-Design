@@ -58,6 +58,7 @@ FORMS    += mainwindow.ui \
 
 DISTFILES += \
     newIcon.ico \
+    icon.png \
     icon.ico
 
 win32:RC_ICONS += icon.ico

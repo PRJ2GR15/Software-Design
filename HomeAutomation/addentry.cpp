@@ -3,6 +3,12 @@
 #include "entry.h"
 #include <QInputDialog>
 
+//=============================================================
+// METHOD : Explicit Constructor
+// DESCR. : 
+//=============================================================
+
+
 AddEntry::AddEntry(QStackedWidget *parent, UnitRegister& regRef, CommInterface& comRef) :
     QWidget(parent),
     ui(new Ui::AddEntry)
@@ -17,15 +23,33 @@ AddEntry::AddEntry(QStackedWidget *parent, UnitRegister& regRef, CommInterface& 
     populateTable();
 }
 
+//=============================================================
+// METHOD : Deconstructor
+// DESCR. : 
+//=============================================================
+
+
 AddEntry::~AddEntry()
 {
     delete ui;
 }
 
+//=============================================================
+// METHOD : getUnit	
+// DESCR. : Slot som modtager UnitID der skal redigeres på
+//=============================================================
+
+
 void AddEntry::getUnit(int id)
 {
     unitID=id;
 }
+
+//=============================================================
+// METHOD : setTablePtr
+// DESCR. : Sætter en pointer til tabellen
+//=============================================================
+
 
 void AddEntry::setTablePtr(QTableWidget* tableRef) {
     if(tableRef != NULL) {
@@ -38,6 +62,12 @@ void AddEntry::setTablePtr(QTableWidget* tableRef) {
     else
         cerr << "Couldn't register table address" << endl;
 }
+
+//=============================================================
+// METHOD : populateTable
+// DESCR. : Funktionen fylder tabellen med tilføjede tidsplaner
+//=============================================================
+
 
 void AddEntry::populateTable()
 {
@@ -120,11 +150,21 @@ void AddEntry::populateTable()
         }
 }
 
+//=============================================================
+// METHOD : on_cancel_clicked
+// DESCR. : Funktionen afbryder tilføjelse af tidsplan til enheden
+//=============================================================
+
 
 void AddEntry::on_Cancel_clicked()
 {
     parentPtr->setCurrentIndex(0);
 }
+
+//=============================================================
+// METHOD : on_AddTheEntry_clicked
+// DESCR. : Funktionen tilføjer tidsplan til enheden
+//=============================================================
 
 void AddEntry::on_AddTheEntry_clicked()
 {

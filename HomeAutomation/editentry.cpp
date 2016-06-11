@@ -1,6 +1,13 @@
 #include "editentry.h"
 #include "ui_editentry.h"
 
+
+//=============================================================
+// METHOD : Explicit Constructor
+// DESCR. : 
+//=============================================================
+
+
 EditEntry::EditEntry(QStackedWidget *parent, UnitRegister& regRef, CommInterface& commRef) :
     QWidget(parent),
     ui(new Ui::EditEntry)
@@ -15,10 +22,22 @@ EditEntry::EditEntry(QStackedWidget *parent, UnitRegister& regRef, CommInterface
 
 }
 
+//=============================================================
+// METHOD : Deconstructor
+// DESCR. : 
+//=============================================================
+
+
 EditEntry::~EditEntry()
 {
     delete ui;
 }
+
+//=============================================================
+// METHOD : setTablePtr
+// DESCR. : Funktionen sætter en pointer til tabellen
+//=============================================================
+
 
 void EditEntry::setTablePtr(QTableWidget* tableRef) {
     if(tableRef != NULL) {
@@ -31,6 +50,12 @@ void EditEntry::setTablePtr(QTableWidget* tableRef) {
     else
         cerr << "Couldn't register table address" << endl;
 }
+
+//=============================================================
+// METHOD : populateTable
+// DESCR. : Funktionen udfylder tabellen med enheden
+// samt hvor mange de enkelte enheder har af tidsplaner. 
+//=============================================================
 
 
 void EditEntry::populateTable() {
@@ -60,6 +85,10 @@ void EditEntry::populateTable() {
         }
 }
 
+//=============================================================
+// METHOD : on_EntryTable_cellClicked
+// DESCR. : Funktionen sætter hvilken celle som er valgt i tabellen 
+//=============================================================
 
 
 void EditEntry::on_EntryTable_cellClicked(int row, int column)
@@ -71,6 +100,12 @@ void EditEntry::on_EntryTable_cellClicked(int row, int column)
 
 }
 
+//=============================================================
+// METHOD : returnSelected
+// DESCR. : Funktionen returner hvilken enhed som er valgt i tabellen
+//=============================================================
+
+
 void EditEntry::returnSelected()
 {
     QModelIndex index = tablePtr->model()->index(selectedRow,0,QModelIndex());
@@ -80,6 +115,10 @@ void EditEntry::returnSelected()
 }
 
 
+//=============================================================
+// METHOD : on_RemoveEntry_clicked
+// DESCR. : Funktionen åbner ”Fjern tidsplan” vinduet
+//=============================================================
 
 
 
@@ -110,6 +149,13 @@ void EditEntry::on_RemoveEntry_clicked()
     }
 }
 
+
+//=============================================================
+// METHOD : on_AddEntry_clicked
+// DESCR. : Funktionen åbner ”Tilføj tidsplan” vinduet
+//=============================================================
+
+
 void EditEntry::on_AddEntry_clicked()
 {
     returnSelected();
@@ -134,10 +180,24 @@ void EditEntry::on_AddEntry_clicked()
     }
 }
 
+
+//=============================================================
+// METHOD : on_ScheduleCancel_clicked
+// DESCR. : Funktionen sender brugeren tilbage til mainWindow
+//=============================================================
+
+
 void EditEntry::on_ScheduleCancel_clicked()
 {
     parentPtr->setCurrentIndex(0);
 }
+
+//=============================================================
+// METHOD : on_EditSchedule_clicked
+// DESCR. : Funktionen åbner ”Rediger eksisterende tidsplan” vinduet. 
+//=============================================================
+
+
 
 void EditEntry::on_EditSchedule_clicked()
 {

@@ -1,6 +1,12 @@
 #include "editoldentry.h"
 #include "ui_editoldentry.h"
 
+//=============================================================
+// METHOD : Explicit Constructor
+// DESCR. : 
+//=============================================================
+
+
 EditOldEntry::EditOldEntry(QStackedWidget *parent, UnitRegister& regRef, CommInterface& commRef) :
     QWidget(parent),
     ui(new Ui::EditOldEntry)
@@ -16,15 +22,33 @@ EditOldEntry::EditOldEntry(QStackedWidget *parent, UnitRegister& regRef, CommInt
         populateTable();
 }
 
+//=============================================================
+// METHOD : Deconstructor
+// DESCR. : 
+//=============================================================
+
+
 EditOldEntry::~EditOldEntry()
 {
     delete ui;
 }
 
+//=============================================================
+// METHOD : getUnit
+// DESCR. : Slot som modtager UnitID der skal redigeres på
+//=============================================================
+
+
 void EditOldEntry::getUnit(int id)
 {
     unitID=id;
 }
+
+//=============================================================
+// METHOD : setTablePtr
+// DESCR. : Funktionen sætter en pointer til tabellen. Benyttes for at tilgå tabellen.
+//=============================================================
+
 
 void EditOldEntry::setTablePtr(QTableWidget* tableRef) {
     if(tableRef != NULL) {
@@ -38,6 +62,10 @@ void EditOldEntry::setTablePtr(QTableWidget* tableRef) {
         cerr << "Couldn't register table address" << endl;
 }
 
+//=============================================================
+// METHOD : populateTable
+// DESCR. : Funktionen udfylder tabellen med tilføjede tidsplaner. 
+//=============================================================
 
 void EditOldEntry::populateTable()
 {
@@ -140,8 +168,10 @@ void EditOldEntry::populateTable()
         }
 }
 
-
-
+//=============================================================
+// METHOD : on_EditEntryTable_cellClicked
+// DESCR. : Funktionen sætter hvilken celle som er valgt i tabellen
+//=============================================================
 
 void EditOldEntry::on_EditEntryTable_cellClicked(int row, int column)
 {
@@ -153,10 +183,20 @@ void EditOldEntry::on_EditEntryTable_cellClicked(int row, int column)
     }
 }
 
+//=============================================================
+// METHOD : on_Annuller_clicked
+// DESCR. : Funktionen afbryder redigering af eksisterende tidsplan
+//=============================================================
+
 void EditOldEntry::on_Annuller_clicked()
 {
      parentPtr->setCurrentIndex(0);
 }
+
+//=============================================================
+// METHOD : on_SaveEntry_clicked
+// DESCR. : Funktionen gemmer ændringer af eksisterende tidsplan
+//=============================================================
 
 void EditOldEntry::on_SaveEntry_clicked()
 {

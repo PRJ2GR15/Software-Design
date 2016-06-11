@@ -14,6 +14,13 @@
 // 1.0 <20-05/2016/Anders Brondbjerg Knudsen> <Oprettelse af addUnit>
 //========================================================================
 
+//=============================================================
+// METHOD : Explicit Constructor
+// DESCR. : 
+//=============================================================
+
+
+
 AddUnit::AddUnit(QStackedWidget *parent, UnitRegister &regRef, CommInterface &comRef) :
     QWidget(parent),
     ui(new Ui::AddUnit)
@@ -38,10 +45,24 @@ AddUnit::AddUnit(QStackedWidget *parent, UnitRegister &regRef, CommInterface &co
 
 }
 
+//=============================================================
+// METHOD : Deconstructor
+// DESCR. : 
+//=============================================================
+
+
+
 AddUnit::~AddUnit()
 {
     delete ui;
 }
+
+//=============================================================
+// METHOD : on_AddUnit_2_clicked
+// DESCR. : Funktionen tilføjer enhed til unitRegister
+//=============================================================
+
+
 
 
 void AddUnit::on_AddUnit_2_clicked()
@@ -67,6 +88,13 @@ void AddUnit::on_AddUnit_2_clicked()
      if(msgBox.exec()==QMessageBox::Ok)
      getParentPtr()->setCurrentIndex(0);
 }
+
+//=============================================================
+// METHOD : on_Cancel_clicked
+// DESCR. : Funktionen afbryder tilføjelse af enheden 
+//=============================================================
+
+
 
 void AddUnit::on_Cancel_clicked()
 {

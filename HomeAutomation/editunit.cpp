@@ -13,6 +13,13 @@
 // 1.0 <21-05/2016/Nikolai J. Topping> <Oprettet fil.>
 //========================================================================
 
+
+//=============================================================
+// METHOD : Explicit Constructor
+// DESCR. : 
+//=============================================================
+
+
 EditUnit::EditUnit(QStackedWidget *parent, UnitRegister &regRef, CommInterface& commRef) :
     QWidget(parent), invalidSelection(9999),
     ui(new Ui::EditUnit)
@@ -30,14 +37,32 @@ EditUnit::EditUnit(QStackedWidget *parent, UnitRegister &regRef, CommInterface& 
     setTablePtr(this->findChild<QTableWidget*>("editUnit_Table"));
 }
 
+//=============================================================
+// METHOD : Deconstructor
+// DESCR. : 
+//=============================================================
+
+
 EditUnit::~EditUnit()
 {
     delete ui;
 }
 
+//=============================================================
+// METHOD : setSelectedUnitID
+// DESCR. : Funktionen benyttes for at sætte attributten selectedUnitID
+//=============================================================
+
+
 void EditUnit::setSelectedUnitID(int unitID) {
     selectedUnitID = unitID;
 }
+
+//=============================================================
+// METHOD : setTablePtr
+// DESCR. : Funktionen sætter en pointer til tabellen
+//=============================================================
+
 
 void EditUnit::setTablePtr(QTableWidget* tableRef)
 {
@@ -47,6 +72,12 @@ void EditUnit::setTablePtr(QTableWidget* tableRef)
     else
         cerr << "Couldn't register table address" << endl;
 }
+
+//=============================================================
+// METHOD : updateTable
+// DESCR. : Funktionen opdaterer tabellen med tilføjede enheder
+//=============================================================
+
 
 void EditUnit::updateTable()
 {
@@ -69,10 +100,22 @@ void EditUnit::updateTable()
         }
 }
 
+//=============================================================
+// METHOD : on_editUnit_Cancel_PushButton_clicked
+// DESCR. : Funktionen afbryder redigering af enheder 
+//=============================================================
+
+
 void EditUnit::on_editUnit_Cancel_PushButton_clicked()
 {
     parentPtr->setCurrentIndex(0);
 }
+
+//=============================================================
+// METHOD : on_editUnit_Cancel_PushButton_clicked
+// DESCR. : Funktionen sætter hvilken celle som er valgt i tabellen
+//=============================================================
+
 
 void EditUnit::on_editUnit_Table_cellClicked(int row, int column)
 {
@@ -96,6 +139,12 @@ void EditUnit::on_editUnit_Table_cellClicked(int row, int column)
         this->findChild<QLineEdit*>("newRoomID_LineEdit")->clear();
 
 }
+
+//=============================================================
+// METHOD : on_editUnit_Save_PushButton_clicked
+// DESCR. : Funktionen gemmer ændringer af eksisterende enhed
+//=============================================================
+
 
 void EditUnit::on_editUnit_Save_PushButton_clicked()
 {

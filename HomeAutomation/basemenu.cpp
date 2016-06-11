@@ -11,14 +11,19 @@
 //========================================================================
 #include "basemenu.h"
 
+//=============================================================
+// METHOD : default constructor
+// DESCR. :
+//=============================================================
+
 BaseMenu::BaseMenu()
 {
 
 }
 
 //=============================================================
-// METHOD :
-// DESCR. :
+// METHOD : setRegistryPtr(UnitRegister& regRef)
+// DESCR. : Funktionen sætter en pointer til klassen UnitRegister
 //=============================================================
 void BaseMenu::setRegistryPtr(UnitRegister& regRef) {
     //TODO - Validering
@@ -29,8 +34,8 @@ void BaseMenu::setRegistryPtr(UnitRegister& regRef) {
 }
 
 //=============================================================
-// METHOD :
-// DESCR. :
+// METHOD : setCommPtr(CommInterface& commRef)
+// DESCR. : Funktionen sætter en pointer til klassen commInterface
 //=============================================================
 void BaseMenu::setCommPtr(CommInterface& commRef) {
     if(&commRef != NULL) {

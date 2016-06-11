@@ -8,6 +8,14 @@
 //
 // REV. DATE/AUTHOR CHANGE DESCRIPTION
 // 1.0 <18.05/2016/Nikolai J. Topping> <Tilføjet data fra QT projekt>
+// 1.1 <20.05/2016/Nikolai J. Topping> <Entryregister ændres til at hedde UnitRegister>
+// 1.2 <20.05/2016/Nikolai J. Topping> <Migreret inhold fra QT projekt>
+// 1.3 <21/05-2016/Anders Brondbjerg Knudsen <Tilføjet addNewTime og upDate time>
+//========================================================================
+
+// REV. DATE/AUTHOR CHANGE DESCRIPTION
+// 1.0 <18.05/2016/Nikolai J. Topping> <Tilføjet data fra QT projekt>
+// 1.1 <20.05/2016/Nikolai J. Topping> <Entryregister ændres til at hedde UnitRegister>
 // 1.1 <19.05/2016/Nikolai J. Topping> <Migreret inhold fra QT projekt>
 // 1.2 <21/05-2016/Anders Brondbjerg Knudsen <Tilføjet addNewTime og upDate time>
 //========================================================================
@@ -29,7 +37,6 @@ class UnitRegister
 {
 public:
     UnitRegister();
-    ~UnitRegister();
     bool storeUnit(Unit&);
     bool compareID(uchar unitID) const;
     bool deleteUnit(uchar unitID);

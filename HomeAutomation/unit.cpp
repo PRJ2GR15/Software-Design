@@ -100,6 +100,11 @@ void Unit::setStatus(bool status)
 	status_ = status;
 }
 
+//=============================================================
+// METHOD : Return status for enhed
+// DESCR. : 
+//=============================================================
+
 bool Unit::getStatus() const
 {
 	return status_;
@@ -136,7 +141,7 @@ bool Unit::storeEntry(int day, Entry& obj)
 
 //=============================================================
 // METHOD : Compare Entry. 
-// DESCR. : Benyttes for at tjekke om en entry allerede findes i registret for den dag..
+// DESCR. : Benyttes for at tjekke om en entry allerede findes i registret for den dag.
 //=============================================================
 bool Unit::compareEntry(Entry& obj,int d)
 {
@@ -159,7 +164,7 @@ bool Unit::compareEntry(Entry& obj,int d)
 //=============================================================
 bool Unit::deleteEntry(unsigned char entryID)
 {
-    //bool entryDeleted = false;
+    
     for(int i = 0; i < days; i++)
     {
         for(int j = entryRegister_[i].size()-1; j >= 0; j--)
@@ -172,21 +177,6 @@ bool Unit::deleteEntry(unsigned char entryID)
     }
     addDeletedEntry(entryID);
 
-    /*for (auto day : entryRegister_) {
-        auto erase_begin = std::remove_if(
-                    day.begin(),
-                    day.end(),
-                    [=](const Entry& entry) { return entry.EntryID() == entryID; }
-        );
-        day.erase(erase_begin, day.end());
-    }*/
-    /*
-    if(entryDeleted)
-    {
-        addDeletedEntry(entryID);
-        return true;
-    }*/
-    //entryRegister_[day].erase(entryRegister_[day].begin() + place);
     return false;
 }
 
@@ -201,7 +191,10 @@ bool Unit::deleteDayEntry(int day)
 }
 
 
-
+//=============================================================
+// METHOD : getSize. 
+// DESCR. : Return størrelse på entryRegister for alle dage
+//=============================================================
 
 unsigned char Unit::getSize()const
 {
@@ -216,7 +209,11 @@ unsigned char Unit::getSize()const
 }
 
 
-
+//=============================================================
+// METHOD : setEntries. 
+// DESCR. : Sætter Entries id, så der kan hentes et ID til alle tries.
+//          Da de oprettes i par med en tænd og sluk, så er der 70 Entries ID er benytte
+//=============================================================
 
 void Unit::setEntries()
 {
@@ -228,6 +225,13 @@ void Unit::setEntries()
     }
 }
 
+
+//=============================================================
+// METHOD : getIDEntry. 
+// DESCR. : Benyttes for at return et ID til en entry. 
+//=============================================================
+
+
 unsigned char Unit::getIDEntry()
 {
     if(!EntriesID.empty())
@@ -237,6 +241,12 @@ unsigned char Unit::getIDEntry()
         return ID;
     }
 }
+
+//=============================================================
+// METHOD : addDeleteEntry. 
+// DESCR. : Benyttes for tilføje et ID, hvis en tidsplan er slettet.  
+//=============================================================
+
 
 void Unit::addDeletedEntry(unsigned char ID)
 {

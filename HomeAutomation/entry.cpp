@@ -117,7 +117,7 @@ bool Entry::getAction() const
 
 
 istream& operator>>(istream& is, Entry& obj)
-{       is >> obj.entryID_;
+{   is >> obj.entryID_;
 	is >> obj.hour_;
 	is >> obj.min_;
 	is >> obj.action_;

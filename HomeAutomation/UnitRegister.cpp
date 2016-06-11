@@ -8,12 +8,14 @@
 //
 // REV. DATE/AUTHOR CHANGE DESCRIPTION
 // 1.0 <18.05/2016/Nikolai J. Topping> <Tilføjet data fra QT projekt>
-// 1.1 <21/05-2016/Anders Brondbjerg Knudsen <Tilføjet addNewTime og upDate time>
+// 1.1 <20.05/2016/Nikolai J. Topping> <Entryregister ændres til at hedde UnitRegister>
+// 1.2 <20.05/2016/Nikolai J. Topping> <Migreret inhold fra QT projekt>
+// 1.3 <21/05-2016/Anders Brondbjerg Knudsen <Tilføjet addNewTime og upDate time>
 //========================================================================
 #include "UnitRegister.h"
 
 //=============================================================
-// METHOD : 
+// METHOD : Default constructor
 // DESCR. : 
 //=============================================================
 
@@ -25,8 +27,8 @@ UnitRegister::UnitRegister()
 
 
 //=============================================================
-// METHOD : 
-// DESCR. : 
+// METHOD : StoreUnit
+// DESCR. : Benyttes for at gemme en Unit til vectoren
 //=============================================================
 
 bool UnitRegister::storeUnit(Unit& unitRef)
@@ -43,8 +45,8 @@ bool UnitRegister::storeUnit(Unit& unitRef)
 }
 
 //=============================================================
-// METHOD : 
-// DESCR. : 
+// METHOD : compareID
+// DESCR. : Benyttes for at sammenligne om at indtastet UnitID kan findes i vectoren.
 //=============================================================
 
 bool UnitRegister::compareID(uchar unitID) const
@@ -60,8 +62,8 @@ bool UnitRegister::compareID(uchar unitID) const
 }
 
 //=============================================================
-// METHOD : 
-// DESCR. : 
+// METHOD : updateStatus
+// DESCR. : Begnyttes for at sætte statis for en unit
 //=============================================================
 
 bool UnitRegister::updateStatus(uchar unitID, bool status)
@@ -81,8 +83,8 @@ bool UnitRegister::updateStatus(uchar unitID, bool status)
 
 
 //=============================================================
-// METHOD : 
-// DESCR. : 
+// METHOD : deleteUnit
+// DESCR. : Benyttes for at slette en unit
 //=============================================================
 
 bool UnitRegister::deleteUnit(uchar unitID)
@@ -100,8 +102,8 @@ bool UnitRegister::deleteUnit(uchar unitID)
 }
 
 //=============================================================
-// METHOD : 
-// DESCR. : 
+// METHOD : modifyUnit
+// DESCR. : benyttes for at ændre unitID og roomID
 //=============================================================
 
 bool UnitRegister::modifyUnit(uchar originalUnitID, uchar unitID, uchar roomID)
@@ -119,13 +121,3 @@ bool UnitRegister::modifyUnit(uchar originalUnitID, uchar unitID, uchar roomID)
     return false;
 }
 
-
-
-//=============================================================
-// METHOD : 
-// DESCR. : 
-//=============================================================
-
-UnitRegister::~UnitRegister()
-{
-}

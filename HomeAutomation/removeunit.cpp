@@ -14,6 +14,10 @@
 #include "removeunit.h"
 #include "ui_removeunit.h"
 
+//=============================================================
+// METHOD : RemoveUnit
+// DESCR. : Explicit Constructor
+//=============================================================
 RemoveUnit::RemoveUnit(QStackedWidget *parent, UnitRegister& regRef, CommInterface& commRef) :
     QWidget(parent), invalidSelection(9999),
     ui(new Ui::RemoveUnit)
@@ -27,14 +31,18 @@ RemoveUnit::RemoveUnit(QStackedWidget *parent, UnitRegister& regRef, CommInterfa
     selectedRow = invalidSelection;
 }
 
+//=============================================================
+// METHOD : ~RemoveUnit
+// DESCR. : Destructor
+//=============================================================
 RemoveUnit::~RemoveUnit()
 {
     delete ui;
 }
 
 //=============================================================
-// METHOD :
-// DESCR. :
+// METHOD : setTablePtr
+// DESCR. : Sætter pointeren til UI'ets tabel.
 //=============================================================
 void RemoveUnit::setTablePtr(QTableWidget* tableRef) {
     if(tableRef != NULL) {
@@ -48,6 +56,10 @@ void RemoveUnit::setTablePtr(QTableWidget* tableRef) {
         cerr << "Couldn't register table address" << endl;
 }
 
+//=============================================================
+// METHOD : populateTable
+// DESCR. : Udfylder tabellen med liste over enheder
+//=============================================================
 void RemoveUnit::populateTable() {
     if(getRegistryPtr() != NULL)
         if(tablePtr != NULL) {
@@ -72,17 +84,19 @@ void RemoveUnit::populateTable() {
         }
 }
 
-/*void RemoveUnit::on_rem_unitTable_cellEntered(int row, int column)
-{
-    selectedRow = row;
-    selectedColumn = column;
-}*/
-
+//=============================================================
+// METHOD : on_rem_unitTable_cellClicked
+// DESCR. : Slot der kaldes når der trykkes på en felt i tabellen
+//=============================================================
 void RemoveUnit::on_rem_unitTable_cellClicked(int row, int column)
 {
     selectedRow = row;
 }
 
+//=============================================================
+// METHOD : on_remove_PushButton_clicked
+// DESCR. : Slot der kaldes når der trykkes på fjern enhed
+//=============================================================
 void RemoveUnit::on_remove_PushButton_clicked()
 {
     QModelIndex index = tablePtr->model()->index(selectedRow,0,QModelIndex());
@@ -118,6 +132,10 @@ void RemoveUnit::on_remove_PushButton_clicked()
 
 }
 
+//=============================================================
+// METHOD : on_cancel_PushButton_clicked
+// DESCR. : Slot der kaldes når der trykkes på annuller
+//=============================================================
 void RemoveUnit::on_cancel_PushButton_clicked()
 {
     parentPtr->setCurrentIndex(0);

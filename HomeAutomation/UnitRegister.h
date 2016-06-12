@@ -23,7 +23,7 @@ using namespace std;
 
 //=====================================
 // CLASS : UnitRegister
-// DESCR. : BLA BLA BLA
+// DESCR. : Håndterer lagring og manipulation af enheder
 //=====================================
 class UnitRegister
 {

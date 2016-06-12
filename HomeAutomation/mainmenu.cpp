@@ -15,8 +15,8 @@
 #include "ui_mainmenu.h"
 
 //=============================================================
-// METHOD :
-// DESCR. :
+// METHOD : MainMenu
+// DESCR. : Constructor
 //=============================================================
 MainMenu::MainMenu(QStackedWidget *parent, UnitRegister &regRef, CommInterface &commRef) :
     QWidget(parent),
@@ -33,8 +33,8 @@ MainMenu::MainMenu(QStackedWidget *parent, UnitRegister &regRef, CommInterface &
 }
 
 //=============================================================
-// METHOD :
-// DESCR. :
+// METHOD : ~MainMenu
+// DESCR. : Destructor
 //=============================================================
 MainMenu::~MainMenu()
 {
@@ -42,8 +42,8 @@ MainMenu::~MainMenu()
 }
 
 //=============================================================
-// METHOD :
-// DESCR. :
+// METHOD : setTablePtr
+// DESCR. : Sætter pointeren til det table der vises i UI.
 //=============================================================
 void MainMenu::setTablePtr(QTableWidget* tableRef) {
     if(tableRef != NULL) {
@@ -57,6 +57,10 @@ void MainMenu::setTablePtr(QTableWidget* tableRef) {
         cerr << "Couldn't register table address" << endl;
 }
 
+//=============================================================
+// METHOD : updateFromCommandBox
+// DESCR. : Opdaterer status på enheder fra styreboksen
+//=============================================================
 void MainMenu::updateFromCommandBox() {
     if(getRegistryPtr() != NULL)
     {
@@ -86,6 +90,10 @@ void MainMenu::updateFromCommandBox() {
     }
 }
 
+//=============================================================
+// METHOD : updateFromLocal
+// DESCR. : Opdaterer tabellen med enheder ud fra lokal lager.
+//=============================================================
 void MainMenu::updateFromLocal() {
     if(getRegistryPtr() != NULL)
     {
@@ -113,14 +121,18 @@ void MainMenu::updateFromLocal() {
 }
 
 //=============================================================
-// METHOD :
-// DESCR. :
+// METHOD : on_updateButton_clicked
+// DESCR. : Slot der kaldes ved tryk på "Opdater Enhedsstatus"
 //=============================================================
 void MainMenu::on_updateButton_clicked()
 {
     updateFromCommandBox();
 }
 
+//=============================================================
+// METHOD : on_addUnit_PushButton_clicked
+// DESCR. : Slot der kaldes når der trykkes på knappen "Tilføj Enhed"
+//=============================================================
 void MainMenu::on_addUnit_PushButton_clicked()
 {
     for(int i = 0; i < getParentPtr()->count(); ++i) {
@@ -132,6 +144,10 @@ void MainMenu::on_addUnit_PushButton_clicked()
     cerr << "Kan ikke finde Add Unit" << endl;
 }
 
+//=============================================================
+// METHOD : on_remUnit_PushButton_clicked
+// DESCR. : Slot der kaldes når der trykkes på "Fjern enhed"
+//=============================================================
 void MainMenu::on_remUnit_PushButton_clicked()
 {
     for(int i = 0; i < getParentPtr()->count(); ++i) {
@@ -144,7 +160,10 @@ void MainMenu::on_remUnit_PushButton_clicked()
     //getParentPtr()->setCurrentIndex(2);
 }
 
-
+//=============================================================
+// METHOD : on_editUnit_PushButton_clicked
+// DESCR. : Slot der kaldes når der trykkes på "Ret Enhed"
+//=============================================================
 void MainMenu::on_editUnit_PushButton_clicked()
 {
     for(int i = 0; i < getParentPtr()->count(); ++i) {
@@ -156,6 +175,10 @@ void MainMenu::on_editUnit_PushButton_clicked()
     cerr << "Kan ikke finde Edit Unit" << endl;
 }
 
+//=============================================================
+// METHOD : on_TimeSchuduleButtin_clicked
+// DESCR. : Slot der kaldes når der trykkes på "Tidsplaner"
+//=============================================================
 void MainMenu::on_TimeSchuduleButtin_clicked()
 {
     for(int i = 0; i < getParentPtr()->count(); ++i) {

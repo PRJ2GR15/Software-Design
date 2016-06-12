@@ -17,15 +17,15 @@
 #include <stdlib.h>
 #include <fstream>
 
-/*void CommInterface::updateUnit(unsigned char previousID, unsigned char newID, unsigned char roomID) {
-    return;
-}*/
 
+//=============================================================
+// METHOD : openComPort
+// DESCR. : Åbner COM port til UART kommunikation mellem PC og styreboks
+//=============================================================
 bool CommInterface::openComPort(int port, int baud, int dataBit, int paritet, int stopBit) {
     //Parity: 0 = PARITY_NONE, 1 = PARITY_ODD, 2 = PARITY_EVEN
     try
     {
-        //serialCom.open(port, baud, dataBit, paritet, stopBit);
         serialCom.open(port, baud, dataBit, paritet, stopBit);
 
     }
@@ -39,6 +39,11 @@ bool CommInterface::openComPort(int port, int baud, int dataBit, int paritet, in
     portOpened = true;
     return true;
 }
+
+//=============================================================
+// METHOD : closeComPort
+// DESCR. : Lukker COM porten
+//=============================================================
 void CommInterface::closeComPort() {
     try
     {
@@ -51,6 +56,11 @@ void CommInterface::closeComPort() {
     cout << "Serial port closed" << endl;
     portOpened = false;
 }
+
+//=============================================================
+// METHOD : sendCommand
+// DESCR. : Sender en kommando til styreboksen
+//=============================================================
 void CommInterface::sendCommand(char *cmd, int cmdSize) {
     try
     {
@@ -63,6 +73,11 @@ void CommInterface::sendCommand(char *cmd, int cmdSize) {
         //exit(1);
     }
 }
+
+//=============================================================
+// METHOD : readInputBuffer
+// DESCR. : Læser input buffer til .txt fil
+//=============================================================
 int CommInterface::readInputBuffer() {
     int bytesRead = 0;
     try
@@ -112,6 +127,11 @@ int CommInterface::readInputBuffer() {
         //exit(1);
     }
 }
+
+//=============================================================
+// METHOD : PCConnected
+// DESCR. : Sender PC Connected kommando til styreboks
+//=============================================================
 bool CommInterface::PCConnected()
 {
     //Sender PC Tilsluttet kommando
@@ -136,6 +156,11 @@ bool CommInterface::PCConnected()
         return false;
 
 }
+
+//=============================================================
+// METHOD : PCDisconnected
+// DESCR. : Sender PC Disconnected kommando til styreboks
+//=============================================================
 void CommInterface::PCDisconnected()
 {
     //Sender PC Frakoblet kommando
@@ -156,6 +181,11 @@ void CommInterface::PCDisconnected()
     input >> reply;
     input.close();
 }
+
+//=============================================================
+// METHOD : validatePin
+// DESCR. : Sender validate pin kommando til styreboks
+//=============================================================
 bool CommInterface::validatePin() {
     //Sender valider(check om pin er indtastet)pin kommando
     const int cmdSize = 5;
@@ -179,6 +209,11 @@ bool CommInterface::validatePin() {
     else
         return false;
 }
+
+//=============================================================
+// METHOD : getUnitStatus
+// DESCR. : Henter status på enhed ud fra ID, fra styreboksen
+//=============================================================
 bool CommInterface::getUnitStatus(unsigned char unitID)
 {
     //Sender hent unit status kommando
@@ -212,6 +247,10 @@ bool CommInterface::getUnitStatus(unsigned char unitID)
     }
 }
 
+//=============================================================
+// METHOD : getAllUnits
+// DESCR. : Henter alle enheder fra styreboks og lagre i UnitRegister
+//=============================================================
 void CommInterface::getAllUnits()
 {
     //Forventet svar tilbage: 512 * 7 bytes. 3584 bytes. Per Unit.
@@ -294,6 +333,11 @@ void CommInterface::getAllUnits()
     //Uden for while loopet nu, men jeg skal blive ved med at hente enheder op, indtil jeg får mine fire "error" bytes(0xFAFAFAFA). Derfor kalder jeg bare getAllUnits en gang til.
     getAllUnits();
 }
+
+//=============================================================
+// METHOD : editUnit
+// DESCR. : Sender EditUnit kommando til styreboks, med info vedr. ændringer til enhed
+//=============================================================
 bool CommInterface::editUnit(unsigned char previousID, unsigned char newID, unsigned char roomID) {
     //Sender Edit Unit kommando
     const int cmdSize = 8;
@@ -322,6 +366,11 @@ bool CommInterface::editUnit(unsigned char previousID, unsigned char newID, unsi
         return false;
     }
 }
+
+//=============================================================
+// METHOD : deleteUnit
+// DESCR. : Sender delete unit kommando til styreboksen
+//=============================================================
 bool CommInterface::deleteUnit(unsigned char unitID) {
     //Sender Delete Unit kommando
     const int cmdSize = 6;
@@ -351,6 +400,11 @@ bool CommInterface::deleteUnit(unsigned char unitID) {
         return false;
     }
 }
+
+//=============================================================
+// METHOD : sendUnit
+// DESCR. : Sender en Unit til styreboksen
+//=============================================================
 bool CommInterface::sendUnit(unsigned char unitID, unsigned char roomID)
 {
     //Kommando for at sende en enhed = 0xF0F0 , 0x07 , unitID, roomID, 0x0F0F
@@ -382,6 +436,11 @@ bool CommInterface::sendUnit(unsigned char unitID, unsigned char roomID)
     }
 
 }
+
+//=============================================================
+// METHOD : readAckCommand
+// DESCR. : Læser en ACK kommando fra styreboksen
+//=============================================================
 bool CommInterface::readAckCommand()
 {
     int replySize = readInputBuffer();
@@ -408,6 +467,11 @@ bool CommInterface::readAckCommand()
         return false;
     }
 }
+
+//=============================================================
+// METHOD : sendEntries
+// DESCR. : Sender alle entries for en given Unit og en given dag til styreboksen
+//=============================================================
 bool CommInterface::sendEntries(Unit& obj, int day)
 {
     unsigned char unitID = obj.getUnitID(); unsigned char roomID = obj.getRoomID();

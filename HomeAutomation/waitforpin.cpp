@@ -1,6 +1,10 @@
 #include "waitforpin.h"
 #include "ui_waitforpin.h"
 
+//=============================================================
+// METHOD : waitForPin
+// DESCR. : Constructor
+//=============================================================
 waitForPin::waitForPin(QStackedWidget *parent, CommInterface &commRef) :
     QWidget(parent),
     ui(new Ui::waitForPin)
@@ -11,11 +15,19 @@ waitForPin::waitForPin(QStackedWidget *parent, CommInterface &commRef) :
     parentPtr = parent;
 }
 
+//=============================================================
+// METHOD : ~waitForPin
+// DESCR. : Destructor 
+//=============================================================
 waitForPin::~waitForPin()
 {
     delete ui;
 }
 
+//=============================================================
+// METHOD : on_codeAccept_PushButton_clicked
+// DESCR. : Slot der kaldes når koden til godkendelse af pin clickes
+//=============================================================
 void waitForPin::on_codeAccept_PushButton_clicked()
 {
     if(commPtr->validatePin())

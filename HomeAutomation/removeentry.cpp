@@ -1,6 +1,10 @@
 #include "removeentry.h"
 #include "ui_removeentry.h"
 
+//=============================================================
+// METHOD : RemoveEntry
+// DESCR. : Explicit Constructor
+//=============================================================
 RemoveEntry::RemoveEntry(QStackedWidget *parent, UnitRegister &regRef, CommInterface &commRef) :
     QWidget(parent),
     ui(new Ui::RemoveEntry)
@@ -15,16 +19,28 @@ RemoveEntry::RemoveEntry(QStackedWidget *parent, UnitRegister &regRef, CommInter
     populateTable();
 }
 
+//=============================================================
+// METHOD : ~RemoveEntry
+// DESCR. : Destructor
+//=============================================================
 RemoveEntry::~RemoveEntry()
 {
     delete ui;
 }
 
+//=============================================================
+// METHOD : getUnit
+// DESCR. : Slot som modtager ID for den Unit der skal redigeres
+//=============================================================
 void RemoveEntry::getUnit(int id)
 {
     unitID=id;
 }
 
+//=============================================================
+// METHOD : setTablePtr
+// DESCR. : Sætter pointeren til tabellen vist i UI
+//=============================================================
 void RemoveEntry::setTablePtr(QTableWidget* tableRef) {
     if(tableRef != NULL) {
         tablePtr = tableRef;
@@ -37,6 +53,10 @@ void RemoveEntry::setTablePtr(QTableWidget* tableRef) {
         cerr << "Couldn't register table address" << endl;
 }
 
+//=============================================================
+// METHOD : populateTable
+// DESCR. : Udfylder tabellen med relevant information
+//=============================================================
 void RemoveEntry::populateTable()
 {
     int rows=2;//Da starttid og sluttids udfyldes på en linje, men hentes ind som to.
@@ -55,37 +75,13 @@ void RemoveEntry::populateTable()
 
                     tablePtr->setRowCount(iter->getSize()/rows);
                     vector< vector<Entry> > myRef = iter->getEntryRegisterRef();
-
+                    map<int, QString> dayMap = { {0, "Mandag"}, {1, "Tirsdag"}, {2, "Onsdag"}, {3, "Torsdag"}, {4, "Fredag"}, {5, "Lørdag"}, {6, "Søndag"} };
                     int dayCounter = 0;
                     int rowCounter = 0;
 
                     for(auto day : myRef) {
                         for(auto entry : day) {
-                            switch(dayCounter) {
-                            case 0:
-                                inf = "Mandag";
-                                break;
-                            case 1:
-                                inf = "Tirsdag";
-                                break;
-                            case 2:
-                                inf = "Onsdag";
-                                break;
-                            case 3:
-                                inf = "Torsdag";
-                                break;
-                            case 4:
-                                inf = "Fredag";
-                                break;
-                            case 5:
-                                inf = "Lørdag";
-                                break;
-                            case 6:
-                                inf = "Søndag";
-                                break;
-                            default:
-                                inf = "default";
-                            }
+                            inf = dayMap[dayCounter];
                             if(entry.getAction()) {
                                 QString tmpQString;
                                 myMap[entry.EntryID()] = rowCounter;
@@ -138,6 +134,11 @@ void RemoveEntry::populateTable()
             }
         }
 }
+
+//=============================================================
+// METHOD : on_RemoveEntry_2_clicked
+// DESCR. : Slot der kaldes når der trykkes på "Fjern Tidsplan"
+//=============================================================
 void RemoveEntry::on_RemoveEntry_2_clicked()
 {
     QMessageBox msgBox;
@@ -164,9 +165,10 @@ void RemoveEntry::on_RemoveEntry_2_clicked()
     }
 }
 
-
-
-
+//=============================================================
+// METHOD : on_EntriesTable_cellClicked
+// DESCR. : Slot der kaldes når der trykkes på et element i tabellen
+//=============================================================
 void RemoveEntry::on_EntriesTable_cellClicked(int row, int column)
 {
     selectedRow = row;
@@ -177,11 +179,19 @@ void RemoveEntry::on_EntriesTable_cellClicked(int row, int column)
     }
 }
 
+//=============================================================
+// METHOD : on_Annuller_clicked
+// DESCR. : Slot der kaldes når der trykkes annuller
+//=============================================================
 void RemoveEntry::on_Annuller_clicked()
 {
     parentPtr->setCurrentIndex(0);
 }
 
+//=============================================================
+// METHOD : on_RemoveEntriesForDay_clicked
+// DESCR. : Slot der kaldes når der trykkes "Fjern tidsplan for valgte dag"
+//=============================================================
 void RemoveEntry::on_RemoveEntriesForDay_clicked()
 {
     QMessageBox msgBox;

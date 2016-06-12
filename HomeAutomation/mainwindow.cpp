@@ -16,6 +16,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+//=============================================================
+// METHOD : MainWindow
+// DESCR. : Constructor
+//=============================================================
 MainWindow::MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *parent = 0) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -56,6 +60,10 @@ MainWindow::MainWindow(UnitRegister& regRef, CommInterface& commRef, QWidget *pa
                      removeEntryPtr,SLOT(getUnit(int)));
 }
 
+//=============================================================
+// METHOD : ~MainWindow
+// DESCR. : Destructor
+//=============================================================
 MainWindow::~MainWindow()
 {
     //commPtr->PCDisconnected();
@@ -63,6 +71,10 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+//=============================================================
+// METHOD : setRegistryPtr
+// DESCR. : Sætter pointeren til UnitRegister
+//=============================================================
 void MainWindow::setRegistryPtr(UnitRegister& regRef) {
     //TODO - Validering
     if(&regRef != NULL) {
@@ -72,6 +84,10 @@ void MainWindow::setRegistryPtr(UnitRegister& regRef) {
         cerr << "Couldn't register unit registry address" << endl;
 }
 
+//=============================================================
+// METHOD : setCommPtr
+// DESCR. : Sætter pointeren til CommInterface
+//=============================================================
 void MainWindow::setCommPtr(CommInterface& commRef) {
     if(&commRef != NULL) {
         commPtr = &commRef;
@@ -80,6 +96,10 @@ void MainWindow::setCommPtr(CommInterface& commRef) {
         cerr << "Couldn't register comm interface address" << endl;
 }
 
+//=============================================================
+// METHOD : on_MainW_StackedWidget_currentChanged
+// DESCR. : Slot der kaldes hver gang der skiftes aktiv widget i QStackedWidget
+//=============================================================
 void MainWindow::on_MainW_StackedWidget_currentChanged(int arg1)
 {
     QString tmpString = QString(ui->MainW_StackedWidget->currentWidget()->accessibleName());
